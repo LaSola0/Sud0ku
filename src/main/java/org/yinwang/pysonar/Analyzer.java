@@ -136,3 +136,200 @@ public class Analyzer {
     private void copyModels() {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(Globals.MODEL_LOCATION);
         String dest = $.getTempFile("models");
+        this.modelDir = dest;
+
+        try {
+            $.copyResourcesRecursively(resource, new File(dest));
+            $.msg("copied models to: " + modelDir);
+        } catch (Exception e) {
+            $.die("Failed to copy models. Please check permissions of writing to: " + dest);
+        }
+        addPath(dest);
+    }
+
+
+    @NotNull
+    public List<String> getLoadPath() {
+        List<String> loadPath = new ArrayList<>();
+        if (cwd != null) {
+            loadPath.add(cwd);
+        }
+        if (projectDir != null && (new File(projectDir).isDirectory())) {
+            loadPath.add(projectDir);
+        }
+        loadPath.addAll(path);
+        return loadPath;
+    }
+
+
+    public boolean inImportStack(Object f) {
+        return importStack.contains(f);
+    }
+
+
+    public void pushImportStack(Object f) {
+        importStack.add(f);
+    }
+
+
+    public void popImportStack(Object f) {
+        importStack.remove(f);
+    }
+
+
+    @NotNull
+    public List<Binding> getAllBindings() {
+        return allBindings;
+    }
+
+
+    @Nullable
+    ModuleType getCachedModule(String file) {
+        Type t = moduleTable.lookupType($.moduleQname(file));
+        if (t == null) {
+            return null;
+        } else if (t instanceof UnionType) {
+            for (Type tt : ((UnionType) t).types) {
+                if (tt instanceof ModuleType) {
+                    return (ModuleType) tt;
+                }
+            }
+            return null;
+        } else if (t instanceof ModuleType) {
+            return (ModuleType) t;
+        } else {
+            return null;
+        }
+    }
+
+
+    public List<Diagnostic> getDiagnosticsForFile(String file) {
+        List<Diagnostic> errs = semanticErrors.get(file);
+        if (errs != null) {
+            return errs;
+        }
+        return new ArrayList<>();
+    }
+
+
+    public void putRef(@NotNull Node node, @NotNull Collection<Binding> bs) {
+        if (!(node instanceof Url)) {
+            List<Binding> bindings = references.get(node);
+            for (Binding b : bs) {
+                if (!bindings.contains(b)) {
+                    bindings.add(b);
+                }
+                b.addRef(node);
+            }
+        }
+    }
+
+
+    public void putRef(@NotNull Node node, @NotNull Binding b) {
+        List<Binding> bs = new ArrayList<>();
+        bs.add(b);
+        putRef(node, bs);
+    }
+
+
+    public void putProblem(@NotNull Node loc, String msg) {
+        String file = loc.file;
+        if (file != null) {
+            addFileErr(file, loc.start, loc.end, msg);
+        }
+    }
+
+
+    // for situations without a Node
+    public void putProblem(@Nullable String file, int begin, int end, String msg) {
+        if (file != null) {
+            addFileErr(file, begin, end, msg);
+        }
+    }
+
+
+    void addFileErr(String file, int begin, int end, String msg) {
+        Diagnostic d = new Diagnostic(file, Diagnostic.Category.ERROR, begin, end, msg);
+        semanticErrors.put(file, d);
+    }
+
+
+    @Nullable
+    public Type loadFile(String path) {
+        path = $.unifyPath(path);
+        File f = new File(path);
+
+        if (!f.canRead()) {
+            return null;
+        }
+
+        Type module = getCachedModule(path);
+        if (module != null) {
+            return module;
+        }
+
+        // detect circular import
+        if (inImportStack(path)) {
+            return null;
+        }
+
+        // set new CWD and save the old one on stack
+        String oldcwd = cwd;
+        setCWD(f.getParent());
+
+        pushImportStack(path);
+        Type type = parseAndResolve(path);
+        popImportStack(path);
+
+        // restore old CWD
+        setCWD(oldcwd);
+        return type;
+    }
+
+
+    @Nullable
+    private Type parseAndResolve(String file) {
+        loadingProgress.tick();
+        Node ast = getAstForFile(file);
+
+        if (ast == null) {
+            failedToParse.add(file);
+            return null;
+        } else {
+            Type type = inferencer.visit(ast, moduleTable);
+            loadedFiles.add(file);
+            return type;
+        }
+    }
+
+
+    private String createCacheDir() {
+        String dir = $.getTempFile("ast_cache");
+        File f = new File(dir);
+        $.msg("AST cache is at: " + dir);
+
+        if (!f.exists()) {
+            if (!f.mkdirs()) {
+                $.die("Failed to create tmp directory: " + dir + ". Please check permissions");
+            }
+        }
+        return dir;
+    }
+
+
+    /**
+     * Returns the syntax tree for {@code file}. <p>
+     */
+    @Nullable
+    public Node getAstForFile(String file) {
+        return astCache.getAST(file);
+    }
+
+
+    @Nullable
+    public ModuleType getBuiltinModule(@NotNull String qname) {
+        return builtins.get(qname);
+    }
+
+
+    @Nullable
