@@ -223,3 +223,180 @@ public class $ {
                 if (!fileName.equals("/")) {  // exclude the directory
                     InputStream entryInputStream = null;
                     try {
+                        entryInputStream = jarFile.getInputStream(entry);
+                        FileUtils.copyInputStreamToFile(entryInputStream, new File(destination, fileName));
+                    } catch (Exception e) {
+                        die("Failed to copy resource: " + fileName, e);
+                    } finally {
+                        if (entryInputStream != null) {
+                            try {
+                                entryInputStream.close();
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public static String readResource(String resource) {
+        InputStream s = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource);
+        return readWholeStream(s);
+    }
+
+
+    /**
+     * get unique hash according to file content and filename
+     */
+    @NotNull
+    public static String getFileHash(@NotNull String path) {
+        byte[] bytes = getBytesFromFile(path);
+        return $.getContentHash(path.getBytes()) + "." + getContentHash(bytes);
+    }
+
+
+    @NotNull
+    public static String getContentHash(byte[] fileContents) {
+        MessageDigest algorithm;
+
+        try {
+            algorithm = MessageDigest.getInstance("SHA-1");
+        } catch (Exception e) {
+            $.die("Failed to get SHA, shouldn't happen");
+            return "";
+        }
+
+        algorithm.reset();
+        algorithm.update(fileContents);
+        byte[] messageDigest = algorithm.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte aMessageDigest : messageDigest) {
+            sb.append(String.format("%02x", 0xFF & aMessageDigest));
+        }
+        return sb.toString();
+    }
+
+
+    public static String escapeQname(@NotNull String s) {
+        return s.replaceAll("[.&@%-]", "_");
+    }
+
+
+    public static String escapeWindowsPath(String path) {
+        return path.replace("\\", "\\\\");
+    }
+
+
+    @NotNull
+    public static Collection<String> toStringCollection(@NotNull Collection<Integer> collection) {
+        List<String> ret = new ArrayList<>();
+        for (Integer x : collection) {
+            ret.add(x.toString());
+        }
+        return ret;
+    }
+
+
+    @NotNull
+    public static String joinWithSep(@NotNull Collection<String> ls, String sep, @Nullable String start,
+                                     @Nullable String end)
+    {
+        StringBuilder sb = new StringBuilder();
+        if (start != null && ls.size() > 1) {
+            sb.append(start);
+        }
+        int i = 0;
+        for (String s : ls) {
+            if (i > 0) {
+                sb.append(sep);
+            }
+            sb.append(s);
+            i++;
+        }
+        if (end != null && ls.size() > 1) {
+            sb.append(end);
+        }
+        return sb.toString();
+    }
+
+
+    public static void msg(String m) {
+        if (Analyzer.self != null && !Analyzer.self.hasOption("quiet")) {
+            System.out.println(m);
+        }
+    }
+
+
+    public static void msg_(String m) {
+        if (Analyzer.self != null && !Analyzer.self.hasOption("quiet")) {
+            System.out.print(m);
+        }
+    }
+
+
+    public static void testmsg(String m) {
+        System.out.println(m);
+    }
+
+
+    public static void die(String msg) {
+        die(msg, null);
+    }
+
+
+    public static void die(String msg, Exception e) {
+        System.err.println(msg);
+
+        if (e != null) {
+            System.err.println("Exception: " + e + "\n");
+        }
+
+        Thread.dumpStack();
+        System.exit(2);
+    }
+
+
+    @Nullable
+    public static String readWholeFile(String filename) {
+        try {
+            return new Scanner(new File(filename)).useDelimiter("PYSONAR2END").next();
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+    }
+
+
+    public static String readWholeStream(InputStream in) {
+        return new Scanner(in).useDelimiter("\\Z").next();
+    }
+
+
+    @NotNull
+    public static String percent(long num, long total) {
+        if (total == 0) {
+            return "100%";
+        } else {
+            int pct = (int) (num * 100 / total);
+            return String.format("%1$3d", pct) + "%";
+        }
+    }
+
+
+    @NotNull
+    public static String formatTime(long millis) {
+        long sec = millis / 1000;
+        long min = sec / 60;
+        sec = sec % 60;
+        long hr = min / 60;
+        min = min % 60;
+
+        return hr + ":" + min + ":" + sec;
+    }
+
+
+    /**
+     * format number with fixed width
+     */
+    public static String formatNumber(Object n, int length) {
