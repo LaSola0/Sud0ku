@@ -583,3 +583,39 @@ public class $ {
         sb.append(banner("memory stats"));
         sb.append("\n- total collections: ").append(totalGC);
         sb.append("\n- total collection time: ").append(formatTime(gcTime));
+
+        Runtime runtime = Runtime.getRuntime();
+        sb.append("\n- total memory: ").append($.printMem(runtime.totalMemory()));
+
+        return sb.toString();
+    }
+
+    public static List<List<Binding>> correlateBindings(List<Binding> bindings) {
+        Map<Integer, List<Binding>> bdHash = new HashMap<>();
+        for (Binding b : bindings) {
+            int hash = b.hashCode();
+            if (!bdHash.containsKey(hash)) {
+                bdHash.put(hash, new ArrayList<>());
+            }
+            List<Binding> bs = bdHash.get(hash);
+            bs.add(b);
+        }
+        return new ArrayList<>(bdHash.values());
+    }
+
+    public static boolean deleteFile(String file)
+    {
+        return new File(file).delete();
+    }
+
+    public static void sleep(long millis)
+    {
+        try
+        {
+            Thread.sleep(millis);
+        } catch (InterruptedException e)
+        {
+        }
+    }
+
+}
