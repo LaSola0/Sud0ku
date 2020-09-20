@@ -400,3 +400,186 @@ public class $ {
      * format number with fixed width
      */
     public static String formatNumber(Object n, int length) {
+        if (length == 0) {
+            length = 1;
+        }
+
+        if (n instanceof Integer) {
+            return String.format("%1$" + length + "d", (int) n);
+        } else if (n instanceof Long) {
+            return String.format("%1$" + length + "d", (long) n);
+        } else {
+            return String.format("%1$" + length + "s", n.toString());
+        }
+    }
+
+    public static boolean deleteDirectory(String directory)
+    {
+        return deleteDirectory(new File(directory));
+    }
+
+    public static boolean deleteDirectory(File directory)
+    {
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    if (f.isDirectory()) {
+                        deleteDirectory(f);
+                    } else {
+                        f.delete();
+                    }
+                }
+            }
+        }
+        return directory.delete();
+    }
+
+
+    public static String newSessionId() {
+        return UUID.randomUUID().toString();
+    }
+
+
+    public static File makePath(String... files) {
+        File ret = new File(files[0]);
+
+        for (int i = 1; i < files.length; i++) {
+            ret = new File(ret, files[i]);
+        }
+
+        return ret;
+    }
+
+
+    public static String makePathString(String... files) {
+        return unifyPath(makePath(files).getPath());
+    }
+
+
+    public static String unifyPath(String filename) {
+        return unifyPath(new File(filename));
+    }
+
+
+    public static String unifyPath(File file) {
+        try {
+            return file.getCanonicalPath();
+        } catch (Exception e) {
+            die("Failed to get canonical path");
+            return "";
+        }
+    }
+
+
+    public static String relPath(String path1, String path2) {
+        String a = unifyPath(path1);
+        String b = unifyPath(path2);
+
+        String[] as = a.split("[/\\\\]");
+        String[] bs = b.split("[/\\\\]");
+
+        int i;
+        for (i = 0; i < Math.min(as.length, bs.length); i++) {
+            if (!as[i].equals(bs[i])) {
+                break;
+            }
+        }
+
+        int ups = as.length - i - 1;
+
+        File res = null;
+
+        for (int x = 0; x < ups; x++) {
+            res = new File(res, "..");
+        }
+
+        for (int y = i; y < bs.length; y++) {
+            res = new File(res, bs[y]);
+        }
+
+        if (res == null) {
+            return null;
+        } else {
+            return res.getPath();
+        }
+    }
+
+
+    public static String projRelPath(String file) {
+        if (file.startsWith(Analyzer.self.projectDir)) {
+            return file.substring(Analyzer.self.projectDir.length() + 1);
+        } else {
+            return file;
+        }
+    }
+
+
+    public static String projAbsPath(String file) {
+        if (file.startsWith("/") || file.startsWith(Analyzer.self.projectDir)) {
+            return file;
+        } else {
+            return makePathString(Analyzer.self.projectDir, file);
+        }
+    }
+
+
+    @NotNull
+    public static File joinPath(@NotNull File dir, String file) {
+        return joinPath(dir.getAbsolutePath(), file);
+    }
+
+
+    @NotNull
+    public static File joinPath(String dir, String file) {
+        File file1 = new File(dir);
+        File file2 = new File(file1, file);
+        return file2;
+    }
+
+    public static String banner(String msg) {
+        return "---------------- " + msg + " ----------------";
+    }
+
+
+    public static String printMem(long bytes) {
+        double dbytes = (double) bytes;
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        if (dbytes < 1024) {
+            return df.format(bytes);
+        } else if (dbytes < 1024 * 1024) {
+            return df.format(dbytes / 1024);
+        } else if (dbytes < 1024 * 1024 * 1024) {
+            return df.format(dbytes / 1024 / 1024) + "M";
+        } else if (dbytes < 1024 * 1024 * 1024 * 1024L) {
+            return df.format(dbytes / 1024 / 1024 / 1024) + "G";
+        } else {
+            return "Too big to show you";
+        }
+    }
+
+
+    public static String getGCStats() {
+        long totalGC = 0;
+        long gcTime = 0;
+
+        for (GarbageCollectorMXBean gc : ManagementFactory.getGarbageCollectorMXBeans()) {
+            long count = gc.getCollectionCount();
+
+            if (count >= 0) {
+                totalGC += count;
+            }
+
+            long time = gc.getCollectionTime();
+
+            if (time >= 0) {
+                gcTime += time;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(banner("memory stats"));
+        sb.append("\n- total collections: ").append(totalGC);
+        sb.append("\n- total collection time: ").append(formatTime(gcTime));
