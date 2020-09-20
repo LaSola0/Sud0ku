@@ -333,3 +333,174 @@ public class Analyzer {
 
 
     @Nullable
+    public String makeQname(@NotNull List<Name> names) {
+        if (names.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder ret = new StringBuilder();
+
+        for (int i = 0; i < names.size() - 1; i++) {
+            ret.append(names.get(i).id).append(".");
+        }
+
+        ret.append(names.get(names.size() - 1).id);
+        return ret.toString();
+    }
+
+
+    /**
+     * Find the path that contains modname. Used to find the starting point of locating a qname.
+     *
+     * @param headName first module name segment
+     */
+    public String locateModule(String headName) {
+        List<String> loadPath = getLoadPath();
+
+        for (String p : loadPath) {
+            File startDir = new File(p, headName);
+            File initFile = new File($.joinPath(startDir, "__init__.py").getPath());
+
+            if (initFile.exists()) {
+                return p;
+            }
+
+            File startFile = new File(startDir + Globals.FILE_SUFFIX);
+            if (startFile.exists()) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+
+    @Nullable
+    public Type loadModule(@NotNull List<Name> name, @NotNull State state) {
+        if (name.isEmpty()) {
+            return null;
+        }
+
+        String qname = makeQname(name);
+
+        Type mt = getBuiltinModule(qname);
+        if (mt != null) {
+            state.insert(name.get(0).id,
+                    new Url(Builtins.LIBRARY_URL + mt.table.path + ".html"),
+                    mt, Binding.Kind.SCOPE);
+            return mt;
+        }
+
+        // If there are more than one segment
+        // load the packages first
+        Type prev = null;
+        String startPath = locateModule(name.get(0).id);
+
+        if (startPath == null) {
+            return null;
+        }
+
+        File path = new File(startPath);
+
+        for (int i = 0; i < name.size(); i++) {
+            path = new File(path, name.get(i).id);
+            File initFile = new File($.joinPath(path, "__init__.py").getPath());
+
+            if (initFile.exists()) {
+                Type mod = loadFile(initFile.getPath());
+                if (mod == null) {
+                    return null;
+                }
+
+                Binding binding = Binding.createFileBinding(name.get(i).id, initFile.getPath(), mod);
+
+                if (prev != null) {
+                    prev.table.update(name.get(i).id, binding);
+                } else {
+                    state.update(name.get(i).id, binding);
+                }
+
+                Analyzer.self.putRef(name.get(i), binding);
+                prev = mod;
+            } else if (i == name.size() - 1) {
+                File startFile = new File(path + Globals.FILE_SUFFIX);
+                if (startFile.exists()) {
+                    Type mod = loadFile(startFile.getPath());
+                    if (mod == null) {
+                        return null;
+                    }
+
+                    Binding binding = Binding.createFileBinding(name.get(i).id, startFile.getPath(), mod);
+
+                    if (prev != null) {
+                        prev.table.update(name.get(i).id, binding);
+                    } else {
+                        state.update(name.get(i).id, binding);
+                    }
+
+                    Analyzer.self.putRef(name.get(i), binding);
+                    prev = mod;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return prev;
+    }
+
+
+    /**
+     * Load all Python source files recursively if the given fullname is a
+     * directory; otherwise just load a file.  Looks at file extension to
+     * determine whether to load a given file.
+     */
+    public void loadFileRecursive(String fullname) {
+        int count = countFileRecursive(fullname);
+        if (loadingProgress == null) {
+            loadingProgress = new Progress(count, 50);
+        }
+
+        File file_or_dir = new File(fullname);
+
+        if (file_or_dir.isDirectory()) {
+            for (File file : file_or_dir.listFiles()) {
+                loadFileRecursive(file.getPath());
+            }
+        } else {
+            if (file_or_dir.getPath().endsWith(Globals.FILE_SUFFIX)) {
+                loadFile(file_or_dir.getPath());
+            }
+        }
+    }
+
+
+    // count number of .py files
+    public int countFileRecursive(String fullname) {
+        File file_or_dir = new File(fullname);
+        int sum = 0;
+
+        if (file_or_dir.isDirectory()) {
+            for (File file : file_or_dir.listFiles()) {
+                sum += countFileRecursive(file.getPath());
+            }
+        } else {
+            if (file_or_dir.getPath().endsWith(Globals.FILE_SUFFIX)) {
+                sum += 1;
+            }
+        }
+        return sum;
+    }
+
+
+    public void finish() {
+        $.msg("\nFinished loading files. " + nCalled + " functions were called.");
+        $.msg("Analyzing uncalled functions");
+        applyUncalled();
+
+        // mark unused variables
+        for (List<Binding> bset : $.correlateBindings(allBindings)) {
+            if (unusedBindingSet(bset)) {
+                Binding first = bset.get(0);
+                putProblem(first.node, "Unused variable: " + first.name);
+            }
+        }
