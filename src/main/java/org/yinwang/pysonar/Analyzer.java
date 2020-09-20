@@ -504,3 +504,120 @@ public class Analyzer {
                 putProblem(first.node, "Unused variable: " + first.name);
             }
         }
+
+        $.msg(getAnalysisSummary());
+        close();
+    }
+
+    private boolean unusedBindingSet(List<Binding> bindings) {
+        for (Binding binding : bindings) {
+            if (!unused(binding)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean unused(Binding binding) {
+        return (!(binding.type instanceof ClassType) &&
+                !(binding.type instanceof FunType) &&
+                !(binding.type instanceof ModuleType)
+                && binding.refs.isEmpty());
+    }
+
+    public void close()
+    {
+        astCache.close();
+        $.sleep(10);
+        if (!$.deleteDirectory($.getTempDir()))
+        {
+            $.msg("Failed to delete temp dir: " + $.getTempDir());
+        }
+    }
+
+    public void addUncalled(@NotNull FunType cl) {
+        if (!cl.func.called) {
+            uncalled.add(cl);
+        }
+    }
+
+
+    public void removeUncalled(FunType f) {
+        uncalled.remove(f);
+    }
+
+
+    public void applyUncalled() {
+        Progress progress = new Progress(uncalled.size(), 50);
+
+        while (!uncalled.isEmpty()) {
+            List<FunType> uncalledDup = new ArrayList<>(uncalled);
+
+            for (FunType cl : uncalledDup) {
+                progress.tick();
+                inferencer.apply(cl, null, null, null, null, null, null);
+            }
+        }
+    }
+
+
+    @NotNull
+    public String getAnalysisSummary() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n").append($.banner("analysis summary"));
+
+        String duration = $.formatTime(System.currentTimeMillis() - stats.getInt("startTime"));
+        sb.append("\n- total time: ").append(duration);
+        sb.append("\n- modules loaded: ").append(loadedFiles.size());
+        sb.append("\n- semantic problems: ").append(semanticErrors.size());
+        sb.append("\n- failed to parse: ").append(failedToParse.size());
+
+        // calculate number of defs, refs, xrefs
+        int nDef = 0, nXRef = 0;
+        for (Binding b : getAllBindings()) {
+            nDef += 1;
+            nXRef += b.refs.size();
+        }
+
+        sb.append("\n- number of definitions: ").append(nDef);
+        sb.append("\n- number of cross references: ").append(nXRef);
+        sb.append("\n- number of references: ").append(references.size());
+
+        long nResolved = resolved.size();
+        long nUnresolved = unresolved.size();
+        sb.append("\n- resolved names: ").append(nResolved);
+        sb.append("\n- unresolved names: ").append(nUnresolved);
+        sb.append("\n- name resolve rate: ").append($.percent(nResolved, nResolved + nUnresolved));
+        sb.append("\n").append($.getGCStats());
+
+        return sb.toString();
+    }
+
+
+    @NotNull
+    public List<String> getLoadedFiles() {
+        List<String> files = new ArrayList<>();
+        for (String file : loadedFiles) {
+            if (file.endsWith(Globals.FILE_SUFFIX)) {
+                files.add(file);
+            }
+        }
+        return files;
+    }
+
+
+    public void registerBinding(@NotNull Binding b) {
+        allBindings.add(b);
+    }
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "(analyzer:" +
+                "[" + allBindings.size() + " bindings] " +
+                "[" + references.size() + " refs] " +
+                "[" + loadedFiles.size() + " files] " +
+                ")";
+    }
+}
