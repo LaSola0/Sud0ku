@@ -57,3 +57,160 @@ public class Binding implements Comparable<Object> {
     public Binding(@NotNull String id, @NotNull Node node, @NotNull Type type, @NotNull Kind kind) {
         this.name = id;
         this.qname = type.table.path;
+        this.type = type;
+        this.kind = kind;
+        this.node = node;
+
+        if (node instanceof Url) {
+            String url = ((Url) node).url;
+            if (url.startsWith("file://")) {
+                fileOrUrl = url.substring("file://".length());
+            } else {
+                fileOrUrl = url;
+            }
+        } else {
+            fileOrUrl = node.file;
+            if (node instanceof Name) {
+                name = ((Name) node).id;
+            }
+        }
+
+        initLocationInfo(node);
+        Analyzer.self.registerBinding(this);
+    }
+
+
+    private void initLocationInfo(Node node) {
+        start = node.start;
+        end = node.end;
+        line = node.line;
+        col = node.col;
+
+        Node parent = node.parent;
+        if ((parent instanceof FunctionDef && ((FunctionDef) parent).name == node) ||
+                (parent instanceof ClassDef && ((ClassDef) parent).name == node))
+        {
+            bodyStart = parent.start;
+            bodyEnd = parent.end;
+        } else if (node instanceof PyModule) {
+            name = ((PyModule) node).name;
+            start = 0;
+            end = 0;
+            bodyStart = node.start;
+            bodyEnd = node.end;
+        } else {
+            bodyStart = node.start;
+            bodyEnd = node.end;
+        }
+    }
+
+    public static Binding createFileBinding(String name, String filename, Type type)
+    {
+        Node refNode = new Dummy(filename, 0, 0, 0, 0);
+        return new Binding(name, refNode, type, Binding.Kind.MODULE);
+    }
+
+
+    public Str getDocstring() {
+        Node parent = node.parent;
+        if ((parent instanceof FunctionDef && ((FunctionDef) parent).name == node) ||
+                (parent instanceof ClassDef && ((ClassDef) parent).name == node))
+        {
+            return parent.getDocString();
+        } else {
+            return node.getDocString();
+        }
+    }
+
+
+    public void setQname(@NotNull String qname) {
+        this.qname = qname;
+    }
+
+
+    public void addRef(Node node) {
+        refs.add(node);
+    }
+
+
+    // merge one more type into the type
+    // used by stateful assignments which we can't track down the control flow
+    public void addType(Type t) {
+        type = UnionType.union(type, t);
+    }
+
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+
+    public void setKind(Kind kind) {
+        this.kind = kind;
+    }
+
+
+    public void markStatic() {
+        isStatic = true;
+    }
+
+
+    public boolean isStatic() {
+        return isStatic;
+    }
+
+
+    public void markSynthetic() {
+        isSynthetic = true;
+    }
+
+
+    public boolean isSynthetic() {
+        return isSynthetic;
+    }
+
+
+    public boolean isBuiltin() {
+        return isBuiltin;
+    }
+
+
+    @NotNull
+    public String getFirstFile() {
+        Type bt = type;
+        if (bt instanceof ModuleType) {
+            String file = bt.asModuleType().file;
+            return file != null ? file : "<built-in module>";
+        }
+
+        String file = getFile();
+        if (file != null) {
+            return file;
+        }
+
+        return "<built-in binding>";
+    }
+
+
+    @Nullable
+    public String getFile() {
+        return isURL() ? null : fileOrUrl;
+    }
+
+
+    @Nullable
+    public String getURL() {
+        return isURL() ? fileOrUrl : null;
+    }
+
+
+    public boolean isURL() {
+        return fileOrUrl != null && fileOrUrl.startsWith("http://");
+    }
+
+
+    /**
+     * Bindings can be sorted by their location for outlining purposes.
+     */
+    @Override
+    public int compareTo(@NotNull Object o) {
