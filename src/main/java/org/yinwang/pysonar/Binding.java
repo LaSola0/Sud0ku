@@ -214,3 +214,41 @@ public class Binding implements Comparable<Object> {
      */
     @Override
     public int compareTo(@NotNull Object o) {
+        if (start == ((Binding) o).start) {
+            return end - ((Binding) o).end;
+        } else
+        {
+            return start - ((Binding) o).start;
+        }
+    }
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(binding:");
+        sb.append(":kind=").append(kind);
+        sb.append(":node=").append(node);
+        sb.append(":type=").append(type);
+        sb.append(":qname=").append(qname);
+        sb.append(":refs=");
+        if (refs.size() > 10) {
+            sb.append("[");
+            sb.append(refs.iterator().next());
+            sb.append(", ...(");
+            sb.append(refs.size() - 1);
+            sb.append(" more)]");
+        } else {
+            sb.append(refs);
+        }
+        sb.append(">");
+        return sb.toString();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return node.hashCode();
+    }
+}
