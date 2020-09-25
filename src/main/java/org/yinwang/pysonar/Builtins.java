@@ -125,3 +125,160 @@ public class Builtins {
 
     @NotNull
     ClassType newException(@NotNull String name, State t) {
+        return newClass(name, t, BaseException);
+    }
+
+
+    @NotNull
+    FunType newFunc() {
+        return new FunType();
+    }
+
+
+    @Nullable
+    FunType newFunc(@Nullable Type type) {
+        if (type == null) {
+            type = Types.UNKNOWN;
+        }
+        return new FunType(Types.UNKNOWN, type);
+    }
+
+
+    @NotNull
+    ListType newList() {
+        return newList(Types.UNKNOWN);
+    }
+
+
+    @NotNull
+    ListType newList(Type type) {
+        return new ListType(type);
+    }
+
+
+    @NotNull
+    DictType newDict(Type ktype, Type vtype) {
+        return new DictType(ktype, vtype);
+    }
+
+
+    @NotNull
+    TupleType newTuple(Type... types) {
+        return new TupleType(types);
+    }
+
+
+    @NotNull
+    UnionType newUnion(Type... types) {
+        return new UnionType(types);
+    }
+
+
+    String[] list(String... names) {
+        return names;
+    }
+
+
+    private abstract class NativeModule {
+
+        protected String name;
+        @Nullable
+        protected ModuleType module;
+        @Nullable
+        protected State table;  // the module's symbol table
+
+
+        NativeModule(String name) {
+            this.name = name;
+            modules.put(name, this);
+        }
+
+
+        /**
+         * Lazily load the module.
+         */
+        @Nullable
+        ModuleType getModule() {
+            if (module == null) {
+                createModuleType();
+                initBindings();
+            }
+            return module;
+        }
+
+
+        protected abstract void initBindings();
+
+
+        protected void createModuleType() {
+            if (module == null) {
+                module = newModule(name);
+                table = module.table;
+                Analyzer.self.moduleTable.insert(name, liburl(), module, MODULE);
+            }
+        }
+
+
+        @Nullable
+        protected void update(String name, Url url, Type type, Binding.Kind kind) {
+            table.insert(name, url, type, kind);
+        }
+
+
+        @Nullable
+        protected void addClass(String name, Url url, Type type) {
+            table.insert(name, url, type, CLASS);
+        }
+
+
+        @Nullable
+        protected void addClass(ClassType type) {
+            table.insert(type.name, liburl(type.name), type, CLASS);
+        }
+
+
+        @Nullable
+        protected void addMethod(ClassType cls, String name, Type type) {
+            cls.table.insert(name, liburl(cls.name + "." + name), newFunc(type), METHOD);
+        }
+
+        @Nullable
+        protected void addMethod(ClassType cls, String name) {
+            cls.table.insert(name, liburl(cls.name + "." + name), newFunc(), METHOD);
+        }
+
+
+        protected void addFunction(ModuleType module, String name, Type type) {
+            Url url = this.module == module ? liburl(module.qname + "." + name) :
+                newLibUrl(module.table.path, module.table.path + "." + name);
+            module.table.insert(name, url, newFunc(type), FUNCTION);
+        }
+
+
+        protected void addFunction(String name, Type type) {
+            addFunction(module, name, type);
+        }
+
+
+        // don't use this unless you're sure it's OK to share the type object
+        protected void addFunctions_beCareful(Type type, @NotNull String... names) {
+            for (String name : names) {
+                addFunction(name, type);
+            }
+        }
+
+
+        protected void addNoneFuncs(String... names) {
+            addFunctions_beCareful(Types.NoneInstance, names);
+        }
+
+
+        protected void addNumFuncs(String... names) {
+            addFunctions_beCareful(Types.IntInstance, names);
+        }
+
+
+        protected void addStrFuncs(String... names) {
+            addFunctions_beCareful(Types.StrInstance, names);
+        }
+
