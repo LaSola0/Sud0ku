@@ -282,3 +282,156 @@ public class Builtins {
             addFunctions_beCareful(Types.StrInstance, names);
         }
 
+
+        protected void addUnknownFuncs(@NotNull String... names) {
+            for (String name : names) {
+                addFunction(name, Types.UNKNOWN);
+            }
+        }
+
+
+        protected void addAttr(String name, Url url, Type type) {
+            table.insert(name, url, type, ATTRIBUTE);
+        }
+
+
+        protected void addAttr(String name, Type type) {
+            addAttr(table, name, type);
+        }
+
+
+        protected void addAttr(State s, String name, Type type) {
+            s.insert(name, liburl(s.path + "." + name), type, ATTRIBUTE);
+        }
+
+
+        protected void addAttr(ClassType cls, String name, Type type) {
+            addAttr(cls.table, name, type);
+        }
+
+        // don't use this unless you're sure it's OK to share the type object
+        protected void addAttributes_beCareful(Type type, @NotNull String... names) {
+            for (String name : names) {
+                addAttr(name, type);
+            }
+        }
+
+
+        protected void addNumAttrs(String... names) {
+            addAttributes_beCareful(Types.IntInstance, names);
+        }
+
+
+        protected void addStrAttrs(String... names) {
+            addAttributes_beCareful(Types.StrInstance, names);
+        }
+
+
+        protected void addUnknownAttrs(@NotNull String... names) {
+            for (String name : names) {
+                addAttr(name, Types.UNKNOWN);
+            }
+        }
+
+
+        @NotNull
+        protected Url liburl() {
+            return newLibUrl(name);
+        }
+
+
+        @NotNull
+        protected Url liburl(String anchor) {
+            return newLibUrl(name, anchor);
+        }
+
+        @NotNull
+        @Override
+        public String toString() {
+            return module == null
+                    ? "<Non-loaded builtin module '" + name + "'>"
+                    : "<NativeModule:" + module + ">";
+        }
+    }
+
+
+    /**
+     * The set of top-level native modules.
+     */
+    @NotNull
+    private Map<String, NativeModule> modules = new HashMap<>();
+
+
+    public Builtins() {
+        buildTypes();
+    }
+
+
+    private void buildTypes() {
+        new BuiltinsModule();
+        State bt = Builtin.table;
+
+        objectType = newClass("object", bt);
+        BaseType = newClass("type", bt, objectType);
+        BaseTuple = newClass("tuple", bt, objectType);
+        BaseList = newClass("list", bt, objectType);
+        BaseListInst = new InstanceType(BaseList);
+        BaseArray = newClass("array", bt);
+        ClassType numClass = newClass("int", bt, objectType);
+        BaseModule = newClass("module", bt);
+        BaseFile = newClass("file", bt, objectType);
+        BaseFileInst = new InstanceType(BaseFile);
+        BaseFunction = newClass("function", bt, objectType);
+        BaseClass = newClass("classobj", bt, objectType);
+    }
+
+
+    void init() {
+        buildObjectType();
+        buildTupleType();
+        buildArrayType();
+        buildListType();
+        buildDictType();
+        buildNumTypes();
+        buildStrType();
+        buildModuleType();
+        buildFileType();
+        buildFunctionType();
+        buildClassType();
+
+        modules.get("__builtin__").initBindings();  // eagerly load these bindings
+
+        new ArrayModule();
+        new AudioopModule();
+        new BinasciiModule();
+        new Bz2Module();
+        new CPickleModule();
+        new CStringIOModule();
+        new CMathModule();
+        new CollectionsModule();
+        new CryptModule();
+        new CTypesModule();
+        new DatetimeModule();
+        new DbmModule();
+        new ErrnoModule();
+        new ExceptionsModule();
+        new FcntlModule();
+        new FpectlModule();
+        new GcModule();
+        new GdbmModule();
+        new GrpModule();
+        new ImpModule();
+        new ItertoolsModule();
+        new MarshalModule();
+        new MathModule();
+        new Md5Module();
+        new MmapModule();
+        new NisModule();
+        new OperatorModule();
+        new OsModule();
+        new ParserModule();
+        new PosixModule();
+        new PwdModule();
+        new PyexpatModule();
+        new ReadlineModule();
+        new ResourceModule();
