@@ -768,3 +768,175 @@ public class Builtins {
     // so we can remove the per-instance attributes from NClassDef.
     void buildClassType() {
         State t = BaseClass.table;
+
+        for (String s : list("__name__", "__doc__", "__module__")) {
+            t.insert(s, new Url(DATAMODEL_URL), Types.StrInstance, ATTRIBUTE);
+        }
+
+        t.insert("__dict__", new Url(DATAMODEL_URL), new DictType(Types.StrInstance, Types.UNKNOWN), ATTRIBUTE);
+    }
+
+
+    class BuiltinsModule extends NativeModule {
+        public BuiltinsModule() {
+            super("__builtin__");
+            Builtin = module = newModule(name);
+            table = module.table;
+        }
+
+
+        @Nullable
+        protected void addFunction(String name, Url url, Type type) {
+            table.insert(name, url, newFunc(type), FUNCTION);
+        }
+
+
+        @Override
+        public void initBindings() {
+            Analyzer.self.moduleTable.insert(name, liburl(), module, MODULE);
+            table.addSuper(BaseModule.table);
+
+            addClass("object", newLibUrl("functions", "object"), Types.ObjectClass);
+            addFunction("type", newLibUrl("functions", "type"), Types.TypeClass);
+
+            addFunction("bool", newLibUrl("functions", "bool"), Types.BoolInstance);
+            addClass("int", newLibUrl("functions", "int"), Types.IntClass);
+            addClass("str", newLibUrl("functions", "func-str"), Types.StrClass);
+            addClass("long", newLibUrl("functions", "long"), Types.LongClass);
+            addClass("float", newLibUrl("functions", "float"), Types.FloatClass);
+                addClass("complex", newLibUrl("functions", "complex"), Types.ComplexClass);
+
+            addClass("None", newLibUrl("constants", "None"), Types.NoneInstance);
+
+            addClass("dict", newLibUrl("stdtypes", "typesmapping"), Types.BaseDict);
+            addFunction("file", newLibUrl("functions", "file"), BaseFileInst);
+            addFunction("list", newLibUrl("functions", "list"), new InstanceType(BaseList));
+            addFunction("tuple", newLibUrl("functions", "tuple"), new InstanceType(BaseTuple));
+
+            // XXX:  need to model the following as built-in class types:
+            //   basestring, bool, buffer, frozenset, property, set, slice,
+            //   staticmethod, super and unicode
+            String[] builtin_func_unknown = {
+                    "apply", "basestring", "callable", "classmethod",
+                    "coerce", "compile", "copyright", "credits", "delattr", "enumerate",
+                    "eval", "execfile", "exit", "filter", "frozenset", "getattr",
+                    "help", "input", "intern", "iter", "license", "long",
+                    "property", "quit", "raw_input", "reduce", "reload", "reversed",
+                    "set", "setattr", "slice", "sorted", "staticmethod", "super",
+                    "type", "unichr", "unicode",
+            };
+            for (String f : builtin_func_unknown) {
+                addFunction(f, newLibUrl("functions", f), Types.UNKNOWN);
+            }
+
+            String[] builtin_func_num = {
+                    "abs", "all", "any", "cmp", "coerce", "divmod",
+                    "hasattr", "hash", "id", "isinstance", "issubclass", "len", "max",
+                    "min", "ord", "pow", "round", "sum"
+            };
+            for (String f : builtin_func_num) {
+                addFunction(f, newLibUrl("functions", f), Types.IntInstance);
+            }
+
+            for (String f : list("hex", "oct", "repr", "chr")) {
+                addFunction(f, newLibUrl("functions", f), Types.StrInstance);
+            }
+
+            addFunction("dir", newLibUrl("functions", "dir"), newList(Types.StrInstance));
+            addFunction("map", newLibUrl("functions", "map"), newList(Types.UNKNOWN));
+            addFunction("range", newLibUrl("functions", "range"), newList(Types.IntInstance));
+            addFunction("xrange", newLibUrl("functions", "range"), newList(Types.IntInstance));
+            addFunction("buffer", newLibUrl("functions", "buffer"), newList(Types.UNKNOWN));
+            addFunction("zip", newLibUrl("functions", "zip"), newList(newTuple(Types.UNKNOWN)));
+
+
+            for (String f : list("globals", "vars", "locals")) {
+                addFunction(f, newLibUrl("functions.html#" + f), newDict(Types.StrInstance, Types.UNKNOWN));
+            }
+
+            for (String f : builtin_exception_types) {
+                addClass(f, newLibUrl("exceptions", f),
+                        newClass(f, Analyzer.self.globaltable, objectType));
+            }
+            BaseException = (ClassType) table.lookupType("BaseException");
+
+            addAttr("True", newLibUrl("constants", "True"), Types.BoolInstance);
+            addAttr("False", newLibUrl("constants", "False"), Types.BoolInstance);
+            addAttr("None", newLibUrl("constants", "None"), Types.NoneInstance);
+            addFunction("open", newTutUrl("inputoutput.html#reading-and-writing-files"), BaseFileInst);
+            addFunction("__import__", newLibUrl("functions", "__import__"), newModule("<?>"));
+
+            Analyzer.self.globaltable.insert("__builtins__", liburl(), module, ATTRIBUTE);
+            Analyzer.self.globaltable.putAll(table);
+        }
+    }
+
+
+    class ArrayModule extends NativeModule {
+        public ArrayModule() {
+            super("array");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addClass("array", liburl("array.array"), BaseArray);
+            addClass("ArrayType", liburl("array.ArrayType"), BaseArray);
+        }
+    }
+
+
+    class AudioopModule extends NativeModule {
+        public AudioopModule() {
+            super("audioop");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addClass(newException("error", table));
+
+            addStrFuncs("add", "adpcm2lin", "alaw2lin", "bias", "lin2alaw", "lin2lin",
+                    "lin2ulaw", "mul", "reverse", "tomono", "ulaw2lin");
+
+            addNumFuncs("avg", "avgpp", "cross", "findfactor", "findmax",
+                    "getsample", "max", "maxpp", "rms");
+
+            for (String s : list("adpcm2lin", "findfit", "lin2adpcm", "minmax", "ratecv")) {
+                addFunction(s, newTuple());
+            }
+        }
+    }
+
+
+    class BinasciiModule extends NativeModule {
+        public BinasciiModule() {
+            super("binascii");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addStrFuncs(
+                    "a2b_uu", "b2a_uu", "a2b_base64", "b2a_base64", "a2b_qp",
+                    "b2a_qp", "a2b_hqx", "rledecode_hqx", "rlecode_hqx", "b2a_hqx",
+                    "b2a_hex", "hexlify", "a2b_hex", "unhexlify");
+
+            addNumFuncs("crc_hqx", "crc32");
+
+            addClass(newException("Error", table));
+            addClass(newException("Incomplete", table));
+        }
+    }
+
+
+    class Bz2Module extends NativeModule {
+        public Bz2Module() {
+            super("bz2");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType bz2 = newClass("BZ2File", table, BaseFile);  // close enough.
+            addClass(bz2);
