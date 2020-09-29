@@ -607,3 +607,164 @@ public class Builtins {
                 "__long__", "__mod__", "__mul__", "__neg__", "__new__",
                 "__pos__", "__pow__", "__radd__", "__rdiv__", "__rdivmod__",
                 "__rfloordiv__", "__rmod__", "__rmul__", "__rpow__", "__rsub__",
+                "__rtruediv__", "__sub__", "__truediv__", "conjugate"
+        };
+        for (String c : complex_methods) {
+            bct.insert(c, numUrl(), newFunc(Types.ComplexInstance), METHOD);
+        }
+        String[] complex_methods_num = {
+                "__eq__", "__ge__", "__gt__", "__le__", "__lt__", "__ne__",
+                "__nonzero__", "__coerce__"
+        };
+        for (String cn : complex_methods_num) {
+            bct.insert(cn, numUrl(), newFunc(Types.IntInstance), METHOD);
+        }
+        bct.insert("__getnewargs__", numUrl(), newFunc(newTuple(Types.ComplexInstance)), METHOD);
+        bct.insert("imag", numUrl(), Types.IntInstance, ATTRIBUTE);
+        bct.insert("real", numUrl(), Types.IntInstance, ATTRIBUTE);
+    }
+
+
+    void buildStrType() {
+        Types.StrInstance.table.insert("__getslice__", newDataModelUrl("object.__getslice__"),
+                                       newFunc(Types.StrInstance), METHOD);
+        Types.StrInstance.table.insert("__getitem__", newDataModelUrl("object.__getitem__"),
+                                       newFunc(Types.StrInstance), METHOD);
+        Types.StrInstance.table.insert("__iter__", newDataModelUrl("object.__iter__"),
+                                       newFunc(Types.StrInstance), METHOD);
+
+        String[] str_methods_str = {
+                "capitalize", "center", "decode", "encode", "expandtabs", "format",
+                "index", "join", "ljust", "lower", "lstrip", "partition", "replace",
+                "rfind", "rindex", "rjust", "rpartition", "rsplit", "rstrip",
+                "strip", "swapcase", "title", "translate", "upper", "zfill"
+        };
+        for (String m : str_methods_str) {
+            Types.StrInstance.table.insert(m, newLibUrl("stdtypes", "str." + m),
+                                           newFunc(Types.StrInstance), METHOD);
+        }
+
+        String[] str_methods_num = {
+                "count", "isalnum", "isalpha", "isdigit", "islower", "isspace",
+                "istitle", "isupper", "find", "startswith", "endswith"
+        };
+        for (String m : str_methods_num) {
+            Types.StrInstance.table.insert(m, newLibUrl("stdtypes", "str." + m),
+                                           newFunc(Types.IntInstance), METHOD);
+        }
+
+        String[] str_methods_list = {"split", "splitlines"};
+        for (String m : str_methods_list) {
+            Types.StrInstance.table.insert(m, newLibUrl("stdtypes", "str." + m),
+                                           newFunc(newList(Types.StrInstance)), METHOD);
+        }
+        Types.StrInstance.table.insert("partition", newLibUrl("stdtypes", "str.partition"),
+                                       newFunc(newTuple(Types.StrInstance)), METHOD);
+    }
+
+
+    void buildModuleType() {
+        String[] attrs = {"__doc__", "__file__", "__name__", "__package__"};
+        for (String m : attrs) {
+            BaseModule.table.insert(m, newTutUrl("modules.html"), Types.StrInstance, ATTRIBUTE);
+        }
+        BaseModule.table.insert("__dict__", newLibUrl("stdtypes", "modules"),
+                                newDict(Types.StrInstance, Types.UNKNOWN), ATTRIBUTE);
+    }
+
+
+    void buildDictType() {
+        String url = "datastructures.html#dictionaries";
+        State bt = Types.BaseDict.table;
+
+        bt.insert("__getitem__", newTutUrl(url), newFunc(), METHOD);
+        bt.insert("__iter__", newTutUrl(url), newFunc(), METHOD);
+        bt.insert("get", newTutUrl(url), newFunc(), METHOD);
+
+        bt.insert("items", newTutUrl(url),
+                  newFunc(newList(newTuple(Types.UNKNOWN, Types.UNKNOWN))), METHOD);
+
+        bt.insert("keys", newTutUrl(url), newFunc(BaseList), METHOD);
+        bt.insert("values", newTutUrl(url), newFunc(BaseList), METHOD);
+
+        String[] dict_method_unknown = {
+                "clear", "copy", "fromkeys", "get", "iteritems", "iterkeys",
+                "itervalues", "pop", "popitem", "setdefault", "update"
+        };
+        for (String m : dict_method_unknown) {
+            bt.insert(m, newTutUrl(url), newFunc(), METHOD);
+        }
+
+        String[] dict_method_num = {"has_key"};
+        for (String m : dict_method_num) {
+            bt.insert(m, newTutUrl(url), newFunc(Types.IntInstance), METHOD);
+        }
+    }
+
+
+    void buildFileType() {
+        State table = BaseFile.table;
+
+        table.insert("__enter__", newLibUrl("stdtypes", "contextmanager.__enter__"), newFunc(), METHOD);
+        table.insert("__exit__", newLibUrl("stdtypes", "contextmanager.__exit__"), newFunc(), METHOD);
+        table.insert("__iter__", newLibUrl("stdtypes", "iterator-types"), newFunc(), METHOD);
+
+        String[] file_methods_unknown = {
+            "__enter__", "__exit__", "__iter__", "flush", "readinto", "truncate"
+        };
+        for (String m : file_methods_unknown) {
+            table.insert(m, newLibUrl("stdtypes", "file." + m), newFunc(), METHOD);
+        }
+
+        String[] methods_str = {"next", "read", "readline"};
+        for (String m : methods_str) {
+            table.insert(m, newLibUrl("stdtypes", "file." + m), newFunc(Types.StrInstance), METHOD);
+        }
+
+        String[] num = {"fileno", "isatty", "tell"};
+        for (String m : num) {
+            table.insert(m, newLibUrl("stdtypes", "file." + m), newFunc(Types.IntInstance), METHOD);
+        }
+
+        String[] methods_none = {"close", "seek", "write", "writelines"};
+        for (String m : methods_none) {
+            table.insert(m, newLibUrl("stdtypes", "file." + m), newFunc(Types.NoneInstance), METHOD);
+        }
+
+        table.insert("readlines", newLibUrl("stdtypes", "file.readlines"), newFunc(newList(Types.StrInstance)), METHOD);
+        table.insert("xreadlines", newLibUrl("stdtypes", "file.xreadlines"), newFunc(Types.StrInstance), METHOD);
+        table.insert("closed", newLibUrl("stdtypes", "file.closed"), Types.IntInstance, ATTRIBUTE);
+        table.insert("encoding", newLibUrl("stdtypes", "file.encoding"), Types.StrInstance, ATTRIBUTE);
+        table.insert("errors", newLibUrl("stdtypes", "file.errors"), Types.UNKNOWN, ATTRIBUTE);
+        table.insert("mode", newLibUrl("stdtypes", "file.mode"), Types.IntInstance, ATTRIBUTE);
+        table.insert("name", newLibUrl("stdtypes", "file.name"), Types.StrInstance, ATTRIBUTE);
+        table.insert("softspace", newLibUrl("stdtypes", "file.softspace"), Types.IntInstance, ATTRIBUTE);
+        table.insert("newlines", newLibUrl("stdtypes", "file.newlines"), newUnion(Types.StrInstance, newTuple(Types.StrInstance)), ATTRIBUTE);
+    }
+
+
+    void buildFunctionType() {
+        State t = BaseFunction.table;
+
+        for (String s : list("func_doc", "__doc__", "func_name", "__name__", "__module__")) {
+            t.insert(s, new Url(DATAMODEL_URL), Types.StrInstance, ATTRIBUTE);
+        }
+
+        t.insert("func_closure", new Url(DATAMODEL_URL), newTuple(), ATTRIBUTE);
+        t.insert("func_code", new Url(DATAMODEL_URL), Types.UNKNOWN, ATTRIBUTE);
+        t.insert("func_defaults", new Url(DATAMODEL_URL), newTuple(), ATTRIBUTE);
+        t.insert("func_globals", new Url(DATAMODEL_URL), new DictType(Types.StrInstance, Types.UNKNOWN),
+                ATTRIBUTE);
+        t.insert("func_dict", new Url(DATAMODEL_URL), new DictType(Types.StrInstance, Types.UNKNOWN), ATTRIBUTE);
+
+        // Assume any function can become a method, for simplicity.
+        for (String s : list("__func__", "im_func")) {
+            t.insert(s, new Url(DATAMODEL_URL), new FunType(), METHOD);
+        }
+    }
+
+
+    // XXX:  finish wiring this up.  ClassType needs to inherit from it somehow,
+    // so we can remove the per-instance attributes from NClassDef.
+    void buildClassType() {
+        State t = BaseClass.table;
