@@ -435,3 +435,175 @@ public class Builtins {
         new PyexpatModule();
         new ReadlineModule();
         new ResourceModule();
+        new SelectModule();
+        new SignalModule();
+        new ShaModule();
+        new SpwdModule();
+        new StropModule();
+        new StructModule();
+        new SysModule();
+        new SyslogModule();
+        new TermiosModule();
+        new ThreadModule();
+        new TimeModule();
+        new UnicodedataModule();
+        new ZipimportModule();
+        new ZlibModule();
+        new UnittestModule();
+    }
+
+
+    /**
+     * Loads (if necessary) and returns the specified built-in module.
+     */
+    @Nullable
+    public ModuleType get(@NotNull String name) {
+        if (!name.contains(".")) {  // unqualified
+            return getModule(name);
+        }
+
+        String[] mods = name.split("\\.");
+        Type type = getModule(mods[0]);
+        if (type == null) {
+            return null;
+        }
+        for (int i = 1; i < mods.length; i++) {
+            type = type.table.lookupType(mods[i]);
+            if (!(type instanceof ModuleType)) {
+                return null;
+            }
+        }
+        return (ModuleType) type;
+    }
+
+
+    @Nullable
+    private ModuleType getModule(String name) {
+        NativeModule wrap = modules.get(name);
+        return wrap == null ? null : wrap.getModule();
+    }
+
+
+    void buildObjectType() {
+        String[] obj_methods = {
+                "__delattr__", "__format__", "__getattribute__", "__hash__",
+                "__init__", "__new__", "__reduce__", "__reduce_ex__",
+                "__repr__", "__setattr__", "__sizeof__", "__str__", "__subclasshook__"
+        };
+        for (String m : obj_methods) {
+            objectType.table.insert(m, newLibUrl("stdtypes"), newFunc(), METHOD);
+        }
+        objectType.table.insert("__doc__", newLibUrl("stdtypes"), Types.StrInstance, CLASS);
+        objectType.table.insert("__class__", newLibUrl("stdtypes"), Types.UNKNOWN, CLASS);
+    }
+
+
+    void buildTupleType() {
+        State bt = BaseTuple.table;
+        String[] tuple_methods = {
+                "__add__", "__contains__", "__eq__", "__ge__", "__getnewargs__",
+                "__gt__", "__iter__", "__le__", "__len__", "__lt__", "__mul__",
+                "__ne__", "__new__", "__rmul__", "count", "index"
+        };
+        for (String m : tuple_methods) {
+            bt.insert(m, newLibUrl("stdtypes"), newFunc(), METHOD);
+        }
+        bt.insert("__getslice__", newDataModelUrl("object.__getslice__"), newFunc(), METHOD);
+        bt.insert("__getitem__", newDataModelUrl("object.__getitem__"), newFunc(), METHOD);
+        bt.insert("__iter__", newDataModelUrl("object.__iter__"), newFunc(), METHOD);
+    }
+
+
+    void buildArrayType() {
+        String[] array_methods_none = {
+                "append", "buffer_info", "byteswap", "extend", "fromfile",
+                "fromlist", "fromstring", "fromunicode", "index", "insert", "pop",
+                "read", "remove", "reverse", "tofile", "tolist", "typecode", "write"
+        };
+        for (String m : array_methods_none) {
+            BaseArray.table.insert(m, newLibUrl("array"), newFunc(Types.NoneInstance), METHOD);
+        }
+        String[] array_methods_num = {"count", "itemsize",};
+        for (String m : array_methods_num) {
+            BaseArray.table.insert(m, newLibUrl("array"), newFunc(Types.IntInstance), METHOD);
+        }
+        String[] array_methods_str = {"tostring", "tounicode",};
+        for (String m : array_methods_str) {
+            BaseArray.table.insert(m, newLibUrl("array"), newFunc(Types.StrInstance), METHOD);
+        }
+    }
+
+
+    void buildListType() {
+        BaseList.table.insert("__getslice__", newDataModelUrl("object.__getslice__"),
+                newFunc(BaseListInst), METHOD);
+        BaseList.table.insert("__getitem__", newDataModelUrl("object.__getitem__"),
+                newFunc(BaseList), METHOD);
+        BaseList.table.insert("__iter__", newDataModelUrl("object.__iter__"),
+                newFunc(BaseList), METHOD);
+
+        String[] list_methods_none = {
+                "append", "extend", "index", "insert", "pop", "remove", "reverse", "sort"
+        };
+        for (String m : list_methods_none) {
+            BaseList.table.insert(m, newLibUrl("stdtypes"), newFunc(Types.NoneInstance), METHOD);
+        }
+        String[] list_methods_num = {"count"};
+        for (String m : list_methods_num) {
+            BaseList.table.insert(m, newLibUrl("stdtypes"), newFunc(Types.IntInstance), METHOD);
+        }
+    }
+
+
+    @NotNull
+    Url numUrl() {
+        return newLibUrl("stdtypes", "typesnumeric");
+    }
+
+
+    void buildNumTypes() {
+        State bft = Types.FloatInstance.table;
+        String[] float_methods_num = {
+                "__abs__", "__add__", "__coerce__", "__div__", "__divmod__",
+                "__eq__", "__float__", "__floordiv__", "__format__",
+                "__ge__", "__getformat__", "__gt__", "__int__",
+                "__le__", "__long__", "__lt__", "__mod__", "__mul__", "__ne__",
+                "__neg__", "__new__", "__nonzero__", "__pos__", "__pow__",
+                "__radd__", "__rdiv__", "__rdivmod__", "__rfloordiv__", "__rmod__",
+                "__rmul__", "__rpow__", "__rsub__", "__rtruediv__", "__setformat__",
+                "__sub__", "__truediv__", "__trunc__", "as_integer_ratio",
+                "fromhex", "is_integer"
+        };
+        for (String m : float_methods_num) {
+            bft.insert(m, numUrl(), newFunc(Types.FloatInstance), METHOD);
+        }
+        State bnt = Types.IntInstance.table;
+        String[] num_methods_num = {
+                "__abs__", "__add__", "__and__",
+                "__class__", "__cmp__", "__coerce__", "__delattr__", "__div__",
+                "__divmod__", "__doc__", "__float__", "__floordiv__",
+                "__getattribute__", "__getnewargs__", "__hash__", "__hex__",
+                "__index__", "__init__", "__int__", "__invert__", "__long__",
+                "__lshift__", "__mod__", "__mul__", "__neg__", "__new__",
+                "__nonzero__", "__oct__", "__or__", "__pos__", "__pow__",
+                "__radd__", "__rand__", "__rdiv__", "__rdivmod__",
+                "__reduce__", "__reduce_ex__", "__repr__", "__rfloordiv__",
+                "__rlshift__", "__rmod__", "__rmul__", "__ror__", "__rpow__",
+                "__rrshift__", "__rshift__", "__rsub__", "__rtruediv__",
+                "__rxor__", "__setattr__", "__str__", "__sub__", "__truediv__",
+                "__xor__"
+        };
+        for (String m : num_methods_num) {
+            bnt.insert(m, numUrl(), newFunc(Types.IntInstance), METHOD);
+        }
+        bnt.insert("__getnewargs__", numUrl(), newFunc(newTuple(Types.IntInstance)), METHOD);
+        bnt.insert("hex", numUrl(), newFunc(Types.StrInstance), METHOD);
+        bnt.insert("conjugate", numUrl(), newFunc(Types.ComplexInstance), METHOD);
+
+        State bct = Types.ComplexInstance.table;
+        String[] complex_methods = {
+                "__abs__", "__add__", "__div__", "__divmod__",
+                "__float__", "__floordiv__", "__format__", "__getformat__", "__int__",
+                "__long__", "__mod__", "__mul__", "__neg__", "__new__",
+                "__pos__", "__pow__", "__radd__", "__rdiv__", "__rdivmod__",
+                "__rfloordiv__", "__rmod__", "__rmul__", "__rpow__", "__rsub__",
