@@ -1120,3 +1120,177 @@ public class Builtins {
             addClass(mutableSequence);
 
             ClassType setType = newClass("Set", table, Sized, iterableType, containerType);
+            setType.table.insert("__getitem__", abcUrl(), newFunc(), METHOD);
+            addClass(setType);
+
+            ClassType mutableSet = newClass("MutableSet", table, setType);
+            mutableSet.table.insert("add", abcUrl(), newFunc(), METHOD);
+            mutableSet.table.insert("discard", abcUrl(), newFunc(), METHOD);
+            addClass(mutableSet);
+
+            ClassType mapping = newClass("Mapping", table, Sized, iterableType, containerType);
+            mapping.table.insert("__getitem__", abcUrl(), newFunc(), METHOD);
+            addClass(mapping);
+
+            ClassType mutableMapping = newClass("MutableMapping", table, mapping);
+            mutableMapping.table.insert("__setitem__", abcUrl(), newFunc(), METHOD);
+            mutableMapping.table.insert("__delitem__", abcUrl(), newFunc(), METHOD);
+            addClass(mutableMapping);
+
+            ClassType MappingView = newClass("MappingView", table, Sized);
+            addClass(MappingView);
+
+            ClassType KeysView = newClass("KeysView", table, Sized);
+            addClass(KeysView);
+
+            ClassType ItemsView = newClass("ItemsView", table, Sized);
+            addClass(ItemsView);
+
+            ClassType ValuesView = newClass("ValuesView", table, Sized);
+            addClass(ValuesView);
+
+            ClassType deque = newClass("deque", table, objectType);
+            for (String n : list("append", "appendLeft", "clear",
+                    "extend", "extendLeft", "rotate"))
+            {
+                deque.table.insert(n, dequeUrl(), newFunc(Types.NoneInstance), METHOD);
+            }
+            for (String u : list("__getitem__", "__iter__",
+                    "pop", "popleft", "remove"))
+            {
+                deque.table.insert(u, dequeUrl(), newFunc(), METHOD);
+            }
+            addClass(deque);
+
+            ClassType defaultdict = newClass("defaultdict", table, objectType);
+            defaultdict.table.insert("__missing__", liburl("defaultdict-objects"),
+                    newFunc(), METHOD);
+            defaultdict.table.insert("default_factory", liburl("defaultdict-objects"),
+                    newFunc(), METHOD);
+            addClass(defaultdict);
+
+            String argh = "namedtuple-factory-function-for-tuples-with-named-fields";
+            ClassType namedtuple = newClass("(namedtuple)", table, BaseTuple);
+            namedtuple.table.insert("_fields", liburl(argh),
+                                    new ListType(Types.StrInstance), ATTRIBUTE);
+            addFunction("namedtuple", namedtuple);
+        }
+    }
+
+
+    class CTypesModule extends NativeModule {
+        public CTypesModule() {
+            super("ctypes");
+        }
+
+
+        @Override
+        public void initBindings() {
+            String[] ctypes_attrs = {
+                    "ARRAY", "ArgumentError", "Array", "BigEndianStructure", "CDLL",
+                    "CFUNCTYPE", "DEFAULT_MODE", "DllCanUnloadNow", "DllGetClassObject",
+                    "FormatError", "GetLastError", "HRESULT", "LibraryLoader",
+                    "LittleEndianStructure", "OleDLL", "POINTER", "PYFUNCTYPE", "PyDLL",
+                    "RTLD_GLOBAL", "RTLD_LOCAL", "SetPointerType", "Structure", "Union",
+                    "WINFUNCTYPE", "WinDLL", "WinError", "_CFuncPtr", "_FUNCFLAG_CDECL",
+                    "_FUNCFLAG_PYTHONAPI", "_FUNCFLAG_STDCALL", "_FUNCFLAG_USE_ERRNO",
+                    "_FUNCFLAG_USE_LASTERROR", "_Pointer", "_SimpleCData",
+                    "_c_functype_cache", "_calcsize", "_cast", "_cast_addr",
+                    "_check_HRESULT", "_check_size", "_ctypes_version", "_dlopen",
+                    "_endian", "_memmove_addr", "_memset_addr", "_os",
+                    "_pointer_type_cache", "_string_at", "_string_at_addr", "_sys",
+                    "_win_functype_cache", "_wstring_at", "_wstring_at_addr",
+                    "addressof", "alignment", "byref", "c_bool", "c_buffer", "c_byte",
+                    "c_char", "c_char_p", "c_double", "c_float", "c_int", "c_int16",
+                    "c_int32", "c_int64", "c_int8", "c_long", "c_longdouble",
+                    "c_longlong", "c_short", "c_size_t", "c_ubyte", "c_uint",
+                    "c_uint16", "c_uint32", "c_uint64", "c_uint8", "c_ulong",
+                    "c_ulonglong", "c_ushort", "c_void_p", "c_voidp", "c_wchar",
+                    "c_wchar_p", "cast", "cdll", "create_string_buffer",
+                    "create_unicode_buffer", "get_errno", "get_last_error", "memmove",
+                    "memset", "oledll", "pointer", "py_object", "pydll", "pythonapi",
+                    "resize", "set_conversion_mode", "set_errno", "set_last_error",
+                    "sizeof", "string_at", "windll", "wstring_at"
+            };
+            for (String attr : ctypes_attrs) {
+                addAttr(attr, Types.UNKNOWN);
+            }
+        }
+    }
+
+
+    class CryptModule extends NativeModule {
+        public CryptModule() {
+            super("crypt");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addStrFuncs("crypt");
+        }
+    }
+
+
+    class DatetimeModule extends NativeModule {
+        public DatetimeModule() {
+            super("datetime");
+        }
+
+
+        @NotNull
+        private Url dtUrl(String anchor) {
+            return liburl("datetime." + anchor);
+        }
+
+
+        @Override
+        public void initBindings() {
+            // XXX:  make datetime, time, date, timedelta and tzinfo Base* objects,
+            // so built-in functions can return them.
+
+            addNumAttrs("MINYEAR", "MAXYEAR");
+
+            ClassType timedelta = Datetime_timedelta = newClass("timedelta", table, objectType);
+            addClass(timedelta);
+            addAttr(timedelta, "min", timedelta);
+            addAttr(timedelta, "max", timedelta);
+            addAttr(timedelta, "resolution", timedelta);
+            addAttr(timedelta, "days", Types.IntInstance);
+            addAttr(timedelta, "seconds", Types.IntInstance);
+            addAttr(timedelta, "microseconds", Types.IntInstance);
+
+            ClassType tzinfo = Datetime_tzinfo = newClass("tzinfo", table, objectType);
+            addClass(tzinfo);
+            addMethod(tzinfo, "utcoffset", timedelta);
+            addMethod(tzinfo, "dst", timedelta);
+            addMethod(tzinfo, "tzname", Types.StrInstance);
+            addMethod(tzinfo, "fromutc", tzinfo);
+
+            ClassType date = Datetime_date = newClass("date", table, objectType);
+            addClass(date);
+            addAttr(date, "min", date);
+            addAttr(date, "max", date);
+            addAttr(date, "resolution", timedelta);
+
+            addMethod(date, "today", date);
+            addMethod(date, "fromtimestamp", date);
+            addMethod(date, "fromordinal", date);
+
+            addAttr(date, "year", Types.IntInstance);
+            addAttr(date, "month", Types.IntInstance);
+            addAttr(date, "day", Types.IntInstance);
+
+            addMethod(date, "replace", date);
+            addMethod(date, "timetuple", Time_struct_time);
+
+            for (String n : list("toordinal", "weekday", "isoweekday")) {
+                addMethod(date, n, Types.IntInstance);
+            }
+            for (String r : list("ctime", "strftime", "isoformat")) {
+                addMethod(date, r, Types.StrInstance);
+            }
+            addMethod(date, "isocalendar", newTuple(Types.IntInstance, Types.IntInstance, Types.IntInstance));
+
+            ClassType time = Datetime_time = newClass("time", table, objectType);
+            addClass(time);
