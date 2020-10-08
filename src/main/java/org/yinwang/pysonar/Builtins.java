@@ -940,3 +940,183 @@ public class Builtins {
         public void initBindings() {
             ClassType bz2 = newClass("BZ2File", table, BaseFile);  // close enough.
             addClass(bz2);
+
+            ClassType bz2c = newClass("BZ2Compressor", table, objectType);
+            addMethod(bz2c, "compress", Types.StrInstance);
+            addMethod(bz2c, "flush", Types.NoneInstance);
+            addClass(bz2c);
+
+            ClassType bz2d = newClass("BZ2Decompressor", table, objectType);
+            addMethod(bz2d, "decompress", Types.StrInstance);
+            addClass(bz2d);
+
+            addFunction("compress", Types.StrInstance);
+            addFunction("decompress", Types.StrInstance);
+        }
+    }
+
+
+    class CPickleModule extends NativeModule {
+        public CPickleModule() {
+            super("cPickle");
+        }
+
+
+        @NotNull
+        @Override
+        protected Url liburl() {
+            return newLibUrl("pickle", "module-cPickle");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addUnknownFuncs("dump", "load", "dumps", "loads");
+
+            addClass(newException("PickleError", table));
+
+            ClassType picklingError = newException("PicklingError", table);
+            addClass(picklingError);
+            update("UnpickleableError", liburl(table.path + "." + "UnpickleableError"),
+                    newClass("UnpickleableError", table, picklingError), CLASS);
+            ClassType unpicklingError = newException("UnpicklingError", table);
+            addClass(unpicklingError);
+            update("BadPickleGet", liburl(table.path + "." + "BadPickleGet"),
+                    newClass("BadPickleGet", table, unpicklingError), CLASS);
+
+            ClassType pickler = newClass("Pickler", table, objectType);
+            addMethod(pickler, "dump");
+            addMethod(pickler, "clear_memo");
+            addClass(pickler);
+
+            ClassType unpickler = newClass("Unpickler", table, objectType);
+            addMethod(unpickler, "load");
+            addMethod(unpickler, "noload");
+            addClass(unpickler);
+        }
+    }
+
+
+    class CStringIOModule extends NativeModule {
+        public CStringIOModule() {
+            super("cStringIO");
+        }
+
+
+        @NotNull
+        @Override
+        protected Url liburl() {
+            return newLibUrl("stringio");
+        }
+
+
+        @NotNull
+        @Override
+        protected Url liburl(String anchor) {
+            return newLibUrl("stringio", anchor);
+        }
+
+        @Override
+        public void initBindings() {
+            ClassType StringIO = newClass("StringIO", table, BaseFile);
+            addFunction("StringIO", new InstanceType(StringIO));
+            addAttr("InputType", BaseType);
+            addAttr("OutputType", BaseType);
+            addAttr("cStringIO_CAPI", Types.UNKNOWN);
+        }
+    }
+
+
+    class CMathModule extends NativeModule {
+        public CMathModule() {
+            super("cmath");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addFunction("phase", Types.IntInstance);
+            addFunction("polar", newTuple(Types.IntInstance, Types.IntInstance));
+            addFunction("rect", Types.ComplexInstance);
+
+            for (String plf : list("exp", "log", "log10", "sqrt")) {
+                addFunction(plf, Types.IntInstance);
+            }
+
+            for (String tf : list("acos", "asin", "atan", "cos", "sin", "tan")) {
+                addFunction(tf, Types.IntInstance);
+            }
+
+            for (String hf : list("acosh", "asinh", "atanh", "cosh", "sinh", "tanh")) {
+                addFunction(hf, Types.ComplexInstance);
+            }
+
+            for (String cf : list("isinf", "isnan")) {
+                addFunction(cf, Types.BoolInstance);
+            }
+
+            for (String c : list("pi", "e")) {
+                addAttr(c, Types.IntInstance);
+            }
+        }
+    }
+
+
+    class CollectionsModule extends NativeModule {
+        public CollectionsModule() {
+            super("collections");
+        }
+
+
+        @NotNull
+        private Url abcUrl() {
+            return liburl("abcs-abstract-base-classes");
+        }
+
+
+        @NotNull
+        private Url dequeUrl() {
+            return liburl("deque-objects");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType callable = newClass("Callable", table, objectType);
+            callable.table.insert("__call__", abcUrl(), newFunc(), METHOD);
+            addClass(callable);
+
+            ClassType iterableType = newClass("Iterable", table, objectType);
+            // TODO should this jump to url like https://docs.python.org/2.7/library/stdtypes.html#iterator.__iter__ ?
+            iterableType.table.insert("__next__", abcUrl(), newFunc(), METHOD);
+            iterableType.table.insert("__iter__", abcUrl(), newFunc(), METHOD);
+            addClass(iterableType);
+
+            ClassType Hashable = newClass("Hashable", table, objectType);
+            Hashable.table.insert("__hash__", abcUrl(), newFunc(Types.IntInstance), METHOD);
+            addClass(Hashable);
+
+            ClassType Sized = newClass("Sized", table, objectType);
+            Sized.table.insert("__len__", abcUrl(), newFunc(Types.IntInstance), METHOD);
+            addClass(Sized);
+
+            ClassType containerType = newClass("Container", table, objectType);
+            containerType.table.insert("__contains__", abcUrl(), newFunc(Types.IntInstance), METHOD);
+            addClass(containerType);
+
+            ClassType iteratorType = newClass("Iterator", table, iterableType);
+            addClass(iteratorType);
+
+            ClassType sequenceType = newClass("Sequence", table, Sized, iterableType, containerType);
+            sequenceType.table.insert("__getitem__", abcUrl(), newFunc(), METHOD);
+            sequenceType.table.insert("reversed", abcUrl(), newFunc(sequenceType), METHOD);
+            sequenceType.table.insert("index", abcUrl(), newFunc(Types.IntInstance), METHOD);
+            sequenceType.table.insert("count", abcUrl(), newFunc(Types.IntInstance), METHOD);
+            addClass(sequenceType);
+
+            ClassType mutableSequence = newClass("MutableSequence", table, sequenceType);
+            mutableSequence.table.insert("__setitem__", abcUrl(), newFunc(), METHOD);
+            mutableSequence.table.insert("__delitem__", abcUrl(), newFunc(), METHOD);
+            addClass(mutableSequence);
+
+            ClassType setType = newClass("Set", table, Sized, iterableType, containerType);
