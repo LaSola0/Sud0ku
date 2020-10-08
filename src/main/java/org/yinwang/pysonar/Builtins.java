@@ -1294,3 +1294,173 @@ public class Builtins {
 
             ClassType time = Datetime_time = newClass("time", table, objectType);
             addClass(time);
+
+            addAttr(time, "min", time);
+            addAttr(time, "max", time);
+            addAttr(time, "resolution", timedelta);
+
+            addAttr(time, "hour", Types.IntInstance);
+            addAttr(time, "minute", Types.IntInstance);
+            addAttr(time, "second", Types.IntInstance);
+            addAttr(time, "microsecond", Types.IntInstance);
+            addAttr(time, "tzinfo", tzinfo);
+
+            addMethod(time, "replace", time);
+
+            for (String l : list("isoformat", "strftime", "tzname")) {
+                addMethod(time, l, Types.StrInstance);
+            }
+            for (String f : list("utcoffset", "dst")) {
+                addMethod(time, f, timedelta);
+            }
+
+            ClassType datetime = Datetime_datetime = newClass("datetime", table, date, time);
+            addClass(datetime);
+
+            for (String c : list("combine", "fromordinal", "fromtimestamp", "now",
+                    "strptime", "today", "utcfromtimestamp", "utcnow")) {
+                addMethod(datetime, c, datetime);
+            }
+
+            addAttr(datetime, "min", datetime);
+            addAttr(datetime, "max", datetime);
+            addAttr(datetime, "resolution", timedelta);
+
+            addMethod(datetime, "date", date);
+
+            for (String x : list("time", "timetz")) {
+                addMethod(datetime, x, time);
+            }
+
+            for (String y : list("replace", "astimezone")) {
+                addMethod(datetime, y, datetime);
+            }
+
+            addMethod(datetime, "utctimetuple", Time_struct_time);
+        }
+    }
+
+
+    class DbmModule extends NativeModule {
+        public DbmModule() {
+            super("dbm");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType dbm = new ClassType("dbm", table, Types.BaseDict);
+            addClass(dbm);
+            addClass(newException("error", table));
+            addStrAttrs("library");
+            addFunction("open", dbm);
+        }
+    }
+
+
+    class ErrnoModule extends NativeModule {
+        public ErrnoModule() {
+            super("errno");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNumAttrs(
+                    "E2BIG", "EACCES", "EADDRINUSE", "EADDRNOTAVAIL", "EAFNOSUPPORT",
+                    "EAGAIN", "EALREADY", "EBADF", "EBUSY", "ECHILD", "ECONNABORTED",
+                    "ECONNREFUSED", "ECONNRESET", "EDEADLK", "EDEADLOCK",
+                    "EDESTADDRREQ", "EDOM", "EDQUOT", "EEXIST", "EFAULT", "EFBIG",
+                    "EHOSTDOWN", "EHOSTUNREACH", "EILSEQ", "EINPROGRESS", "EINTR",
+                    "EINVAL", "EIO", "EISCONN", "EISDIR", "ELOOP", "EMFILE", "EMLINK",
+                    "EMSGSIZE", "ENAMETOOLONG", "ENETDOWN", "ENETRESET", "ENETUNREACH",
+                    "ENFILE", "ENOBUFS", "ENODEV", "ENOENT", "ENOEXEC", "ENOLCK",
+                    "ENOMEM", "ENOPROTOOPT", "ENOSPC", "ENOSYS", "ENOTCONN", "ENOTDIR",
+                    "ENOTEMPTY", "ENOTSOCK", "ENOTTY", "ENXIO", "EOPNOTSUPP", "EPERM",
+                    "EPFNOSUPPORT", "EPIPE", "EPROTONOSUPPORT", "EPROTOTYPE", "ERANGE",
+                    "EREMOTE", "EROFS", "ESHUTDOWN", "ESOCKTNOSUPPORT", "ESPIPE",
+                    "ESRCH", "ESTALE", "ETIMEDOUT", "ETOOMANYREFS", "EUSERS",
+                    "EWOULDBLOCK", "EXDEV", "WSABASEERR", "WSAEACCES", "WSAEADDRINUSE",
+                    "WSAEADDRNOTAVAIL", "WSAEAFNOSUPPORT", "WSAEALREADY", "WSAEBADF",
+                    "WSAECONNABORTED", "WSAECONNREFUSED", "WSAECONNRESET",
+                    "WSAEDESTADDRREQ", "WSAEDISCON", "WSAEDQUOT", "WSAEFAULT",
+                    "WSAEHOSTDOWN", "WSAEHOSTUNREACH", "WSAEINPROGRESS", "WSAEINTR",
+                    "WSAEINVAL", "WSAEISCONN", "WSAELOOP", "WSAEMFILE", "WSAEMSGSIZE",
+                    "WSAENAMETOOLONG", "WSAENETDOWN", "WSAENETRESET", "WSAENETUNREACH",
+                    "WSAENOBUFS", "WSAENOPROTOOPT", "WSAENOTCONN", "WSAENOTEMPTY",
+                    "WSAENOTSOCK", "WSAEOPNOTSUPP", "WSAEPFNOSUPPORT", "WSAEPROCLIM",
+                    "WSAEPROTONOSUPPORT", "WSAEPROTOTYPE", "WSAEREMOTE", "WSAESHUTDOWN",
+                    "WSAESOCKTNOSUPPORT", "WSAESTALE", "WSAETIMEDOUT",
+                    "WSAETOOMANYREFS", "WSAEUSERS", "WSAEWOULDBLOCK",
+                    "WSANOTINITIALISED", "WSASYSNOTREADY", "WSAVERNOTSUPPORTED");
+
+            addAttr("errorcode", newDict(Types.IntInstance, Types.StrInstance));
+        }
+    }
+
+
+    class ExceptionsModule extends NativeModule {
+        public ExceptionsModule() {
+            super("exceptions");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ModuleType builtins = get("__builtin__");
+            for (String s : builtin_exception_types) {
+//                Binding b = builtins.getTable().lookup(s);
+//                table.update(b.getName(), b.getFirstNode(), b.getType(), b.getKind());
+            }
+        }
+    }
+
+
+    class FcntlModule extends NativeModule {
+        public FcntlModule() {
+            super("fcntl");
+        }
+
+
+        @Override
+        public void initBindings() {
+            for (String s : list("fcntl", "ioctl")) {
+                addFunction(s, newUnion(Types.IntInstance, Types.StrInstance));
+            }
+            addNumFuncs("flock");
+            addUnknownFuncs("lockf");
+
+            addNumAttrs(
+                    "DN_ACCESS", "DN_ATTRIB", "DN_CREATE", "DN_DELETE", "DN_MODIFY",
+                    "DN_MULTISHOT", "DN_RENAME", "FASYNC", "FD_CLOEXEC", "F_DUPFD",
+                    "F_EXLCK", "F_GETFD", "F_GETFL", "F_GETLEASE", "F_GETLK", "F_GETLK64",
+                    "F_GETOWN", "F_GETSIG", "F_NOTIFY", "F_RDLCK", "F_SETFD", "F_SETFL",
+                    "F_SETLEASE", "F_SETLK", "F_SETLK64", "F_SETLKW", "F_SETLKW64",
+                    "F_SETOWN", "F_SETSIG", "F_SHLCK", "F_UNLCK", "F_WRLCK", "I_ATMARK",
+                    "I_CANPUT", "I_CKBAND", "I_FDINSERT", "I_FIND", "I_FLUSH",
+                    "I_FLUSHBAND", "I_GETBAND", "I_GETCLTIME", "I_GETSIG", "I_GRDOPT",
+                    "I_GWROPT", "I_LINK", "I_LIST", "I_LOOK", "I_NREAD", "I_PEEK",
+                    "I_PLINK", "I_POP", "I_PUNLINK", "I_PUSH", "I_RECVFD", "I_SENDFD",
+                    "I_SETCLTIME", "I_SETSIG", "I_SRDOPT", "I_STR", "I_SWROPT",
+                    "I_UNLINK", "LOCK_EX", "LOCK_MAND", "LOCK_NB", "LOCK_READ", "LOCK_RW",
+                    "LOCK_SH", "LOCK_UN", "LOCK_WRITE");
+        }
+    }
+
+
+    class FpectlModule extends NativeModule {
+        public FpectlModule() {
+            super("fpectl");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNoneFuncs("turnon_sigfpe", "turnoff_sigfpe");
+            addClass(newException("FloatingPointError", table));
+        }
+    }
+
+
+    class GcModule extends NativeModule {
+        public GcModule() {
