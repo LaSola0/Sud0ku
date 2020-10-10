@@ -1464,3 +1464,212 @@ public class Builtins {
 
     class GcModule extends NativeModule {
         public GcModule() {
+            super("gc");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNoneFuncs("enable", "disable", "set_debug", "set_threshold");
+            addNumFuncs("isenabled", "collect", "get_debug", "get_count", "get_threshold");
+            for (String s : list("get_objects", "get_referrers", "get_referents")) {
+                addFunction(s, newList());
+            }
+            addAttr("garbage", newList());
+            addNumAttrs("DEBUG_STATS", "DEBUG_COLLECTABLE", "DEBUG_UNCOLLECTABLE",
+                    "DEBUG_INSTANCES", "DEBUG_OBJECTS", "DEBUG_SAVEALL", "DEBUG_LEAK");
+        }
+    }
+
+
+    class GdbmModule extends NativeModule {
+        public GdbmModule() {
+            super("gdbm");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addClass(newException("error", table));
+
+            ClassType gdbm = new ClassType("gdbm", table, Types.BaseDict);
+            addMethod(gdbm, "firstkey", Types.StrInstance);
+            addMethod(gdbm, "nextkey", Types.StrInstance);
+            addMethod(gdbm, "reorganize", Types.NoneInstance);
+            addMethod(gdbm, "sync", Types.NoneInstance);
+            addFunction("open", gdbm);
+        }
+
+    }
+
+
+    class GrpModule extends NativeModule {
+        public GrpModule() {
+            super("grp");
+        }
+
+
+        @Override
+        public void initBindings() {
+            Builtins.this.get("struct");
+            ClassType struct_group = newClass("struct_group", table, BaseStruct);
+            addAttr(struct_group, "gr_name", Types.StrInstance);
+            addAttr(struct_group, "gr_passwd", Types.StrInstance);
+            addAttr(struct_group, "gr_gid", Types.IntInstance);
+            addAttr(struct_group, "gr_mem", Types.StrInstance);
+            addClass(struct_group);
+
+            for (String s : list("getgrgid", "getgrnam")) {
+                addFunction(s, struct_group);
+            }
+            addFunction("getgrall", new ListType(struct_group));
+        }
+    }
+
+
+    class ImpModule extends NativeModule {
+        public ImpModule() {
+            super("imp");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addStrFuncs("get_magic");
+            addFunction("get_suffixes", newList(newTuple(Types.StrInstance, Types.StrInstance, Types.IntInstance)));
+            addFunction("find_module", newTuple(Types.StrInstance, Types.StrInstance, Types.IntInstance));
+
+            String[] module_methods = {
+                    "load_module", "new_module", "init_builtin", "init_frozen",
+                    "load_compiled", "load_dynamic", "load_source"
+            };
+            for (String mm : module_methods) {
+                addFunction(mm, newModule("<?>"));
+            }
+
+            addUnknownFuncs("acquire_lock", "release_lock");
+
+            addNumAttrs("PY_SOURCE", "PY_COMPILED", "C_EXTENSION",
+                    "PKG_DIRECTORY", "C_BUILTIN", "PY_FROZEN", "SEARCH_ERROR");
+
+            addNumFuncs("lock_held", "is_builtin", "is_frozen");
+
+            ClassType impNullImporter = newClass("NullImporter", table, objectType);
+            addMethod(impNullImporter, "find_module",  Types.NoneInstance);
+            addClass(impNullImporter);
+        }
+    }
+
+
+    class ItertoolsModule extends NativeModule {
+        public ItertoolsModule() {
+            super("itertools");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType iterator = newClass("iterator", table, objectType);
+            addMethod(iterator, "from_iterable", iterator);
+            addMethod(iterator, "next");
+
+            for (String s : list("chain", "combinations", "count", "cycle",
+                    "dropwhile", "groupby", "ifilter",
+                    "ifilterfalse", "imap", "islice", "izip",
+                    "izip_longest", "permutations", "product",
+                    "repeat", "starmap", "takewhile", "tee"))
+            {
+                addClass(iterator);
+            }
+        }
+    }
+
+
+    class MarshalModule extends NativeModule {
+        public MarshalModule() {
+            super("marshal");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNumAttrs("version");
+            addStrFuncs("dumps");
+            addUnknownFuncs("dump", "load", "loads");
+        }
+    }
+
+
+    class MathModule extends NativeModule {
+        public MathModule() {
+            super("math");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNumFuncs(
+                    "acos", "acosh", "asin", "asinh", "atan", "atan2", "atanh", "ceil",
+                    "copysign", "cos", "cosh", "degrees", "exp", "fabs", "factorial",
+                    "floor", "fmod", "frexp", "fsum", "hypot", "isinf", "isnan",
+                    "ldexp", "log", "log10", "log1p", "modf", "pow", "radians", "sin",
+                    "sinh", "sqrt", "tan", "tanh", "trunc");
+            addNumAttrs("pi", "e");
+        }
+    }
+
+
+    class Md5Module extends NativeModule {
+        public Md5Module() {
+            super("md5");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNumAttrs("blocksize", "digest_size");
+
+            ClassType md5 = newClass("md5", table, objectType);
+            addMethod(md5, "update");
+            addMethod(md5, "digest", Types.StrInstance);
+            addMethod(md5, "hexdigest", Types.StrInstance);
+            addMethod(md5, "copy", md5);
+
+            update("new", liburl(), newFunc(md5), CONSTRUCTOR);
+            update("md5", liburl(), newFunc(md5), CONSTRUCTOR);
+        }
+    }
+
+
+    class MmapModule extends NativeModule {
+        public MmapModule() {
+            super("mmap");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType mmap = newClass("mmap", table, objectType);
+
+            for (String s : list("ACCESS_COPY", "ACCESS_READ", "ACCESS_WRITE",
+                    "ALLOCATIONGRANULARITY", "MAP_ANON", "MAP_ANONYMOUS",
+                    "MAP_DENYWRITE", "MAP_EXECUTABLE", "MAP_PRIVATE",
+                    "MAP_SHARED", "PAGESIZE", "PROT_EXEC", "PROT_READ",
+                    "PROT_WRITE"))
+            {
+                addAttr(mmap, s, Types.IntInstance);
+            }
+
+            for (String fstr : list("read", "read_byte", "readline")) {
+                addMethod(mmap, fstr, Types.StrInstance);
+            }
+
+            for (String fnum : list("find", "rfind", "tell")) {
+                addMethod(mmap, fnum, Types.IntInstance);
+            }
+
+            for (String fnone : list("close", "flush", "move", "resize", "seek",
+                    "write", "write_byte"))
+            {
+                addMethod(mmap, fnone, Types.NoneInstance);
+            }
