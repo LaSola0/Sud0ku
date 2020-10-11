@@ -1673,3 +1673,191 @@ public class Builtins {
             {
                 addMethod(mmap, fnone, Types.NoneInstance);
             }
+
+            addClass(mmap);
+        }
+    }
+
+
+    class NisModule extends NativeModule {
+        public NisModule() {
+            super("nis");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addStrFuncs("match", "cat", "get_default_domain");
+            addFunction("maps", newList(Types.StrInstance));
+            addClass(newException("error", table));
+        }
+    }
+
+
+    class OsModule extends NativeModule {
+        public OsModule() {
+            super("os");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addAttr("name", Types.StrInstance);
+            addClass(newException("error", table));  // XXX: OSError
+
+            initProcBindings();
+            initProcMgmtBindings();
+            initFileBindings();
+            initFileAndDirBindings();
+            initMiscSystemInfo();
+            initOsPathModule();
+
+            String[] str_attrs = {
+                "altsep", "curdir", "devnull", "defpath", "pardir", "pathsep", "sep",
+            };
+            for (String s : str_attrs) {
+                addAttr(s, Types.StrInstance);
+            }
+
+            // TODO this is not needed?
+            addAttr("errno", liburl(), newModule("errno"));
+
+            addFunction("urandom", Types.StrInstance);
+            addAttr("NGROUPS_MAX", Types.IntInstance);
+
+            for (String s : list("_Environ", "_copy_reg", "_execvpe", "_exists",
+                    "_get_exports_list", "_make_stat_result",
+                    "_make_statvfs_result", "_pickle_stat_result",
+                    "_pickle_statvfs_result", "_spawnvef"))
+            {
+                addFunction(s, Types.UNKNOWN);
+            }
+        }
+
+
+        private void initProcBindings() {
+            addAttr("environ", newDict(Types.StrInstance, Types.StrInstance));
+
+            for (String s : list("chdir", "fchdir", "putenv", "setegid", "seteuid",
+                    "setgid", "setgroups", "setpgrp", "setpgid",
+                    "setreuid", "setregid", "setuid", "unsetenv"))
+            {
+                addFunction(s, Types.NoneInstance);
+            }
+
+            for (String s : list("getegid", "getgid", "getpgid", "getpgrp",
+                    "getppid", "getuid", "getsid", "umask"))
+            {
+                addFunction(s, Types.IntInstance);
+            }
+
+            for (String s : list("getcwd", "ctermid", "getlogin", "getenv", "strerror")) {
+                addFunction(s, Types.StrInstance);
+            }
+
+            addFunction("getgroups", newList(Types.StrInstance));
+            addFunction("uname", newTuple(Types.StrInstance, Types.StrInstance, Types.StrInstance,
+                                                     Types.StrInstance, Types.StrInstance));
+        }
+
+
+        private void initProcMgmtBindings() {
+            for (String s : list("EX_CANTCREAT", "EX_CONFIG", "EX_DATAERR",
+                    "EX_IOERR", "EX_NOHOST", "EX_NOINPUT",
+                    "EX_NOPERM", "EX_NOUSER", "EX_OK", "EX_OSERR",
+                    "EX_OSFILE", "EX_PROTOCOL", "EX_SOFTWARE",
+                    "EX_TEMPFAIL", "EX_UNAVAILABLE", "EX_USAGE",
+                    "P_NOWAIT", "P_NOWAITO", "P_WAIT", "P_DETACH",
+                    "P_OVERLAY", "WCONTINUED", "WCOREDUMP",
+                    "WEXITSTATUS", "WIFCONTINUED", "WIFEXITED",
+                    "WIFSIGNALED", "WIFSTOPPED", "WNOHANG", "WSTOPSIG",
+                    "WTERMSIG", "WUNTRACED"))
+            {
+                addAttr(s, Types.IntInstance);
+            }
+
+            for (String s : list("abort", "execl", "execle", "execlp", "execlpe",
+                    "execv", "execve", "execvp", "execvpe", "_exit",
+                    "kill", "killpg", "plock", "startfile"))
+            {
+                addFunction(s, Types.NoneInstance);
+            }
+
+            for (String s : list("nice", "spawnl", "spawnle", "spawnlp", "spawnlpe",
+                    "spawnv", "spawnve", "spawnvp", "spawnvpe", "system"))
+            {
+                addFunction(s, Types.IntInstance);
+            }
+
+            addFunction("fork", newUnion(BaseFileInst, Types.IntInstance));
+            addFunction("times", newTuple(Types.IntInstance, Types.IntInstance, Types.IntInstance, Types.IntInstance, Types.IntInstance));
+
+            for (String s : list("forkpty", "wait", "waitpid")) {
+                addFunction(s, newTuple(Types.IntInstance, Types.IntInstance));
+            }
+
+            for (String s : list("wait3", "wait4")) {
+                addFunction(s, newTuple(Types.IntInstance, Types.IntInstance, Types.IntInstance));
+            }
+        }
+
+
+        private void initFileBindings() {
+            for (String s : list("fdopen", "popen", "tmpfile")) {
+                addFunction(s, BaseFileInst);
+            }
+
+            addFunction("popen2", newTuple(BaseFileInst, BaseFileInst));
+            addFunction("popen3", newTuple(BaseFileInst, BaseFileInst, BaseFileInst));
+            addFunction("popen4", newTuple(BaseFileInst, BaseFileInst));
+
+            addFunction("open", BaseFileInst);
+
+            for (String s : list("close", "closerange", "dup2", "fchmod",
+                    "fchown", "fdatasync", "fsync", "ftruncate",
+                    "lseek", "tcsetpgrp", "write"))
+            {
+                addFunction(s, Types.NoneInstance);
+            }
+
+            for (String s : list("dup2", "fpathconf", "fstat", "fstatvfs",
+                    "isatty", "tcgetpgrp"))
+            {
+                addFunction(s, Types.IntInstance);
+            }
+
+            for (String s : list("read", "ttyname")) {
+                addFunction(s, Types.StrInstance);
+            }
+
+            for (String s : list("openpty", "pipe", "fstat", "fstatvfs",
+                    "isatty"))
+            {
+                addFunction(s, newTuple(Types.IntInstance, Types.IntInstance));
+            }
+
+            for (String s : list("O_APPEND", "O_CREAT", "O_DIRECT", "O_DIRECTORY",
+                    "O_DSYNC", "O_EXCL", "O_LARGEFILE", "O_NDELAY",
+                    "O_NOCTTY", "O_NOFOLLOW", "O_NONBLOCK", "O_RDONLY",
+                    "O_RDWR", "O_RSYNC", "O_SYNC", "O_TRUNC", "O_WRONLY",
+                    "SEEK_CUR", "SEEK_END", "SEEK_SET"))
+            {
+                addAttr(s, Types.IntInstance);
+            }
+        }
+
+
+        private void initFileAndDirBindings() {
+            for (String s : list("F_OK", "R_OK", "W_OK", "X_OK")) {
+                addAttr(s, Types.IntInstance);
+            }
+
+            for (String s : list("chflags", "chroot", "chmod", "chown", "lchflags",
+                    "lchmod", "lchown", "link", "mknod", "mkdir",
+                    "mkdirs", "remove", "removedirs", "rename", "renames",
+                    "rmdir", "symlink", "unlink", "utime"))
+            {
+                addAttr(s, Types.NoneInstance);
+            }
+
+            for (String s : list("access", "lstat", "major", "minor",
