@@ -1861,3 +1861,187 @@ public class Builtins {
             }
 
             for (String s : list("access", "lstat", "major", "minor",
+                    "makedev", "pathconf", "stat_float_times"))
+            {
+                addFunction(s, Types.IntInstance);
+            }
+
+            for (String s : list("getcwdu", "readlink", "tempnam", "tmpnam")) {
+                addFunction(s, Types.StrInstance);
+            }
+
+            for (String s : list("listdir")) {
+                addFunction(s, newList(Types.StrInstance));
+            }
+
+            addFunction("mkfifo", BaseFileInst);
+
+            addFunction("stat", newList(Types.IntInstance));  // XXX: posix.stat_result
+            addFunction("statvfs", newList(Types.IntInstance));  // XXX: pos.statvfs_result
+
+            addAttr("pathconf_names", newDict(Types.StrInstance, Types.IntInstance));
+            addAttr("TMP_MAX", Types.IntInstance);
+
+            addFunction("walk", newList(newTuple(Types.StrInstance, Types.StrInstance, Types.StrInstance)));
+        }
+
+
+        private void initMiscSystemInfo() {
+            addAttr("confstr_names", newDict(Types.StrInstance, Types.IntInstance));
+            addAttr("sysconf_names", newDict(Types.StrInstance, Types.IntInstance));
+
+            for (String s : list("curdir", "pardir", "sep", "altsep", "extsep",
+                    "pathsep", "defpath", "linesep", "devnull"))
+            {
+                addAttr(s, Types.StrInstance);
+            }
+
+            for (String s : list("getloadavg", "sysconf")) {
+                addFunction(s, Types.IntInstance);
+            }
+
+            addFunction("confstr", Types.StrInstance);
+        }
+
+
+        private class OSPathModule extends NativeModule {
+            OSPathModule(String name) {
+                super("os.path");
+            }
+
+            @Override
+            protected void initBindings() {
+
+            }
+        }
+        private void initOsPathModule() {
+            ModuleType m = newModule("path");
+            State ospath = m.table;
+            ospath.setPath("os.path");  // make sure global qnames are correct
+
+            update("path", newLibUrl("os.path.html#module-os.path"), m, MODULE);
+
+            String[] str_funcs = {
+                    "_resolve_link", "abspath", "basename", "commonprefix",
+                    "dirname", "expanduser", "expandvars", "join",
+                    "normcase", "normpath", "realpath", "relpath",
+            };
+            for (String s : str_funcs) {
+                addFunction(m, s, Types.StrInstance);
+            }
+
+            String[] num_funcs = {
+                    "exists", "lexists", "getatime", "getctime", "getmtime", "getsize",
+                    "isabs", "isdir", "isfile", "islink", "ismount", "samefile",
+                    "sameopenfile", "samestat", "supports_unicode_filenames",
+            };
+            for (String s : num_funcs) {
+                addFunction(m, s, Types.IntInstance);
+            }
+
+            for (String s : list("split", "splitdrive", "splitext", "splitunc")) {
+                addFunction(m, s, newTuple(Types.StrInstance, Types.StrInstance));
+            }
+
+            addFunction(m, "walk", newFunc(Types.NoneInstance));
+
+            addAttr(ospath, "os", this.module);
+            ospath.insert("stat", newLibUrl("stat"),
+                    // moduleTable.lookupLocal("stat").getType(),
+                    newModule("<stat-fixme>"), ATTRIBUTE);
+
+            // XXX:  this is an re object, I think
+            addAttr(ospath, "_varprog", Types.UNKNOWN);
+        }
+    }
+
+
+    class OperatorModule extends NativeModule {
+        public OperatorModule() {
+            super("operator");
+        }
+
+
+        @Override
+        public void initBindings() {
+            // XXX:  mark __getslice__, __setslice__ and __delslice__ as deprecated.
+            addNumFuncs(
+                    "__abs__", "__add__", "__and__", "__concat__", "__contains__",
+                    "__div__", "__doc__", "__eq__", "__floordiv__", "__ge__",
+                    "__getitem__", "__getslice__", "__gt__", "__iadd__", "__iand__",
+                    "__iconcat__", "__idiv__", "__ifloordiv__", "__ilshift__",
+                    "__imod__", "__imul__", "__index__", "__inv__", "__invert__",
+                    "__ior__", "__ipow__", "__irepeat__", "__irshift__", "__isub__",
+                    "__itruediv__", "__ixor__", "__le__", "__lshift__", "__lt__",
+                    "__mod__", "__mul__", "__name__", "__ne__", "__neg__", "__not__",
+                    "__or__", "__package__", "__pos__", "__pow__", "__repeat__",
+                    "__rshift__", "__setitem__", "__setslice__", "__sub__",
+                    "__truediv__", "__xor__", "abs", "add", "and_", "concat",
+                    "contains", "countOf", "div", "eq", "floordiv", "ge", "getitem",
+                    "getslice", "gt", "iadd", "iand", "iconcat", "idiv", "ifloordiv",
+                    "ilshift", "imod", "imul", "index", "indexOf", "inv", "invert",
+                    "ior", "ipow", "irepeat", "irshift", "isCallable",
+                    "isMappingType", "isNumberType", "isSequenceType", "is_",
+                    "is_not", "isub", "itruediv", "ixor", "le", "lshift", "lt", "mod",
+                    "mul", "ne", "neg", "not_", "or_", "pos", "pow", "repeat",
+                    "rshift", "sequenceIncludes", "setitem", "setslice", "sub",
+                    "truediv", "truth", "xor");
+
+            addUnknownFuncs("attrgetter", "itemgetter", "methodcaller");
+            addNoneFuncs("__delitem__", "__delslice__", "delitem", "delclice");
+        }
+    }
+
+
+    class ParserModule extends NativeModule {
+        public ParserModule() {
+            super("parser");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType st = newClass("ST", table, objectType);
+            addMethod(st, "compile", Types.NoneInstance);
+            addMethod(st, "isexpr", Types.IntInstance);
+            addMethod(st, "issuite", Types.IntInstance);
+            addMethod(st, "tolist", newList());
+            addMethod(st, "totuple", newTuple());
+
+            addAttr("STType", BaseType);
+
+            for (String s : list("expr", "suite", "sequence2st", "tuple2st")) {
+                addFunction(s, st);
+            }
+
+            addFunction("st2list", newList());
+            addFunction("st2tuple", newTuple());
+            addFunction("compilest", Types.UNKNOWN);
+            addFunction("isexpr", Types.BoolInstance);
+            addFunction("issuite", Types.BoolInstance);
+
+            addClass(newException("ParserError", table));
+        }
+    }
+
+
+    class PosixModule extends NativeModule {
+        public PosixModule() {
+            super("posix");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addAttr("environ", newDict(Types.StrInstance, Types.StrInstance));
+        }
+    }
+
+
+    class PwdModule extends NativeModule {
+        public PwdModule() {
+            super("pwd");
+        }
+
+
+        @Override
