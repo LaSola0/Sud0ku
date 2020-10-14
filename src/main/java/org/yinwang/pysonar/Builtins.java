@@ -2045,3 +2045,182 @@ public class Builtins {
 
 
         @Override
+        public void initBindings() {
+            ClassType struct_pwd = newClass("struct_pwd", table, objectType);
+            for (String s : list("pw_nam", "pw_passwd", "pw_uid", "pw_gid",
+                    "pw_gecos", "pw_dir", "pw_shell"))
+            {
+                struct_pwd.table.insert(s, liburl(), Types.IntInstance, ATTRIBUTE);
+            }
+            addAttr("struct_pwd", liburl(), struct_pwd);
+
+            addFunction("getpwuid", struct_pwd);
+            addFunction("getpwnam", struct_pwd);
+            addFunction("getpwall", newList(struct_pwd));
+        }
+    }
+
+
+    class PyexpatModule extends NativeModule {
+        public PyexpatModule() {
+            super("pyexpat");
+        }
+
+
+        @Override
+        public void initBindings() {
+            // XXX
+        }
+    }
+
+
+    class ReadlineModule extends NativeModule {
+        public ReadlineModule() {
+            super("readline");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNoneFuncs("parse_and_bind", "insert_text", "read_init_file",
+                    "read_history_file", "write_history_file",
+                    "clear_history", "set_history_length",
+                    "remove_history_item", "replace_history_item",
+                    "redisplay", "set_startup_hook", "set_pre_input_hook",
+                    "set_completer", "set_completer_delims",
+                    "set_completion_display_matches_hook", "add_history");
+
+            addNumFuncs("get_history_length", "get_current_history_length",
+                    "get_begidx", "get_endidx");
+
+            addStrFuncs("get_line_buffer", "get_history_item");
+
+            addUnknownFuncs("get_completion_type");
+
+            addFunction("get_completer", newFunc());
+            addFunction("get_completer_delims", newList(Types.StrInstance));
+        }
+    }
+
+
+    class ResourceModule extends NativeModule {
+        public ResourceModule() {
+            super("resource");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addFunction("getrlimit", newTuple(Types.IntInstance, Types.IntInstance));
+            addFunction("getrlimit", Types.UNKNOWN);
+
+            String[] constants = {
+                    "RLIMIT_CORE", "RLIMIT_CPU", "RLIMIT_FSIZE", "RLIMIT_DATA",
+                    "RLIMIT_STACK", "RLIMIT_RSS", "RLIMIT_NPROC", "RLIMIT_NOFILE",
+                    "RLIMIT_OFILE", "RLIMIT_MEMLOCK", "RLIMIT_VMEM", "RLIMIT_AS"
+            };
+            for (String c : constants) {
+                addAttr(c, Types.IntInstance);
+            }
+
+            ClassType ru = newClass("struct_rusage", table, objectType);
+            String[] ru_fields = {
+                    "ru_utime", "ru_stime", "ru_maxrss", "ru_ixrss", "ru_idrss",
+                    "ru_isrss", "ru_minflt", "ru_majflt", "ru_nswap", "ru_inblock",
+                    "ru_oublock", "ru_msgsnd", "ru_msgrcv", "ru_nsignals",
+                    "ru_nvcsw", "ru_nivcsw"
+            };
+            for (String ruf : ru_fields) {
+                addAttr(ru, ruf, Types.IntInstance);
+            }
+            addClass(ru);
+
+            addFunction("getrusage", ru);
+            addFunction("getpagesize", Types.IntInstance);
+
+            for (String s : list("RUSAGE_SELF", "RUSAGE_CHILDREN", "RUSAGE_BOTH")) {
+                addAttr(s, Types.IntInstance);
+            }
+        }
+    }
+
+
+    class SelectModule extends NativeModule {
+        public SelectModule() {
+            super("select");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addClass(newException("error", table));
+
+            addFunction("select",  newTuple(newList(), newList(), newList()));
+            
+            ClassType epoll = newClass("epoll", table, objectType);
+            addMethod(epoll, "close", Types.NoneInstance);
+            addMethod(epoll, "fileno", Types.IntInstance);
+            addMethod(epoll, "fromfd", epoll);
+            for (String s : list("register", "modify", "unregister", "poll")) {
+                addMethod(epoll, s);
+            }
+            addClass(epoll);
+
+            for (String s : list("EPOLLERR", "EPOLLET", "EPOLLHUP", "EPOLLIN", "EPOLLMSG",
+                    "EPOLLONESHOT", "EPOLLOUT", "EPOLLPRI", "EPOLLRDBAND",
+                    "EPOLLRDNORM", "EPOLLWRBAND", "EPOLLWRNORM"))
+            {
+                addAttr(s, Types.IntInstance);
+            }
+
+
+            ClassType poll = newClass("poll", table, objectType);
+            addMethod(poll, "register");
+            addMethod(poll, "modify");
+            addMethod(poll, "unregister");
+            addMethod(poll, "poll", newList(newTuple(Types.IntInstance, Types.IntInstance)));
+            addClass(poll);
+
+            for (String s : list("POLLERR", "POLLHUP", "POLLIN", "POLLMSG",
+                    "POLLNVAL", "POLLOUT", "POLLPRI", "POLLRDBAND",
+                    "POLLRDNORM", "POLLWRBAND", "POLLWRNORM"))
+            {
+                addAttr(s, Types.IntInstance);
+            }
+
+            ClassType kqueue = newClass("kqueue", table, objectType);
+            addMethod(kqueue, "close", Types.NoneInstance);
+            addMethod(kqueue, "fileno", Types.IntInstance);
+            addMethod(kqueue, "fromfd", kqueue);
+            addMethod(kqueue, "control", newList(newTuple(Types.IntInstance, Types.IntInstance)));
+            addClass(kqueue);
+
+            ClassType kevent = newClass("kevent", table, objectType);
+            for (String s : list("ident", "filter", "flags", "fflags", "data", "udata")) {
+                addAttr(kevent, s, Types.UNKNOWN);
+            }
+            addClass(kevent);
+        }
+    }
+
+
+    class SignalModule extends NativeModule {
+        public SignalModule() {
+            super("signal");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNumAttrs(
+                    "NSIG", "SIGABRT", "SIGALRM", "SIGBUS", "SIGCHLD", "SIGCLD",
+                    "SIGCONT", "SIGFPE", "SIGHUP", "SIGILL", "SIGINT", "SIGIO",
+                    "SIGIOT", "SIGKILL", "SIGPIPE", "SIGPOLL", "SIGPROF", "SIGPWR",
+                    "SIGQUIT", "SIGRTMAX", "SIGRTMIN", "SIGSEGV", "SIGSTOP", "SIGSYS",
+                    "SIGTERM", "SIGTRAP", "SIGTSTP", "SIGTTIN", "SIGTTOU", "SIGURG",
+                    "SIGUSR1", "SIGUSR2", "SIGVTALRM", "SIGWINCH", "SIGXCPU", "SIGXFSZ",
+                    "SIG_DFL", "SIG_IGN");
+
+            addUnknownFuncs("default_int_handler", "getsignal", "set_wakeup_fd", "signal");
+        }
+    }
