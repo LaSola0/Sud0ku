@@ -2224,3 +2224,169 @@ public class Builtins {
             addUnknownFuncs("default_int_handler", "getsignal", "set_wakeup_fd", "signal");
         }
     }
+
+
+    class ShaModule extends NativeModule {
+        public ShaModule() {
+            super("sha");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNumAttrs("blocksize", "digest_size");
+
+            ClassType sha = newClass("sha", table, objectType);
+            addMethod(sha, "update");
+            addMethod(sha, "digest", Types.StrInstance);
+            addMethod(sha, "hexdigest", Types.StrInstance);
+            addMethod(sha, "copy", sha);
+            addClass(sha);
+
+            update("new", liburl(), newFunc(sha), CONSTRUCTOR);
+        }
+    }
+
+
+    class SpwdModule extends NativeModule {
+        public SpwdModule() {
+            super("spwd");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType struct_spwd = newClass("struct_spwd", table, objectType);
+            for (String s : list("sp_nam", "sp_pwd", "sp_lstchg", "sp_min",
+                    "sp_max", "sp_warn", "sp_inact", "sp_expire",
+                    "sp_flag"))
+            {
+                addAttr(struct_spwd, s, Types.IntInstance);
+            }
+            addAttr("struct_spwd", struct_spwd);
+
+            addFunction("getspnam", struct_spwd);
+            addFunction("getspall", newList(struct_spwd));
+        }
+    }
+
+
+    class StropModule extends NativeModule {
+        public StropModule() {
+            super("strop");
+        }
+
+
+        @Override
+        public void initBindings() {
+            table.putAll(Types.StrInstance.table);
+        }
+    }
+
+
+    class StructModule extends NativeModule {
+        public StructModule() {
+            super("struct");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addClass(newException("error", table));
+            addStrFuncs("pack");
+            addUnknownFuncs("pack_into");
+            addNumFuncs("calcsize");
+            addFunction("unpack", newTuple());
+            addFunction("unpack_from", newTuple());
+
+            BaseStruct = newClass("Struct", table, objectType);
+            addClass(BaseStruct);
+            State t = BaseStruct.table;
+
+            addMethod(BaseStruct, "pack", Types.StrInstance);
+            addMethod(BaseStruct, "pack_into");
+            addMethod(BaseStruct, "unpack", newTuple());
+            addMethod(BaseStruct, "unpack_from", newTuple());
+            addMethod(BaseStruct, "format", Types.StrInstance);
+            addMethod(BaseStruct, "size", Types.IntInstance);
+        }
+    }
+
+
+    class SysModule extends NativeModule {
+        public SysModule() {
+            super("sys");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addUnknownFuncs(
+                    "_clear_type_cache", "call_tracing", "callstats", "_current_frames",
+                    "_getframe", "displayhook", "dont_write_bytecode", "exitfunc",
+                    "exc_clear", "exc_info", "excepthook", "exit",
+                    "last_traceback", "last_type", "last_value", "modules",
+                    "path_hooks", "path_importer_cache", "getprofile", "gettrace",
+                    "setcheckinterval", "setprofile", "setrecursionlimit", "settrace");
+
+            addAttr("exc_type", Types.NoneInstance);
+
+            addUnknownAttrs("__stderr__", "__stdin__", "__stdout__",
+                    "stderr", "stdin", "stdout", "version_info");
+
+            addNumAttrs("api_version", "hexversion", "winver", "maxint", "maxsize",
+                    "maxunicode", "py3kwarning", "dllhandle");
+
+            addStrAttrs("platform", "byteorder", "copyright", "prefix", "version",
+                    "exec_prefix", "executable");
+
+            addNumFuncs("getrecursionlimit", "getwindowsversion", "getrefcount",
+                    "getsizeof", "getcheckinterval");
+
+            addStrFuncs("getdefaultencoding", "getfilesystemencoding");
+
+            for (String s : list("argv", "builtin_module_names", "path",
+                    "meta_path", "subversion"))
+            {
+                addAttr(s, newList(Types.StrInstance));
+            }
+
+            for (String s : list("flags", "warnoptions", "float_info")) {
+                addAttr(s, newDict(Types.StrInstance, Types.IntInstance));
+            }
+        }
+    }
+
+
+    class SyslogModule extends NativeModule {
+        public SyslogModule() {
+            super("syslog");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNoneFuncs("syslog", "openlog", "closelog", "setlogmask");
+            addNumAttrs("LOG_ALERT", "LOG_AUTH", "LOG_CONS", "LOG_CRIT", "LOG_CRON",
+                    "LOG_DAEMON", "LOG_DEBUG", "LOG_EMERG", "LOG_ERR", "LOG_INFO",
+                    "LOG_KERN", "LOG_LOCAL0", "LOG_LOCAL1", "LOG_LOCAL2", "LOG_LOCAL3",
+                    "LOG_LOCAL4", "LOG_LOCAL5", "LOG_LOCAL6", "LOG_LOCAL7", "LOG_LPR",
+                    "LOG_MAIL", "LOG_MASK", "LOG_NDELAY", "LOG_NEWS", "LOG_NOTICE",
+                    "LOG_NOWAIT", "LOG_PERROR", "LOG_PID", "LOG_SYSLOG", "LOG_UPTO",
+                    "LOG_USER", "LOG_UUCP", "LOG_WARNING");
+        }
+    }
+
+
+    class TermiosModule extends NativeModule {
+        public TermiosModule() {
+            super("termios");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addFunction("tcgetattr", newList());
+            addUnknownFuncs("tcsetattr", "tcsendbreak", "tcdrain", "tcflush", "tcflow");
+        }
+    }
