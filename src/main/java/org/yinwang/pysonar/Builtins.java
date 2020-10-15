@@ -2390,3 +2390,182 @@ public class Builtins {
             addUnknownFuncs("tcsetattr", "tcsendbreak", "tcdrain", "tcflush", "tcflow");
         }
     }
+
+
+    class ThreadModule extends NativeModule {
+        public ThreadModule() {
+            super("thread");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addClass(newException("error", table));
+
+            ClassType lock = newClass("lock", table, objectType);
+            addMethod(lock, "acquire", Types.IntInstance);
+            addMethod(lock, "locked", Types.IntInstance);
+            addMethod(lock, "release", Types.NoneInstance);
+            addAttr("LockType", BaseType);
+
+            addNoneFuncs("interrupt_main", "exit", "exit_thread");
+            addNumFuncs("start_new", "start_new_thread", "get_ident", "stack_size");
+
+            addFunction("allocate", lock);
+            addFunction("allocate_lock", lock);  // synonym
+
+            addAttr("_local", BaseType);
+        }
+    }
+
+
+    class TimeModule extends NativeModule {
+        public TimeModule() {
+            super("time");
+        }
+
+
+        @Override
+        public void initBindings() {
+            InstanceType struct_time = Time_struct_time = new InstanceType(newClass("datetime", table, objectType));
+            addAttr("struct_time", struct_time);
+
+            String[] struct_time_attrs = {
+                    "n_fields", "n_sequence_fields", "n_unnamed_fields",
+                    "tm_hour", "tm_isdst", "tm_mday", "tm_min",
+                    "tm_mon", "tm_wday", "tm_yday", "tm_year",
+            };
+            for (String s : struct_time_attrs) {
+                addAttr(struct_time.table, s, Types.IntInstance);
+            }
+
+            addNumAttrs("accept2dyear", "altzone", "daylight", "timezone");
+
+            addAttr("tzname", newTuple(Types.StrInstance, Types.StrInstance));
+            addNoneFuncs("sleep", "tzset");
+
+            addNumFuncs("clock", "mktime", "time", "tzname");
+            addStrFuncs("asctime", "ctime", "strftime");
+
+            addFunctions_beCareful(struct_time, "gmtime", "localtime", "strptime");
+        }
+    }
+
+
+    class UnicodedataModule extends NativeModule {
+        public UnicodedataModule() {
+            super("unicodedata");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addNumFuncs("decimal", "digit", "numeric", "combining",
+                    "east_asian_width", "mirrored");
+            addStrFuncs("lookup", "name", "category", "bidirectional",
+                    "decomposition", "normalize");
+            addNumAttrs("unidata_version");
+            addUnknownAttrs("ucd_3_2_0");
+        }
+    }
+
+
+    class ZipimportModule extends NativeModule {
+        public ZipimportModule() {
+            super("zipimport");
+        }
+
+
+        @Override
+        public void initBindings() {
+            addClass(newException("ZipImportError", table));
+
+            ClassType zipimporter = newClass("zipimporter", table, objectType);
+            addMethod(zipimporter, "find_module", zipimporter);
+            addMethod(zipimporter, "get_code", Types.UNKNOWN);  // XXX:  code object
+            addMethod(zipimporter, "get_data", Types.UNKNOWN);
+            addMethod(zipimporter, "get_source", Types.StrInstance);
+            addMethod(zipimporter, "is_package", Types.IntInstance);
+            addMethod(zipimporter, "load_module", newModule("<?>"));
+            addMethod(zipimporter, "archive", Types.StrInstance);
+            addMethod(zipimporter, "prefix", Types.StrInstance);
+
+            addClass(zipimporter);
+            addAttr("_zip_directory_cache", newDict(Types.StrInstance, Types.UNKNOWN));
+        }
+    }
+
+
+    class ZlibModule extends NativeModule {
+        public ZlibModule() {
+            super("zlib");
+        }
+
+
+        @Override
+        public void initBindings() {
+            ClassType compress = newClass("Compress", table, objectType);
+            for (String s : list("compress", "flush")) {
+                addMethod(compress, s, Types.StrInstance);
+            }
+            addMethod(compress, "copy", compress);
+            addClass(compress);
+
+            ClassType decompress = newClass("Decompress", table, objectType);
+            for (String s : list("unused_data", "unconsumed_tail")) {
+                addAttr(decompress, s, Types.StrInstance);
+            }
+            for (String s : list("decompress", "flush")) {
+                addMethod(decompress, s, Types.StrInstance);
+            }
+            addMethod(decompress, "copy", decompress);
+            addClass(decompress);
+
+            addFunction("adler32", Types.IntInstance);
+            addFunction("compress", Types.StrInstance);
+            addFunction("compressobj", compress);
+            addFunction("crc32", Types.IntInstance);
+            addFunction("decompress", Types.StrInstance);
+            addFunction("decompressobj", decompress);
+        }
+    }
+
+    class UnittestModule extends NativeModule {
+        public UnittestModule() {
+            super("unittest");
+        }
+
+        @Override
+        protected void initBindings() {
+            ClassType testResult = newClass("TestResult", table, objectType);
+            addAttr(testResult, "shouldStop", Types.BoolInstance);
+            addAttr(testResult, "testsRun", Types.IntInstance);
+            addAttr(testResult, "buffer", Types.BoolInstance);
+            addAttr(testResult, "failfast", Types.BoolInstance);
+
+            addMethod(testResult, "wasSuccessful", Types.BoolInstance);
+            addMethod(testResult, "stop", Types.NoneInstance);
+            addMethod(testResult, "startTest", Types.NoneInstance);
+            addMethod(testResult, "stopTest", Types.NoneInstance);
+            addMethod(testResult, "startTestRun", Types.NoneInstance);
+            addMethod(testResult, "stopTestRun", Types.NoneInstance);
+            addMethod(testResult, "addError", Types.NoneInstance);
+            addMethod(testResult, "addFailure", Types.NoneInstance);
+            addMethod(testResult, "addSuccess", Types.NoneInstance);
+            addMethod(testResult, "addSkip", Types.NoneInstance);
+            addMethod(testResult, "addExpectedFailure", Types.NoneInstance);
+            addMethod(testResult, "addUnexpectedSuccess", Types.NoneInstance);
+            addClass(testResult);
+
+            ClassType textTestResult = newClass("TextTestResult", table, testResult);
+            addClass(textTestResult);
+
+            ClassType testCase = newClass("TestCase", table, objectType);
+            for (String s : list("setUp", "tearDown", "setUpClass", "tearDownClass", "skipTest", "debug",
+                "assertEqual", "assertNotEqual", "assertTrue", "assertFalse", "assertIs", "assertIsNot", "assertIsNone",
+                "assertIsNotNone", "assertIn", "assertNotIn", "assertIsInstance", "assertNotIsInstance", "assertRaises",
+                "assertRaisesRegexp", "assertAlmostEqual", "assertNotAlmostEqual", "assertGreater",
+                "assertGreaterEqual", "assertLess", "assertLessEqual", "assertRegexpMatches", "assertNotRegexpMatches",
+                "assertItemsEqual", "assertDictContainsSubset", "addTypeEqualityFunc", "assertMultiLineEqual",
+                "assertSequenceEqual", "assertListEqual", "assertTupleEqual", "assertSetEqual", "assertDictEqual",
+                "fail", "failureException", "addCleanup", "doCleanups")) {
