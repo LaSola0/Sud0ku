@@ -21,4 +21,13 @@ public class Diagnostic {
         this.file = file;
         this.start = start;
         this.end = end;
-        this.ms
+        this.msg = msg;
+    }
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<Diagnostic:" + file + ":" + category + ":" + msg + ">";
+    }
+}
