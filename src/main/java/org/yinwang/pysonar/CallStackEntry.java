@@ -11,4 +11,6 @@ public class CallStackEntry
     public CallStackEntry(FunType fun, Type from)
     {
         this.fun = fun;
-     
+        this.from = from;
+    }
+}
