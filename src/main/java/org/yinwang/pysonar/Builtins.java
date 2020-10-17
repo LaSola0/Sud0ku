@@ -2569,3 +2569,53 @@ public class Builtins {
                 "assertItemsEqual", "assertDictContainsSubset", "addTypeEqualityFunc", "assertMultiLineEqual",
                 "assertSequenceEqual", "assertListEqual", "assertTupleEqual", "assertSetEqual", "assertDictEqual",
                 "fail", "failureException", "addCleanup", "doCleanups")) {
+                addMethod(testCase, s, Types.NoneInstance);
+            }
+            addMethod(testCase, "countTestCases", Types.IntInstance);
+            addMethod(testCase, "id", Types.StrInstance);
+            addMethod(testCase, "shortDescription", Types.StrInstance);
+            addMethod(testCase, "defaultTestResult", testResult);
+            addMethod(testCase, "run", testResult);
+            addAttr(testCase, "longMessage", Types.BoolInstance);
+            addAttr(testCase, "maxDiff", Types.IntInstance);
+            addClass(testCase);
+
+
+            ClassType testSuite = newClass("TestSuite", table, objectType);
+            addMethod(testSuite, "addTest", Types.NoneInstance);
+            addMethod(testSuite, "addTests", Types.NoneInstance);
+            addMethod(testSuite, "run", testResult);
+            addMethod(testSuite, "debug", Types.NoneInstance);
+            addMethod(testSuite, "countTestCases", Types.IntInstance);
+            addMethod(testSuite, "__iter__", newFunc(testCase));
+            addClass(testSuite);
+
+
+            ClassType testLoader = newClass("TestLoader", table, objectType);
+            addMethod(testLoader, "loadTestsFromTestCase", testSuite);
+            addMethod(testLoader, "loadTestsFromModule", testSuite);
+            addMethod(testLoader, "loadTestsFromName", testSuite);
+            addMethod(testLoader, "loadTestsFromNames", testSuite);
+            addMethod(testLoader, "getTestCaseNames", testCase);
+            addMethod(testLoader, "discover", testSuite);
+            addAttr(testLoader, "testMethodPrefix", Types.StrInstance);
+            addAttr(testLoader, "sortTestMethodsUsing", Types.StrInstance);
+            addAttr(testLoader, "suiteClass", newFunc(testSuite));
+            addClass(testLoader);
+
+            addAttr("defaultTestLoader", testLoader);
+
+            ClassType textTestRunner = newClass("TextTestRunner", table, objectType);
+            addClass(textTestRunner);
+
+            addNoneFuncs("main", "installHandler", "registerResult", "removeResult", "removeHandler");
+
+            addAttr(testResult, "errors", newList(newTuple(testCase, Types.StrInstance)));
+            addAttr(testResult, "failures", newList(newTuple(testCase, Types.StrInstance)));
+            addAttr(testResult, "skipped", newList(newTuple(testCase, Types.StrInstance)));
+            addAttr(testResult, "expectedFailures", newList(newTuple(testCase, Types.StrInstance)));
+            addAttr(testResult, "unexpectedSuccesses",newList(newTuple(testCase, Types.StrInstance)));
+
+        }
+    }
+}
