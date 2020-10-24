@@ -20,4 +20,9 @@ public class JSONDump {
 
     private static Logger log = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    private static Set<
+    private static Set<String> seenDef = new HashSet<>();
+    private static Set<String> seenRef = new HashSet<>();
+    private static Set<String> seenDocs = new HashSet<>();
+
+
+    private static String dirname(String 
