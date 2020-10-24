@@ -25,4 +25,10 @@ public class JSONDump {
     private static Set<String> seenDocs = new HashSet<>();
 
 
-    private static String dirname(String 
+    private static String dirname(String path) {
+        return new File(path).getParent();
+    }
+
+
+    private static Analyzer newAnalyzer(String srcpath, String[] inclpaths) throws Exception {
+        Analyzer 
