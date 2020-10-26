@@ -31,4 +31,12 @@ public class JSONDump {
 
 
     private static Analyzer newAnalyzer(String srcpath, String[] inclpaths) throws Exception {
-        Analyzer 
+        Analyzer idx = new Analyzer();
+        for (String inclpath : inclpaths) {
+            idx.addPath(inclpath);
+        }
+
+        idx.analyze(srcpath);
+        idx.finish();
+
+        if (i
