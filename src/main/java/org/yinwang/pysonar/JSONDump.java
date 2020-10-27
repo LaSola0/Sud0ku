@@ -39,4 +39,7 @@ public class JSONDump {
         idx.analyze(srcpath);
         idx.finish();
 
-        if (i
+        if (idx.semanticErrors.size() > 0) {
+            log.info("Analyzer errors:");
+            for (String file : idx.semanticErrors.keys()) {
+                log.info("  File: " +
