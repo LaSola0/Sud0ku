@@ -42,4 +42,7 @@ public class JSONDump {
         if (idx.semanticErrors.size() > 0) {
             log.info("Analyzer errors:");
             for (String file : idx.semanticErrors.keys()) {
-                log.info("  File: " +
+                log.info("  File: " + file);
+                Collection<Diagnostic> diagnostics = idx.semanticErrors.get(file);
+                for (Diagnostic d : diagnostics) {
+            
