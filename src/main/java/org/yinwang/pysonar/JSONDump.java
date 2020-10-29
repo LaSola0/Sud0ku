@@ -67,4 +67,9 @@ public class JSONDump {
                         Binding.Kind.ATTRIBUTE == binding.kind ||
                         (name.length() == 0 || name.charAt(0) == '_' || name.startsWith("lambda%")));
 
-        String path = binding.qname.replace('.', 
+        String path = binding.qname.replace('.', '/').replace("%20", ".");
+
+        if (!seenDef.contains(path)) {
+            seenDef.add(path);
+            json.writeStartObject();
+            json.writeStr
