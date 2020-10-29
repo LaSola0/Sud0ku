@@ -64,4 +64,7 @@ public class JSONDump {
                 Binding.Kind.VARIABLE == binding.kind ||
                         Binding.Kind.PARAMETER == binding.kind ||
                         Binding.Kind.SCOPE == binding.kind ||
-                        Binding.Kind
+                        Binding.Kind.ATTRIBUTE == binding.kind ||
+                        (name.length() == 0 || name.charAt(0) == '_' || name.startsWith("lambda%")));
+
+        String path = binding.qname.replace('.', 
