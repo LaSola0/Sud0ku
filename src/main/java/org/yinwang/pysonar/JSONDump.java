@@ -75,4 +75,7 @@ public class JSONDump {
             json.writeStringField("name", name);
             json.writeStringField("path", path);
             json.writeStringField("file", binding.fileOrUrl);
-            json.writeNumberField("
+            json.writeNumberField("identStart", binding.start);
+            json.writeNumberField("identEnd", binding.end);
+            json.writeNumberField("defStart", binding.bodyStart);
+            js
