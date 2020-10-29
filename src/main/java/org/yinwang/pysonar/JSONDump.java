@@ -61,4 +61,7 @@ public class JSONDump {
 
         String name = binding.name;
         boolean isExported = !(
-                Binding.Kind.VARIABLE == bin
+                Binding.Kind.VARIABLE == binding.kind ||
+                        Binding.Kind.PARAMETER == binding.kind ||
+                        Binding.Kind.SCOPE == binding.kind ||
+                        Binding.Kind
