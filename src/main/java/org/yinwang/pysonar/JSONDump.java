@@ -72,4 +72,7 @@ public class JSONDump {
         if (!seenDef.contains(path)) {
             seenDef.add(path);
             json.writeStartObject();
-            json.writeStr
+            json.writeStringField("name", name);
+            json.writeStringField("path", path);
+            json.writeStringField("file", binding.fileOrUrl);
+            json.writeNumberField("
