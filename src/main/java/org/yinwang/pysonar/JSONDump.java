@@ -54,4 +54,11 @@ public class JSONDump {
     }
 
 
-    private static void writeSymJson(Binding binding, JsonGenerator json) throws IOExc
+    private static void writeSymJson(Binding binding, JsonGenerator json) throws IOException {
+        if (binding.start < 0) {
+            return;
+        }
+
+        String name = binding.name;
+        boolean isExported = !(
+                Binding.Kind.VARIABLE == bin
