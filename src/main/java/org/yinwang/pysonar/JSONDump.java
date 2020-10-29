@@ -45,4 +45,13 @@ public class JSONDump {
                 log.info("  File: " + file);
                 Collection<Diagnostic> diagnostics = idx.semanticErrors.get(file);
                 for (Diagnostic d : diagnostics) {
-            
+                    log.info("    " + d);
+                }
+            }
+        }
+
+        return idx;
+    }
+
+
+    private static void writeSymJson(Binding binding, JsonGenerator json) throws IOExc
