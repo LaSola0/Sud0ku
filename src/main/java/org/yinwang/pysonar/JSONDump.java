@@ -81,3 +81,7 @@ public class JSONDump {
             json.writeNumberField("defEnd", binding.bodyEnd);
             json.writeBooleanField("exported", isExported);
             json.writeStringField("kind", binding.kind.toString());
+
+            if (Binding.Kind.FUNCTION == binding.kind ||
+                    Binding.Kind.METHOD == binding.kind ||
+                    Binding.Kind.CONSTRUCTOR == binding.kind
