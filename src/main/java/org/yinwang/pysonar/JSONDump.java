@@ -78,4 +78,6 @@ public class JSONDump {
             json.writeNumberField("identStart", binding.start);
             json.writeNumberField("identEnd", binding.end);
             json.writeNumberField("defStart", binding.bodyStart);
-            js
+            json.writeNumberField("defEnd", binding.bodyEnd);
+            json.writeBooleanField("exported", isExported);
+            json.writeStringField("kind", binding.kind.toString());
