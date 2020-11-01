@@ -95,4 +95,7 @@ public class JSONDump {
                     t = ((UnionType) t).firstUseful();
                 }
 
-                if (t != null && t instanc
+                if (t != null && t instanceof FunType) {
+                    FunctionDef func = ((FunType) t).func;
+                    if (func != null) {
+                        argExpr = func.getArgumentExpr(
