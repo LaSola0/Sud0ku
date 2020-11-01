@@ -89,4 +89,10 @@ public class JSONDump {
 
                 // get args expression
                 String argExpr = null;
-                Type t = bind
+                Type t = binding.type;
+
+                if (t instanceof UnionType) {
+                    t = ((UnionType) t).firstUseful();
+                }
+
+                if (t != null && t instanc
