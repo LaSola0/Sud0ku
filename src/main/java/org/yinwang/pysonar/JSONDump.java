@@ -84,4 +84,9 @@ public class JSONDump {
 
             if (Binding.Kind.FUNCTION == binding.kind ||
                     Binding.Kind.METHOD == binding.kind ||
-                    Binding.Kind.CONSTRUCTOR == binding.kind
+                    Binding.Kind.CONSTRUCTOR == binding.kind) {
+                json.writeObjectFieldStart("funcData");
+
+                // get args expression
+                String argExpr = null;
+                Type t = bind
