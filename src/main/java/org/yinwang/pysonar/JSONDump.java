@@ -106,4 +106,6 @@ public class JSONDump {
 
                 json.writeNullField("params");
 
-   
+                String signature = argExpr == null ? "" : argExpr + "\n" + typeExpr;
+                json.writeStringField("signature", signature);
+                json.writ
