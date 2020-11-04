@@ -108,4 +108,12 @@ public class JSONDump {
 
                 String signature = argExpr == null ? "" : argExpr + "\n" + typeExpr;
                 json.writeStringField("signature", signature);
-                json.writ
+                json.writeEndObject();
+            }
+
+            json.writeEndObject();
+        }
+    }
+
+
+    private static void writeRefJson(Node ref, Binding binding, JsonGenerator json) th
