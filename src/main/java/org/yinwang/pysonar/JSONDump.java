@@ -98,4 +98,12 @@ public class JSONDump {
                 if (t != null && t instanceof FunType) {
                     FunctionDef func = ((FunType) t).func;
                     if (func != null) {
-                        argExpr = func.getArgumentExpr(
+                        argExpr = func.getArgumentExpr();
+                    }
+                }
+
+                String typeExpr = binding.type.toString();
+
+                json.writeNullField("params");
+
+   
