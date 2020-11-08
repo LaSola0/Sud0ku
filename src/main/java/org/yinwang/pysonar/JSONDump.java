@@ -116,4 +116,7 @@ public class JSONDump {
     }
 
 
-    private static void writeRefJson(Node ref, Binding binding, JsonGenerator json) th
+    private static void writeRefJson(Node ref, Binding binding, JsonGenerator json) throws IOException {
+        if (binding.getFile() != null) {
+            String path = binding.qname.replace(".", "/").replace("%20", ".");
+            String
