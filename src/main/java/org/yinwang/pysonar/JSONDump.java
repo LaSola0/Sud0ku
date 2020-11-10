@@ -126,4 +126,6 @@ public class JSONDump {
                     json.writeStartObject();
                     json.writeStringField("sym", path);
                     json.writeStringField("file", ref.file);
-                   
+                    json.writeNumberField("start", ref.start);
+                    json.writeNumberField("end", ref.end);
+                    json.writeBooleanField("builtin", bindi
