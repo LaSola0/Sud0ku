@@ -122,4 +122,8 @@ public class JSONDump {
             String key = ref.file + ":" + ref.start;
             if (!seenRef.contains(key)) {
                 seenRef.add(key);
-                if (binding.start >= 0 && ref.start >= 0 && !binding.isBuil
+                if (binding.start >= 0 && ref.start >= 0 && !binding.isBuiltin()) {
+                    json.writeStartObject();
+                    json.writeStringField("sym", path);
+                    json.writeStringField("file", ref.file);
+                   
