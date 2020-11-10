@@ -119,4 +119,7 @@ public class JSONDump {
     private static void writeRefJson(Node ref, Binding binding, JsonGenerator json) throws IOException {
         if (binding.getFile() != null) {
             String path = binding.qname.replace(".", "/").replace("%20", ".");
-            String
+            String key = ref.file + ":" + ref.start;
+            if (!seenRef.contains(key)) {
+                seenRef.add(key);
+                if (binding.start >= 0 && ref.start >= 0 && !binding.isBuil
