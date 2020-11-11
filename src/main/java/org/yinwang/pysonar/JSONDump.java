@@ -128,4 +128,12 @@ public class JSONDump {
                     json.writeStringField("file", ref.file);
                     json.writeNumberField("start", ref.start);
                     json.writeNumberField("end", ref.end);
-                    json.writeBooleanField("builtin", bindi
+                    json.writeBooleanField("builtin", binding.isBuiltin());
+                    json.writeEndObject();
+                }
+            }
+        }
+    }
+
+
+    private static void writeDocJson(Bin
