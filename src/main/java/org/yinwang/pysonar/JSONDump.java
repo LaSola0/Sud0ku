@@ -137,4 +137,12 @@ public class JSONDump {
 
 
     private static void writeDocJson(Binding binding, Analyzer idx, JsonGenerator json) throws Exception {
-        String path = binding.qname.replace('.', '/').replace("%20", ".")
+        String path = binding.qname.replace('.', '/').replace("%20", ".");
+
+        if (!seenDocs.contains(path)) {
+            seenDocs.add(path);
+
+            Str doc = binding.getDocstring();
+
+            if (doc != null) {
+   
