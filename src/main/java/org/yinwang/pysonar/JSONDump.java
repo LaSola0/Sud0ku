@@ -145,4 +145,7 @@ public class JSONDump {
             Str doc = binding.getDocstring();
 
             if (doc != null) {
-   
+                json.writeStartObject();
+                json.writeStringField("sym", path);
+                json.writeStringField("file", binding.fileOrUrl);
+                json.writeStrin
