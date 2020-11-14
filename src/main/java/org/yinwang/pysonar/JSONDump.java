@@ -136,4 +136,5 @@ public class JSONDump {
     }
 
 
-    private static void writeDocJson(Bin
+    private static void writeDocJson(Binding binding, Analyzer idx, JsonGenerator json) throws Exception {
+        String path = binding.qname.replace('.', '/').replace("%20", ".")
