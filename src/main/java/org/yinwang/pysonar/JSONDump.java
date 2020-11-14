@@ -148,4 +148,8 @@ public class JSONDump {
                 json.writeStartObject();
                 json.writeStringField("sym", path);
                 json.writeStringField("file", binding.fileOrUrl);
-                json.writeStrin
+                json.writeStringField("body", doc.value);
+                json.writeNumberField("start", doc.start);
+                json.writeNumberField("end", doc.end);
+                json.writeEndObject();
+            
