@@ -161,4 +161,7 @@ public class JSONDump {
      * Precondition: srcpath and inclpaths are absolute paths
      */
     private static void graph(String srcpath,
-                              String[] incl
+                              String[] inclpaths,
+                              OutputStream symOut,
+                              OutputStream refOut,
+                              OutputStream docOut) throws Exception 
