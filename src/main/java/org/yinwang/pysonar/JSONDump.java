@@ -152,4 +152,13 @@ public class JSONDump {
                 json.writeNumberField("start", doc.start);
                 json.writeNumberField("end", doc.end);
                 json.writeEndObject();
-            
+            }
+        }
+    }
+
+
+    /*
+     * Precondition: srcpath and inclpaths are absolute paths
+     */
+    private static void graph(String srcpath,
+                              String[] incl
