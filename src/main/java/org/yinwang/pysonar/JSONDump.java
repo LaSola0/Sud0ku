@@ -164,4 +164,7 @@ public class JSONDump {
                               String[] inclpaths,
                               OutputStream symOut,
                               OutputStream refOut,
-                              OutputStream docOut) throws Exception 
+                              OutputStream docOut) throws Exception {
+        // Compute parent dirs, sort by length so potential prefixes show up first
+        List<String> parentDirs = Lists.newArrayList(inclpaths);
+        parentDirs.add(dirname(srcp
