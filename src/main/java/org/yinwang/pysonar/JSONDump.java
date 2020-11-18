@@ -171,4 +171,12 @@ public class JSONDump {
         Collections.sort(parentDirs, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                int diff = s1.length
+                int diff = s1.length() - s2.length();
+                if (0 == diff) {
+                    return s1.compareTo(s2);
+                }
+                return diff;
+            }
+        });
+
+        Analyzer i
