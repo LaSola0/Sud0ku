@@ -179,4 +179,7 @@ public class JSONDump {
             }
         });
 
-        Analyzer i
+        Analyzer idx = newAnalyzer(srcpath, inclpaths);
+        idx.multilineFunType = true;
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonGenerator symJson
