@@ -182,4 +182,7 @@ public class JSONDump {
         Analyzer idx = newAnalyzer(srcpath, inclpaths);
         idx.multilineFunType = true;
         JsonFactory jsonFactory = new JsonFactory();
-        JsonGenerator symJson
+        JsonGenerator symJson = jsonFactory.createGenerator(symOut);
+        JsonGenerator refJson = jsonFactory.createGenerator(refOut);
+        JsonGenerator docJson = jsonFactory.createGenerator(docOut);
+        JsonG
