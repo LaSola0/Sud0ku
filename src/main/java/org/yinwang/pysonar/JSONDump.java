@@ -185,4 +185,7 @@ public class JSONDump {
         JsonGenerator symJson = jsonFactory.createGenerator(symOut);
         JsonGenerator refJson = jsonFactory.createGenerator(refOut);
         JsonGenerator docJson = jsonFactory.createGenerator(docOut);
-        JsonG
+        JsonGenerator[] allJson = {symJson, refJson, docJson};
+        for (JsonGenerator json : allJson) {
+            json.writeStartArray();
+        }
