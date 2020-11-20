@@ -189,3 +189,9 @@ public class JSONDump {
         for (JsonGenerator json : allJson) {
             json.writeStartArray();
         }
+
+        for (Binding b : idx.getAllBindings()) {
+            String path = b.qname.replace('.', '/').replace("%20", ".");
+
+            if (b.getFile() != null) {
+    
