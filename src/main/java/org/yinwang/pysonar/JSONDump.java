@@ -203,4 +203,11 @@ public class JSONDump {
             for (Node ref : b.refs) {
                 if (ref.file != null) {
                     if (ref.file.startsWith(srcpath)) {
-                     
+                        writeRefJson(ref, b, refJson);
+                    }
+                }
+            }
+        }
+
+        for (JsonGenerator json : allJson) {
+            json
