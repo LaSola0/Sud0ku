@@ -210,4 +210,16 @@ public class JSONDump {
         }
 
         for (JsonGenerator json : allJson) {
-            json
+            json.writeEndArray();
+            json.close();
+        }
+    }
+
+
+    private static void info(Object msg) {
+        System.out.println(msg);
+    }
+
+
+    private static void usage() {
+    
