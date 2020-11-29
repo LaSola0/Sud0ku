@@ -198,4 +198,9 @@ public class JSONDump {
                     writeSymJson(b, symJson);
                     writeDocJson(b, idx, docJson);
                 }
-           
+            }
+
+            for (Node ref : b.refs) {
+                if (ref.file != null) {
+                    if (ref.file.startsWith(srcpath)) {
+                     
