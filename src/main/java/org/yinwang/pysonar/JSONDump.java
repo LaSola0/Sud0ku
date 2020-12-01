@@ -222,4 +222,5 @@ public class JSONDump {
 
 
     private static void usage() {
-    
+        info("Usage: java org.yinwang.pysonar.dump <source-path> <include-paths> <out-root> [verbose]");
+        info("  <source-path> is path to source unit (pac
