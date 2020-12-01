@@ -223,4 +223,6 @@ public class JSONDump {
 
     private static void usage() {
         info("Usage: java org.yinwang.pysonar.dump <source-path> <include-paths> <out-root> [verbose]");
-        info("  <source-path> is path to source unit (pac
+        info("  <source-path> is path to source unit (package directory or module file) that will be graphed");
+        info("  <include-paths> are colon-separated paths to included libs");
+        info("  <out-root> is the pr
