@@ -225,4 +225,5 @@ public class JSONDump {
         info("Usage: java org.yinwang.pysonar.dump <source-path> <include-paths> <out-root> [verbose]");
         info("  <source-path> is path to source unit (package directory or module file) that will be graphed");
         info("  <include-paths> are colon-separated paths to included libs");
-        info("  <out-root> is the pr
+        info("  <out-root> is the prefix of the output files.  There are 3 output files: <out-root>-doc, <out-root>-sym, <out-root>-ref");
+        info("  [verbose] if set, then verbose logging is used (optional)
