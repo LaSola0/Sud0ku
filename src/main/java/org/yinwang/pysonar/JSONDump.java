@@ -240,3 +240,9 @@ public class JSONDump {
         if (args.length >= 4) {
             log.setLevel(Level.ALL);
             log.info("LOGGING VERBOSE");
+            log.info("ARGS: " + Arrays.toString(args));
+        }
+
+        String srcpath = args[0];
+        String[] inclpaths = args[1].split(":");
+        Str
