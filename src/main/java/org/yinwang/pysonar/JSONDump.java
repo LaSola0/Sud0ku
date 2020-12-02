@@ -226,4 +226,12 @@ public class JSONDump {
         info("  <source-path> is path to source unit (package directory or module file) that will be graphed");
         info("  <include-paths> are colon-separated paths to included libs");
         info("  <out-root> is the prefix of the output files.  There are 3 output files: <out-root>-doc, <out-root>-sym, <out-root>-ref");
-        info("  [verbose] if set, then verbose logging is used (optional)
+        info("  [verbose] if set, then verbose logging is used (optional)");
+    }
+
+
+    public static void main(String[] args) throws Exception {
+        if (args.length < 3 || args.length > 4) {
+            usage();
+            return;
+  
