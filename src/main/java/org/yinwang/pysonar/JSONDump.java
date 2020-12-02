@@ -234,4 +234,9 @@ public class JSONDump {
         if (args.length < 3 || args.length > 4) {
             usage();
             return;
-  
+        }
+
+        log.setLevel(Level.SEVERE);
+        if (args.length >= 4) {
+            log.setLevel(Level.ALL);
+            log.info("LOGGING VERBOSE");
