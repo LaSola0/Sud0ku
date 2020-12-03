@@ -249,4 +249,7 @@ public class JSONDump {
 
         String symFilename = outroot + "-sym";
         String refFilename = outroot + "-ref";
-        String docFilename = outroot + "
+        String docFilename = outroot + "-doc";
+        OutputStream symOut = null, refOut = null, docOut = null;
+        try {
+            docOut = new BufferedOutputStream(new FileOutputStream(doc
