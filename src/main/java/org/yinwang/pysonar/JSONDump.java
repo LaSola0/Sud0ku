@@ -245,4 +245,8 @@ public class JSONDump {
 
         String srcpath = args[0];
         String[] inclpaths = args[1].split(":");
-        Str
+        String outroot = args[2];
+
+        String symFilename = outroot + "-sym";
+        String refFilename = outroot + "-ref";
+        String docFilename = outroot + "
