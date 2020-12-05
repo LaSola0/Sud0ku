@@ -259,4 +259,9 @@ public class JSONDump {
             graph(srcpath, inclpaths, symOut, refOut, docOut);
             docOut.flush();
             symOut.flush();
-            refOut.flush()
+            refOut.flush();
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file: " + e);
+            return;
+        } finally {
+            if (doc
