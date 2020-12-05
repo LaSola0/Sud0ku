@@ -254,4 +254,9 @@ public class JSONDump {
         try {
             docOut = new BufferedOutputStream(new FileOutputStream(docFilename));
             symOut = new BufferedOutputStream(new FileOutputStream(symFilename));
-            refOut = new BufferedOutputStream(new FileOutputStream(refFilename)
+            refOut = new BufferedOutputStream(new FileOutputStream(refFilename));
+            $.msg("graphing: " + srcpath);
+            graph(srcpath, inclpaths, symOut, refOut, docOut);
+            docOut.flush();
+            symOut.flush();
+            refOut.flush()
