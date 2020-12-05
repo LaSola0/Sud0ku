@@ -252,4 +252,6 @@ public class JSONDump {
         String docFilename = outroot + "-doc";
         OutputStream symOut = null, refOut = null, docOut = null;
         try {
-            docOut = new BufferedOutputStream(new FileOutputStream(doc
+            docOut = new BufferedOutputStream(new FileOutputStream(docFilename));
+            symOut = new BufferedOutputStream(new FileOutputStream(symFilename));
+            refOut = new BufferedOutputStream(new FileOutputStream(refFilename)
