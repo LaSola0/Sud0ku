@@ -264,4 +264,10 @@ public class JSONDump {
             System.err.println("Could not find file: " + e);
             return;
         } finally {
-            if (doc
+            if (docOut != null) {
+                docOut.close();
+            }
+            if (symOut != null) {
+                symOut.close();
+            }
+            if (r
