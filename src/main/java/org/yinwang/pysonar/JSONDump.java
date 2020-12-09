@@ -270,4 +270,10 @@ public class JSONDump {
             if (symOut != null) {
                 symOut.close();
             }
-            if (r
+            if (refOut != null) {
+                refOut.close();
+            }
+        }
+        log.info("SUCCESS");
+    }
+}
