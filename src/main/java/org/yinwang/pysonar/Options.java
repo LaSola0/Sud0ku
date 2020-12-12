@@ -14,4 +14,8 @@ public class Options {
 
 
     public Options(String[] args) {
-        for (int i = 0; i < args.length
+        for (int i = 0; i < args.length; i++) {
+            String key = args[i];
+            if (key.startsWith("--")) {
+                if (i + 1 >= args.length) {
+                    $.die("option needs a value: " 
