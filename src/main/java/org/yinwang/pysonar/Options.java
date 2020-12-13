@@ -22,4 +22,10 @@ public class Options {
                 } else {
                     key = key.substring(2);
                     String value = args[i + 1];
-                    if (!value.startsWit
+                    if (!value.startsWith("-")) {
+                        optionsMap.put(key, value);
+                        i++;
+                    }
+                }
+            } else if (key.startsWith("-")) {
+    
