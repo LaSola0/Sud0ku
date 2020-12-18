@@ -53,4 +53,14 @@ public class Options {
 
 
     public void put(String key, Object value) {
-        optionsMap.pu
+        optionsMap.put(key, value);
+    }
+
+
+    public List<String> getArgs() {
+        return args;
+    }
+
+
+    public Map<String, Object> getOptionsMap() {
+        return optio
