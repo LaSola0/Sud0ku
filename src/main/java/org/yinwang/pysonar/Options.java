@@ -37,4 +37,11 @@ public class Options {
     }
 
 
-   
+    public Object get(String key) {
+        return optionsMap.get(key);
+    }
+
+
+    public boolean hasOption(String key) {
+        Object v = optionsMap.get(key);
+        if (v i
