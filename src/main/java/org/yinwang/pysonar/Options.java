@@ -63,4 +63,10 @@ public class Options {
 
 
     public Map<String, Object> getOptionsMap() {
-        return optio
+        return optionsMap;
+    }
+
+
+    public static void main(String[] args) {
+        Options options = new Options(args);
+        for (String key : options.optionsMap.keySet
