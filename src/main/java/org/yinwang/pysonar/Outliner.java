@@ -78,3 +78,166 @@ public class Outliner {
             this.qname = qname;
         }
 
+
+        /**
+         * Returns the file offset of the beginning of the identifier referenced
+         * by this outline entry.
+         */
+        public int getOffset() {
+            return offset;
+        }
+
+
+        public void setOffset(int offset) {
+            this.offset = offset;
+        }
+
+
+        public void setKind(@Nullable Binding.Kind kind) {
+            if (kind == null) {
+                throw new IllegalArgumentException("kind param cannot be null");
+            }
+            this.kind = kind;
+        }
+
+
+        /**
+         * Returns the simple (unqualified) name of the identifier.
+         */
+        public String getName() {
+            String[] parts = qname.split("[.&@%]");
+            return parts[parts.length - 1];
+        }
+
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            toString(sb, 0);
+            return sb.toString().trim();
+        }
+
+
+        public void toString(@NotNull StringBuilder sb, int depth) {
+            for (int i = 0; i < depth; i++) {
+                sb.append("  ");
+            }
+            sb.append(kind);
+            sb.append(" ");
+            sb.append(getName());
+            sb.append("\n");
+            if (hasChildren()) {
+                for (Entry e : getChildren()) {
+                    e.toString(sb, depth + 1);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * An outline entry with children.
+     */
+    public static class Branch extends Entry {
+        private List<Entry> children = new ArrayList<>();
+
+
+        public Branch() {
+        }
+
+
+        public Branch(String qname, int start, Binding.Kind kind) {
+            super(qname, start, kind);
+        }
+
+
+        @Override
+        public boolean isLeaf() {
+            return false;
+        }
+
+
+        @Override
+        public boolean isBranch() {
+            return true;
+        }
+
+
+        @Override
+        public boolean hasChildren() {
+            return children != null && !children.isEmpty();
+        }
+
+
+        @Override
+        public List<Entry> getChildren() {
+            return children;
+        }
+
+
+        @Override
+        public void setChildren(List<Entry> children) {
+            this.children = children;
+        }
+    }
+
+
+    /**
+     * An entry with no children.
+     */
+    public static class Leaf extends Entry {
+        @Override
+        public boolean isLeaf() {
+            return true;
+        }
+
+
+        @Override
+        public boolean isBranch() {
+            return false;
+        }
+
+
+        public Leaf() {
+        }
+
+
+        public Leaf(String qname, int start, Binding.Kind kind) {
+            super(qname, start, kind);
+        }
+
+
+        @Override
+        public boolean hasChildren() {
+            return false;
+        }
+
+
+        @Override
+        @NotNull
+        public List<Entry> getChildren() {
+            return new ArrayList<>();
+        }
+
+
+        @Override
+        public void setChildren(List<Entry> children) {
+            throw new UnsupportedOperationException("Leaf nodes cannot have children.");
+        }
+    }
+
+
+    /**
+     * Create an outline for a file in the index.
+     *
+     * @param idx     the file scope
+     * @param abspath the file for which to build the outline
+     * @return a list of entries constituting the file outline.
+     * Returns an empty list if the analyzer hasn't analyzed that path.
+     */
+    @NotNull
+    public List<Entry> generate(@NotNull Analyzer idx, @NotNull String abspath) {
+        Type mt = idx.loadFile(abspath);
+        if (mt == null) {
+            return new ArrayList<>();
+        }
