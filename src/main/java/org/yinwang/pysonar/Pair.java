@@ -4,4 +4,11 @@ import java.util.Objects;
 
 public class Pair {
     public Object first;
-    public Obj
+    public Object second;
+
+    public Pair(Object first, Object second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public boolean equals(
