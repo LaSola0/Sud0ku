@@ -154,3 +154,177 @@ public class Parser {
                 return new Assign(targets.get(0), value, file, start, end, line, col);
             } else {
                 List<Node> assignments = new ArrayList<>();
+                Node lastTarget = targets.get(targets.size() - 1);
+                assignments.add(new Assign(lastTarget, value, file, start, end, line, col));
+
+                for (int i = targets.size() - 2; i >= 0; i--) {
+                    Node nextAssign = new Assign(targets.get(i), lastTarget, file, start, end, line, col);
+                    assignments.add(nextAssign);
+                }
+
+                return new Block(assignments, file, start, end, line, col);
+            }
+        }
+
+        if (type.equals("Attribute")) {
+            Node value = convert(map.get("value"));
+            Name attr = (Name) convert(map.get("attr_name"));
+            if (attr == null) {
+                attr = new Name((String) map.get("attr"));
+            }
+            return new Attribute(value, attr, file, start, end, line, col);
+        }
+
+        if (type.equals("AugAssign")) {
+            Node target = convert(map.get("target"));
+            Node value = convert(map.get("value"));
+            Op op = convertOp(map.get("op"));
+            Node operation = new BinOp(op, target, value, file, target.start, value.end, value.line, value.col);
+            return new Assign(target, operation, file, start, end, line, col);
+        }
+
+        if (type.equals("BinOp")) {
+            Node left = convert(map.get("left"));
+            Node right = convert(map.get("right"));
+            Op op = convertOp(map.get("op"));
+
+            // desugar complex operators
+            if (op == Op.NotEqual) {
+                Node eq = new BinOp(Op.Equal, left, right, file, start, end, line, col);
+                return new UnaryOp(Op.Not, eq, file, start, end, line, col);
+            }
+
+            if (op == Op.LtE) {
+                Node lt = new BinOp(Op.Lt, left, right, file, start, end, line, col);
+                Node eq = new BinOp(Op.Eq, left, right, file, start, end, line, col);
+                return new BinOp(Op.Or, lt, eq, file, start, end, line, col);
+            }
+
+            if (op == Op.GtE) {
+                Node gt = new BinOp(Op.Gt, left, right, file, start, end, line, col);
+                Node eq = new BinOp(Op.Eq, left, right, file, start, end, line, col);
+                return new BinOp(Op.Or, gt, eq, file, start, end, line, col);
+            }
+
+            if (op == Op.NotIn) {
+                Node in = new BinOp(Op.In, left, right, file, start, end, line, col);
+                return new UnaryOp(Op.Not, in, file, start, end, line, col);
+            }
+
+            if (op == Op.NotEq) {
+                Node in = new BinOp(Op.Eq, left, right, file, start, end, line, col);
+                return new UnaryOp(Op.Not, in, file, start, end, line, col);
+            }
+
+            return new BinOp(op, left, right, file, start, end, line, col);
+
+        }
+
+        if (type.equals("BoolOp")) {
+            List<Node> values = convertList(map.get("values"));
+            if (values == null || values.size() < 2) {
+                $.die("impossible number of arguments, please fix the Python parser");
+            }
+            Op op = convertOp(map.get("op"));
+            BinOp ret = new BinOp(op, values.get(0), values.get(1), file, start, end, line, col);
+            for (int i = 2; i < values.size(); i++) {
+                ret = new BinOp(op, ret, values.get(i), file, start, end, line, col);
+            }
+            return ret;
+        }
+
+        if (type.equals("Bytes")) {
+            Object s = map.get("s");
+            return new Bytes(s, file, start, end, line, col);
+        }
+
+        if (type.equals("Call")) {
+            Node func = convert(map.get("func"));
+            List<Node> args = convertList(map.get("args"));
+            List<Keyword> keywords = convertList(map.get("keywords"));
+            Node kwargs = convert(map.get("kwargs"));
+            Node starargs = convert(map.get("starargs"));
+            return new Call(func, args, keywords, kwargs, starargs, file, start, end, line, col);
+        }
+
+        if (type.equals("ClassDef")) {
+            Name name = (Name) convert(map.get("name_node"));      // hack
+            List<Node> bases = convertList(map.get("bases"));
+            Block body = convertBlock(map.get("body"));
+            return new ClassDef(name, bases, body, file, start, end, line, col);
+        }
+
+        // left-fold Compare into
+        if (type.equals("Compare")) {
+            Node left = convert(map.get("left"));
+            List<Op> ops = convertListOp(map.get("ops"));
+            List<Node> comparators = convertList(map.get("comparators"));
+            Node result = new BinOp(ops.get(0), left, comparators.get(0), file, start, end, line, col);
+            for (int i = 1; i < comparators.size(); i++) {
+                Node compNext = new BinOp(ops.get(i), comparators.get(i - 1), comparators.get(i), file, start, end, line, col);
+                result = new BinOp(Op.And, result, compNext, file, start, end, line, col);
+            }
+            return result;
+        }
+
+        if (type.equals("comprehension")) {
+            Node target = convert(map.get("target"));
+            Node iter = convert(map.get("iter"));
+            List<Node> ifs = convertList(map.get("ifs"));
+            return new Comprehension(target, iter, ifs, file, start, end, line, col);
+        }
+
+        if (type.equals("Break")) {
+            return new Break(file, start, end, line, col);
+        }
+
+        if (type.equals("Continue")) {
+            return new Continue(file, start, end, line, col);
+        }
+
+        if (type.equals("Delete")) {
+            List<Node> targets = convertList(map.get("targets"));
+            return new Delete(targets, file, start, end, line, col);
+        }
+
+        if (type.equals("Dict")) {
+            List<Node> keys = convertList(map.get("keys"));
+            List<Node> values = convertList(map.get("values"));
+            return new Dict(keys, values, file, start, end, line, col);
+        }
+
+        if (type.equals("DictComp")) {
+            Node key = convert(map.get("key"));
+            Node value = convert(map.get("value"));
+            List<Comprehension> generators = convertList(map.get("generators"));
+            return new DictComp(key, value, generators, file, start, end, line, col);
+        }
+
+        if (type.equals("Ellipsis")) {
+            return new Ellipsis(file, start, end, line, col);
+        }
+
+        if (type.equals("ExceptHandler")) {
+            Node exception = convert(map.get("type"));
+            List<Node> exceptions;
+
+            if (exception != null) {
+                exceptions = new ArrayList<>();
+                exceptions.add(exception);
+            } else {
+                exceptions = null;
+            }
+
+            Node binder = convert(map.get("name"));
+            Block body = convertBlock(map.get("body"));
+            return new Handler(exceptions, binder, body, file, start, end, line, col);
+        }
+
+        if (type.equals("Exec")) {
+            Node body = convert(map.get("body"));
+            Node globals = convert(map.get("globals"));
+            Node locals = convert(map.get("locals"));
+            return new Exec(body, globals, locals, file, start, end, line, col);
+        }
+
+        if (type.equals("Expr")) {
