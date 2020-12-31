@@ -13,4 +13,6 @@ public class Pair {
 
     public boolean equals(Object first, Object second) {
         return this.first == first && this.second == second ||
-               this.first == second && this.second =
+               this.first == second && this.second == first;
+    }
+}
