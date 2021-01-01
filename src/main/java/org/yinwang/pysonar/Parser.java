@@ -328,3 +328,191 @@ public class Parser {
         }
 
         if (type.equals("Expr")) {
+            Node value = convert(map.get("value"));
+            return new Expr(value, file, start, end, line, col);
+        }
+
+        if (type.equals("For") || type.equals("AsyncFor")) {
+            Node target = convert(map.get("target"));
+            Node iter = convert(map.get("iter"));
+            Block body = convertBlock(map.get("body"));
+            Block orelse = convertBlock(map.get("orelse"));
+            return new For(target, iter, body, orelse, type.equals("AsyncFor"), file, start, end, line, col);
+        }
+
+        if (type.equals("FunctionDef") || type.equals("Lambda") || type.equals("AsyncFunctionDef")) {
+            Name name = type.equals("Lambda") ? null : (Name) convert(map.get("name_node"));
+            Map<String, Object> argsMap = (Map<String, Object>) map.get("args");
+            List<Node> args = convertList(argsMap.get("args"));
+            List<Node> defaults = convertList(argsMap.get("defaults"));
+            Node body = type.equals("Lambda") ? convert(map.get("body")) : convertBlock(map.get("body"));
+
+            // handle vararg depending on different python versions
+            Name vararg = null;
+            Object varargObj = argsMap.get("vararg");
+            if (varargObj instanceof String) {
+                vararg = new Name((String) argsMap.get("vararg"));
+            } else if (varargObj instanceof Map) {
+                String argName = (String) ((Map) varargObj).get("arg");
+                vararg = new Name(argName);
+            }
+
+            // handle kwarg depending on different python versions
+            Name kwarg = null;
+            Object kwargObj = argsMap.get("kwarg");
+            if (kwargObj instanceof String) {
+                kwarg = new Name((String) argsMap.get("kwarg"));
+            } else if (kwargObj instanceof Map) {
+                String argName = (String) ((Map) kwargObj).get("arg");
+                kwarg = new Name(argName);
+            }
+
+            boolean isAsync = type.equals("AsyncFunctionDef");
+
+            List<Node> decors = new ArrayList<>();
+            if (map.containsKey("decorator_list")) {
+                decors = convertList(map.get("decorator_list"));
+            }
+
+            return new FunctionDef(name, args, body, defaults, vararg, kwarg, decors, file, isAsync, start, end, line, col);
+        }
+
+        if (type.equals("GeneratorExp")) {
+            Node elt = convert(map.get("elt"));
+            List<Comprehension> generators = convertList(map.get("generators"));
+            return new GeneratorExp(elt, generators, file, start, end, line, col);
+        }
+
+        if (type.equals("Global")) {
+            List<String> names = (List<String>) map.get("names");
+            List<Name> nameNodes = new ArrayList<>();
+            for (String name : names) {
+                nameNodes.add(new Name(name));
+            }
+            return new Global(nameNodes, file, start, end, line, col);
+        }
+
+        if (type.equals("Nonlocal")) {
+            List<String> names = (List<String>) map.get("names");
+            List<Name> nameNodes = new ArrayList<>();
+            for (String name : names) {
+                nameNodes.add(new Name(name));
+            }
+            return new Global(nameNodes, file, start, end, line, col);
+        }
+
+        if (type.equals("If")) {
+            Node test = convert(map.get("test"));
+            Block body = convertBlock(map.get("body"));
+            Block orelse = convertBlock(map.get("orelse"));
+            return new If(test, body, orelse, file, start, end, line, col);
+        }
+
+        if (type.equals("IfExp")) {
+            Node test = convert(map.get("test"));
+            Node body = convert(map.get("body"));
+            Node orelse = convert(map.get("orelse"));
+            return new IfExp(test, body, orelse, file, start, end, line, col);
+        }
+
+
+        if (type.equals("Import")) {
+            List<Alias> aliases = convertList(map.get("names"));
+            locateNames(aliases, start);
+            return new Import(aliases, file, start, end, line, col);
+        }
+
+        if (type.equals("ImportFrom")) {
+            String module = (String) map.get("module");
+            int level = ((Double) map.get("level")).intValue();
+            List<Name> moduleSeg = module == null ? null : segmentQname(module, start + "from ".length() + level, true);
+            List<Alias> names = convertList(map.get("names"));
+            locateNames(names, start);
+            return new ImportFrom(moduleSeg, names, level, file, start, end, line, col);
+        }
+
+        if (type.equals("Index")) {
+            Node value = convert(map.get("value"));
+            return new Index(value, file, start, end, line, col);
+        }
+
+        if (type.equals("keyword")) {
+            String arg = (String) map.get("arg");
+            Node value = convert(map.get("value"));
+            return new Keyword(arg, value, file, start, end, line, col);
+        }
+
+        if (type.equals("List")) {
+            List<Node> elts = convertList(map.get("elts"));
+            return new PyList(elts, file, start, end, line, col);
+        }
+
+        if (type.equals("Starred")) { // f(*[1, 2, 3, 4])
+            Node value = convert(map.get("value"));
+            return new Starred(value, file, start, end, line, col);
+        }
+
+        if (type.equals("ListComp")) {
+            Node elt = convert(map.get("elt"));
+            List<Comprehension> generators = convertList(map.get("generators"));
+            return new ListComp(elt, generators, file, start, end, line, col);
+        }
+
+        if (type.equals("Name")) {
+            String id = (String) map.get("id");
+            return new Name(id, file, start, end, line, col);
+        }
+
+        if (type.equals("NameConstant")) {
+            String strVal;
+            Object value = map.get("value");
+            if (value == null) {
+                strVal = "None";
+            } else if (value instanceof Boolean) {
+                strVal = ((Boolean) value) ? "True" : "False";
+            } else if (value instanceof String) {
+                strVal = (String) value;
+            } else {
+                $.msg("[Please report issue] NameConstant contains unrecognized value: " + value);
+                strVal = "";
+            }
+            return new Name(strVal, file, start, end, line, col);
+        }
+
+        // Python3's new node type 'Constant'
+        // Just convert to other types and call convert again
+        if (type.equals("Constant")) {
+            Object value = map.get("value");
+
+            if (map.containsKey("num_type")) {
+                map.put("pysonar_node_type", "Num");
+                map.put("n", map.get("value"));
+                return convert(map);
+            }
+            else if (value instanceof String) {
+                map.put("pysonar_node_type", "Str");
+                map.put("s", value);
+                return convert(map);
+            }
+            else if (value instanceof Boolean) {
+                map.put("pysonar_node_type", "NameConstant");
+                return convert(map);
+            }
+            else {
+                $.msg("\n[Please report issue]: Unexpected Constant node: " + type
+                        + "\nnode: " + o + "\nfile: " + file);
+                return new Unsupported(file, start, end, line, col);
+            }
+        }
+
+        // another name for Name in Python3 func parameters?
+        if (type.equals("arg")) {
+            String id = (String) map.get("arg");
+            return new Name(id, file, start, end, line, col);
+        }
+
+        if (type.equals("Num")) {
+
+            String num_type = (String) map.get("num_type");
+            if (num_type.equals("int")) {
+                return new PyInt((String) map.get("n"), file, start, end, line, col);
