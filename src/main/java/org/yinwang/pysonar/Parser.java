@@ -516,3 +516,174 @@ public class Parser {
             String num_type = (String) map.get("num_type");
             if (num_type.equals("int")) {
                 return new PyInt((String) map.get("n"), file, start, end, line, col);
+            } else if (num_type.equals("float")) {
+                return new PyFloat((String) map.get("n"), file, start, end, line, col);
+            } else {
+                Object real = map.get("real");
+                Object imag = map.get("imag");
+
+                if (real instanceof String) {
+                    if (real.equals("Infinity")) {
+                        real = Double.POSITIVE_INFINITY;
+                    } else if (real.equals("-Infinity")) {
+                        real = Double.NEGATIVE_INFINITY;
+                    }
+                }
+                if (imag instanceof String) {
+                    if (imag.equals("Infinity")) {
+                        imag = Double.POSITIVE_INFINITY;
+                    } else if (real.equals("-Infinity")) {
+                        imag = Double.NEGATIVE_INFINITY;
+                    }
+                }
+                return new PyComplex((double) real, (double) imag, file, start, end, line, col);
+            }
+        }
+
+        if (type.equals("SetComp")) {
+            Node elt = convert(map.get("elt"));
+            List<Comprehension> generators = convertList(map.get("generators"));
+            return new SetComp(elt, generators, file, start, end, line, col);
+        }
+
+        if (type.equals("Pass")) {
+            return new Pass(file, start, end, line, col);
+        }
+
+        if (type.equals("Print")) {
+            List<Node> values = convertList(map.get("values"));
+            Node destination = convert(map.get("dest"));
+            return new Print(destination, values, file, start, end, line, col);
+        }
+
+        if (type.equals("Raise")) {
+            Node exceptionType = convert(map.get("type"));
+            Node inst = convert(map.get("inst"));
+            Node tback = convert(map.get("tback"));
+            return new Raise(exceptionType, inst, tback, file, start, end, line, col);
+        }
+
+        if (type.equals("Repr")) {
+            Node value = convert(map.get("value"));
+            return new Repr(value, file, start, end, line, col);
+        }
+
+        if (type.equals("Return")) {
+            Node value = convert(map.get("value"));
+            return new Return(value, file, start, end, line, col);
+        }
+
+        if (type.equals("Await")) {
+            Node value = convert(map.get("value"));
+            return new Return(value, file, start, end, line, col);
+        }
+
+        if (type.equals("Set")) {
+            List<Node> elts = convertList(map.get("elts"));
+            return new PySet(elts, file, start, end, line, col);
+        }
+
+        if (type.equals("SetComp")) {
+            Node elt = convert(map.get("elt"));
+            List<Comprehension> generators = convertList(map.get("generators"));
+            return new SetComp(elt, generators, file, start, end, line, col);
+        }
+
+        if (type.equals("Slice")) {
+            Node lower = convert(map.get("lower"));
+            Node step = convert(map.get("step"));
+            Node upper = convert(map.get("upper"));
+            return new Slice(lower, step, upper, file, start, end, line, col);
+        }
+
+        if (type.equals("ExtSlice")) {
+            List<Node> dims = convertList(map.get("dims"));
+            return new ExtSlice(dims, file, start, end, line, col);
+        }
+
+        if (type.equals("Str")) {
+            String s = (String) map.get("s");
+            if (s.length() >= 6 && s.startsWith("\"\"\"") && s.endsWith("\"\"\""))
+            {
+                s = s.substring(3, s.length() - 3);
+            }
+            else if (s.length() >= 2 && s.startsWith("\"") && s.endsWith("\""))
+            {
+                s = s.substring(1, s.length() - 1);
+            }
+            return new Str(s, file, start, end, line, col);
+        }
+
+        if (type.equals("Subscript")) {
+            Node value = convert(map.get("value"));
+            Node slice = convert(map.get("slice"));
+            return new Subscript(value, slice, file, start, end, line, col);
+        }
+
+        if (type.equals("Try")) {
+            Block body = convertBlock(map.get("body"));
+            Block orelse = convertBlock(map.get("orelse"));
+            List<Handler> handlers = convertList(map.get("handlers"));
+            Block finalbody = convertBlock(map.get("finalbody"));
+            return new Try(handlers, body, orelse, finalbody, file, start, end, line, col);
+        }
+
+        if (type.equals("TryExcept")) {
+            Block body = convertBlock(map.get("body"));
+            Block orelse = convertBlock(map.get("orelse"));
+            List<Handler> handlers = convertList(map.get("handlers"));
+            return new Try(handlers, body, orelse, null, file, start, end, line, col);
+        }
+
+        if (type.equals("TryFinally")) {
+            Block body = convertBlock(map.get("body"));
+            Block finalbody = convertBlock(map.get("finalbody"));
+            return new Try(null, body, null, finalbody, file, start, end, line, col);
+        }
+
+        if (type.equals("Tuple")) {
+            List<Node> elts = convertList(map.get("elts"));
+            return new Tuple(elts, file, start, end, line, col);
+        }
+
+        if (type.equals("UnaryOp")) {
+            Op op = convertOp(map.get("op"));
+            Node operand = convert(map.get("operand"));
+            return new UnaryOp(op, operand, file, start, end, line, col);
+        }
+
+        if (type.equals("While")) {
+            Node test = convert(map.get("test"));
+            Block body = convertBlock(map.get("body"));
+            Block orelse = convertBlock(map.get("orelse"));
+            return new While(test, body, orelse, file, start, end, line, col);
+        }
+
+        if (type.equals("With") || type.equals("AsyncWith")) {
+            List<Withitem> items = new ArrayList<>();
+
+            Node context_expr = convert(map.get("context_expr"));
+            Node optional_vars = convert(map.get("optional_vars"));
+            Block body = convertBlock(map.get("body"));
+
+            // Python 3 puts context_expr and optional_vars inside "items"
+            if (context_expr != null) {
+                Withitem item = new Withitem(context_expr, optional_vars, file, -1, -1, -1, -1);
+                items.add(item);
+            } else {
+                List<Map<String, Object>> itemsMap = (List<Map<String, Object>>) map.get("items");
+
+                for (Map<String, Object> m : itemsMap) {
+                    context_expr = convert(m.get("context_expr"));
+                    optional_vars = convert(m.get("optional_vars"));
+                    Withitem item = new Withitem(context_expr, optional_vars, file, -1, -1, -1, -1);
+                    items.add(item);
+                }
+            }
+
+            boolean isAsync = type.equals("AsyncWith");
+            return new With(items, body, file, isAsync, start, end, line, col);
+        }
+
+        if (type.equals("Yield")) {
+            Node value = convert(map.get("value"));
