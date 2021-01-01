@@ -687,3 +687,170 @@ public class Parser {
 
         if (type.equals("Yield")) {
             Node value = convert(map.get("value"));
+            return new Yield(value, file, start, end, line, col);
+        }
+
+        if (type.equals("YieldFrom")) {
+            Node value = convert(map.get("value"));
+            return new Yield(value, file, start, end, line, col);
+        }
+
+        $.msg("\n[Please report issue]: Unexpected ast node type: " + type
+                + "\nnode: " + o + "\nfile: " + file);
+
+        return new Unsupported(file, start, end, line, col);
+    }
+
+
+    @Nullable
+    private <T> List<T> convertList(@Nullable Object o) {
+        if (o == null) {
+            return null;
+        } else {
+            List<Map<String, Object>> in = (List<Map<String, Object>>) o;
+            List<T> out = new ArrayList<>();
+
+            for (Map<String, Object> m : in) {
+                Node n = convert(m);
+                if (n != null) {
+                    out.add((T) n);
+                }
+            }
+
+            return out;
+        }
+    }
+
+
+    // cpython ast doesn't have location information for names in the Alias node, thus we need to locate it here.
+    private void locateNames(List<Alias> names, int start) {
+        for (Alias a : names) {
+            for (Name name: a.name)
+            {
+                start = content.indexOf(name.id, start);
+                name.start = start;
+                name.end = start + name.id.length();
+                start = name.end;
+                if (a.asname != null)
+                {
+                    start = content.indexOf(a.asname.id, start);
+                    a.asname.start = start;
+                    a.asname.end = start + a.asname.id.length();
+                    a.asname.file = file;  // file is missing for asname node
+                    start = a.asname.end;
+                }
+            }
+        }
+    }
+
+
+    @Nullable
+    private List<Node> convertListNode(@Nullable Object o) {
+        if (o == null) {
+            return null;
+        } else {
+            List<Map<String, Object>> in = (List<Map<String, Object>>) o;
+            List<Node> out = new ArrayList<>();
+
+            for (Map<String, Object> m : in) {
+                Node n = convert(m);
+                if (n != null) {
+                    out.add(n);
+                }
+            }
+
+            return out;
+        }
+    }
+
+
+    @Nullable
+    private Block convertBlock(@Nullable Object o) {
+        if (o == null) {
+            return null;
+        } else {
+            List<Node> body = convertListNode(o);
+            if (body == null || body.isEmpty()) {
+                return null;
+            } else {
+                return new Block(body, file, 0, 0, 0, 0);
+            }
+        }
+    }
+
+
+    @Nullable
+    private List<Op> convertListOp(@Nullable Object o) {
+        if (o == null) {
+            return null;
+        } else {
+            List<Map<String, Object>> in = (List<Map<String, Object>>) o;
+            List<Op> out = new ArrayList<>();
+
+            for (Map<String, Object> m : in) {
+                Op n = convertOp(m);
+                if (n != null) {
+                    out.add(n);
+                }
+            }
+
+            return out;
+        }
+    }
+
+
+    public Op convertOp(Object map) {
+        String type = (String) ((Map<String, Object>) map).get("pysonar_node_type");
+
+        if (type.equals("Add") || type.equals("UAdd")) {
+            return Op.Add;
+        }
+
+        if (type.equals("Sub") || type.equals("USub")) {
+            return Op.Sub;
+        }
+
+        if (type.equals("Mult")) {
+            return Op.Mul;
+        }
+
+        if (type.equals("MatMult")) {
+            return Op.MatMult;
+        }
+
+        if (type.equals("Div")) {
+            return Op.Div;
+        }
+
+        if (type.equals("Pow")) {
+            return Op.Pow;
+        }
+
+        if (type.equals("Eq")) {
+            return Op.Equal;
+        }
+
+        if (type.equals("Is")) {
+            return Op.Eq;
+        }
+
+        if (type.equals("Lt")) {
+            return Op.Lt;
+        }
+
+        if (type.equals("Gt")) {
+            return Op.Gt;
+        }
+
+
+        if (type.equals("BitAnd")) {
+            return Op.BitAnd;
+        }
+
+        if (type.equals("BitOr")) {
+            return Op.BitOr;
+        }
+
+        if (type.equals("BitXor")) {
+            return Op.BitXor;
+        }
