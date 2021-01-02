@@ -15,4 +15,8 @@ public class Progress {
     long segSize;
 
 
-    public Progres
+    public Progress(long total, long width) {
+        this.startTime = System.currentTimeMillis();
+        this.lastTickTime = System.currentTimeMillis();
+        this.lastCount = 0;
+     
