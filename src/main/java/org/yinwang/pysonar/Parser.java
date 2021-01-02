@@ -854,3 +854,176 @@ public class Parser {
         if (type.equals("BitXor")) {
             return Op.BitXor;
         }
+
+
+        if (type.equals("In")) {
+            return Op.In;
+        }
+
+
+        if (type.equals("LShift")) {
+            return Op.LShift;
+        }
+
+        if (type.equals("FloorDiv")) {
+            return Op.FloorDiv;
+        }
+
+        if (type.equals("Mod")) {
+            return Op.Mod;
+        }
+
+        if (type.equals("RShift")) {
+            return Op.RShift;
+        }
+
+        if (type.equals("Invert")) {
+            return Op.Invert;
+        }
+
+        if (type.equals("And")) {
+            return Op.And;
+        }
+
+        if (type.equals("Or")) {
+            return Op.Or;
+        }
+
+        if (type.equals("Not")) {
+            return Op.Not;
+        }
+
+        if (type.equals("NotEq")) {
+            return Op.NotEqual;
+        }
+
+        if (type.equals("IsNot")) {
+            return Op.NotEq;
+        }
+
+        if (type.equals("LtE")) {
+            return Op.LtE;
+        }
+
+        if (type.equals("GtE")) {
+            return Op.GtE;
+        }
+
+        if (type.equals("NotIn")) {
+            return Op.NotIn;
+        }
+
+        $.msg("[please report] unsupported operator: " + type);
+        return Op.Unsupported;
+    }
+
+
+    @NotNull
+    List<Name> segmentQname(@NotNull String qname, int start, boolean hasLoc) {
+        List<Name> result = new ArrayList<>();
+
+        for (int i = 0; i < qname.length(); i++) {
+            StringBuilder name = new StringBuilder();
+            while (Character.isSpaceChar(qname.charAt(i))) {
+                i++;
+            }
+            int nameStart = i;
+
+            while (i < qname.length() &&
+                    (Character.isJavaIdentifierPart(qname.charAt(i)) ||
+                            qname.charAt(i) == '*') &&
+                    qname.charAt(i) != '.')
+            {
+                name.append(qname.charAt(i));
+                i++;
+            }
+
+            int nameStop = i;
+            int nstart = hasLoc ? start + nameStart : -1;
+            int nstop = hasLoc ? start + nameStop : -1;
+            result.add(new Name(name.toString(), file, nstart, nstop, 0, 0));
+        }
+
+        return result;
+    }
+
+
+    public String prettyJson(String json) {
+        Map<String, Object> obj = gson.fromJson(json, Map.class);
+        return gson.toJson(obj);
+    }
+
+    private int logCount = 0;
+
+    @Nullable
+    public Process startInterpreter(String pythonExe) {
+        Process p;
+        try {
+            ProcessBuilder builder = new ProcessBuilder(pythonExe, "-i", jsonizer);
+            builder.redirectErrorStream(true);
+            builder.redirectOutput(new File(parserLog + "-" + (logCount++)));
+            builder.environment().remove("PYTHONPATH");
+            p = builder.start();
+        } catch (Exception e) {
+            $.msg("Failed to start: " + pythonExe);
+            return null;
+        }
+        return p;
+    }
+
+
+    @Nullable
+    public Node parseFile(String filename) {
+        file = filename;
+        content = $.readFile(filename);
+
+        Node node2 = python2Process == null ? null : parseFileInner(filename, python2Process);
+        if (node2 != null) {
+            return node2;
+        } else if (python3Process != null) {
+            Node node3 = parseFileInner(filename, python3Process);
+            if (node3 == null) {
+                Analyzer.self.failedToParse.add(filename);
+                return null;
+            } else {
+                return node3;
+            }
+        } else {
+            Analyzer.self.failedToParse.add(filename);
+            return null;
+        }
+    }
+
+
+    @Nullable
+    public Node parseFileInner(String filename, @NotNull Process pythonProcess) {
+//        _.msg("parsing: " + filename);
+
+        File exchange = new File(exchangeFile);
+        File marker = new File(endMark);
+        cleanTemp();
+
+        String s1 = $.escapeWindowsPath(filename);
+        String s2 = $.escapeWindowsPath(exchangeFile);
+        String s3 = $.escapeWindowsPath(endMark);
+        String dumpCommand = "parse_dump('" + s1 + "', '" + s2 + "', '" + s3 + "')";
+
+        if (!sendCommand(dumpCommand, pythonProcess)) {
+            cleanTemp();
+            return null;
+        }
+
+        long waitStart = System.currentTimeMillis();
+        while (!marker.exists()) {
+            if (System.currentTimeMillis() - waitStart > TIMEOUT) {
+                Analyzer.self.failedToParse.add(filename);
+                cleanTemp();
+                startPythonProcesses();
+                return null;
+            }
+
+            try {
+                Thread.sleep(1);
+            } catch (Exception e) {
+                cleanTemp();
+                return null;
