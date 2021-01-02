@@ -1027,3 +1027,38 @@ public class Parser {
             } catch (Exception e) {
                 cleanTemp();
                 return null;
+            }
+        }
+
+        String json = $.readFile(exchangeFile);
+        if (json != null) {
+            cleanTemp();
+            Map<String, Object> map = gson.fromJson(json, Map.class);
+            return convert(map);
+        } else {
+            cleanTemp();
+            return null;
+        }
+    }
+
+
+    private void cleanTemp() {
+        new File(exchangeFile).delete();
+        new File(endMark).delete();
+    }
+
+
+    private boolean sendCommand(String cmd, @NotNull Process pythonProcess) {
+        try {
+            OutputStreamWriter writer = new OutputStreamWriter(pythonProcess.getOutputStream());
+            writer.write(cmd);
+            writer.write("\n");
+            writer.flush();
+            return true;
+        } catch (Exception e) {
+            $.msg("\nFailed to send command to interpreter: " + cmd);
+            return false;
+        }
+    }
+
+}
