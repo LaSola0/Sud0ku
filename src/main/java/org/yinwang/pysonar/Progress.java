@@ -19,4 +19,10 @@ public class Progress {
         this.startTime = System.currentTimeMillis();
         this.lastTickTime = System.currentTimeMillis();
         this.lastCount = 0;
-     
+        this.lastRate = 0;
+        this.lastAvgRate = 0;
+        this.total = total;
+        this.width = width;
+        this.segSize = total / width;
+        if (segSize == 0) {
+    
