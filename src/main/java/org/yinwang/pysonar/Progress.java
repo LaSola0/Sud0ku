@@ -36,4 +36,9 @@ public class Progress {
             total = count;
         }
 
-        long elapsed = Sys
+        long elapsed = System.currentTimeMillis() - lastTickTime;
+
+        if (elapsed > 500 || count == total) {
+            $.msg_("\r");
+            int dlen = (int) Math.ceil(Math.log10((double) total));
+            $.
