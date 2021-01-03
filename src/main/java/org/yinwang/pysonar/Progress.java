@@ -25,4 +25,15 @@ public class Progress {
         this.width = width;
         this.segSize = total / width;
         if (segSize == 0) {
-    
+            segSize = 1;
+        }
+    }
+
+
+    public void tick(int n) {
+        count += n;
+        if (count > total) {
+            total = count;
+        }
+
+        long elapsed = Sys
