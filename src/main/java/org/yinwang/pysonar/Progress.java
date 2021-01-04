@@ -41,4 +41,8 @@ public class Progress {
         if (elapsed > 500 || count == total) {
             $.msg_("\r");
             int dlen = (int) Math.ceil(Math.log10((double) total));
-            $.
+            $.msg_($.percent(count, total) + " (" +
+                    $.formatNumber(count, dlen) +
+                    " of " + $.formatNumber(total, dlen) + ")");
+
+            
