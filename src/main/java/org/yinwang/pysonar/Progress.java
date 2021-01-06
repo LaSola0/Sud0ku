@@ -45,4 +45,8 @@ public class Progress {
                     $.formatNumber(count, dlen) +
                     " of " + $.formatNumber(total, dlen) + ")");
 
-            
+            int rate;
+            if (elapsed > 1) {
+                rate = (int) ((count - lastCount) / (elapsed / 1000.0));
+            } else {
+                rate = lastRate
