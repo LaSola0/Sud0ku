@@ -49,4 +49,10 @@ public class Progress {
             if (elapsed > 1) {
                 rate = (int) ((count - lastCount) / (elapsed / 1000.0));
             } else {
-                rate = lastRate
+                rate = lastRate;
+            }
+
+            lastRate = rate;
+            $.msg_("   SPEED: " + $.formatNumber(rate, MAX_SPEED_DIGITS) + "/s");
+
+            long totalElapsed = System.currentTime
