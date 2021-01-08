@@ -65,4 +65,8 @@ public class Progress {
             }
             avgRate = avgRate == 0 ? 1 : avgRate;
 
-            $.msg_("   AVG SPEED: " + $.formatNu
+            $.msg_("   AVG SPEED: " + $.formatNumber(avgRate, MAX_SPEED_DIGITS) + "/s");
+
+            long remain = total - count;
+            long remainTime = remain / avgRate * 1000;
+            $.msg_("   ETA: 
