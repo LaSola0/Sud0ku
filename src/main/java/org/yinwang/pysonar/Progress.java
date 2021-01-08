@@ -61,4 +61,8 @@ public class Progress {
             if (totalElapsed > 1) {
                 avgRate = (int) (count / (totalElapsed / 1000.0));
             } else {
-       
+                avgRate = lastAvgRate;
+            }
+            avgRate = avgRate == 0 ? 1 : avgRate;
+
+            $.msg_("   AVG SPEED: " + $.formatNu
