@@ -69,4 +69,8 @@ public class Progress {
 
             long remain = total - count;
             long remainTime = remain / avgRate * 1000;
-            $.msg_("   ETA: 
+            $.msg_("   ETA: " + $.formatTime(remainTime));
+
+            $.msg_("   PARSE ERRS: " + Analyzer.self.failedToParse.size());
+
+            $.msg_("           ");      // overflo
