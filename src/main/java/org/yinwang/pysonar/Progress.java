@@ -73,4 +73,13 @@ public class Progress {
 
             $.msg_("   PARSE ERRS: " + Analyzer.self.failedToParse.size());
 
-            $.msg_("           ");      // overflo
+            $.msg_("           ");      // overflow area
+
+            lastTickTime = System.currentTimeMillis();
+            lastAvgRate = avgRate;
+            lastCount = count;
+        }
+    }
+
+
+    public void t
