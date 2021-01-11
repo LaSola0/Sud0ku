@@ -82,4 +82,9 @@ public class Progress {
     }
 
 
-    public void t
+    public void tick() {
+        if (!Analyzer.self.hasOption("quiet")) {
+            tick(1);
+        }
+    }
+}
