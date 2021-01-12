@@ -10,4 +10,15 @@ public class Stack<T>
     public void push(T item)
     {
         content.add(item);
-   
+    }
+
+    public T top()
+    {
+        return content.get(content.size() - 1);
+    }
+
+    public T pop()
+    {
+        if (!content.isEmpty())
+        {
+            return
