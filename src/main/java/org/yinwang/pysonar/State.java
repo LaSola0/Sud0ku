@@ -76,3 +76,200 @@ public class State {
         this.type = s.type;
         this.path = s.path;
     }
+
+
+    @NotNull
+    public State copy() {
+        return new State(this);
+    }
+
+
+    public void merge(State other) {
+        for (Map.Entry<String, Set<Binding>> e2 : other.table.entrySet()) {
+            Set<Binding> b1 = table.get(e2.getKey());
+            Set<Binding> b2 = e2.getValue();
+
+            if (b1 != null && b2 != null) {
+                b1.addAll(b2);
+            } else if (b1 == null && b2 != null) {
+                table.put(e2.getKey(), b2);
+            }
+        }
+    }
+
+
+    public static State merge(State state1, State state2) {
+        State ret = state1.copy();
+        ret.merge(state2);
+        return ret;
+    }
+
+
+    public void setParent(@Nullable State parent) {
+        this.parent = parent;
+    }
+
+
+    public State getForwarding() {
+        if (forwarding != null) {
+            return forwarding;
+        } else {
+            return this;
+        }
+    }
+
+
+    public void addSuper(State sup) {
+        if (supers == null) {
+            supers = new ArrayList<>();
+        }
+        supers.add(sup);
+    }
+
+
+    public void setStateType(StateType type) {
+        this.stateType = type;
+    }
+
+
+    public void addGlobalName(@NotNull String name) {
+        if (globalNames == null) {
+            globalNames = new HashSet<>(1);
+        }
+        globalNames.add(name);
+    }
+
+
+    public boolean isGlobalName(@NotNull String name) {
+        if (globalNames != null) {
+            return globalNames.contains(name);
+        } else if (parent != null) {
+            return parent.isGlobalName(name);
+        } else {
+            return false;
+        }
+    }
+
+
+    public void remove(String id) {
+        table.remove(id);
+    }
+
+
+    // create new binding and insert
+    public void insert(String id, @NotNull Node node, @NotNull Type type, Binding.Kind kind) {
+        Binding b = new Binding(id, node, type, kind);
+        if (type instanceof ModuleType) {
+            b.setQname(type.asModuleType().qname);
+        } else {
+            b.setQname(extendPath(id));
+        }
+        update(id, b);
+    }
+
+
+    // directly insert a given binding
+    @NotNull
+    public Set<Binding> update(String id, @NotNull Set<Binding> bs) {
+        table.put(id, bs);
+        return bs;
+    }
+
+
+    @NotNull
+    public Set<Binding> update(String id, @NotNull Binding b) {
+        Set<Binding> bs = new HashSet<>(1);
+        bs.add(b);
+        table.put(id, bs);
+        return bs;
+    }
+
+
+    public void setPath(@NotNull String path) {
+        this.path = path;
+    }
+
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+
+    /**
+     * Look up a name in the current symbol table only. Don't recurse on the
+     * parent table.
+     */
+    @Nullable
+    public Set<Binding> lookupLocal(String name) {
+        return table.get(name);
+    }
+
+
+    /**
+     * Look up a name (String) in the current symbol table.  If not found,
+     * recurse on the parent table.
+     */
+    @Nullable
+    public Set<Binding> lookup(@NotNull String name) {
+        Set<Binding> b = getModuleBindingIfGlobal(name);
+        if (b != null) {
+            return b;
+        } else {
+            Set<Binding> ent = lookupLocal(name);
+            if (ent != null) {
+                return ent;
+            } else {
+                if (parent != null) {
+                    return parent.lookup(name);
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Look up a name in the module if it is declared as global, otherwise look
+     * it up locally.
+     */
+    @Nullable
+    public Set<Binding> lookupScope(String name) {
+        Set<Binding> b = getModuleBindingIfGlobal(name);
+        if (b != null) {
+            return b;
+        } else {
+            return lookupLocal(name);
+        }
+    }
+
+
+    /**
+     * Look up an attribute in the type hierarchy.  Don't look at parent link,
+     * because the enclosing scope may not be a super class. The search is
+     * "depth first, left to right" as in Python's (old) multiple inheritance
+     * rule. The new MRO can be implemented, but will probably not introduce
+     * much difference.
+     */
+    @NotNull
+    private static Set<State> looked = new HashSet<>();    // circularity prevention
+
+
+    @Nullable
+    public Set<Binding> lookupAttr(String attr) {
+        if (looked.contains(this)) {
+            return null;
+        } else {
+            Set<Binding> b = lookupLocal(attr);
+            if (b != null) {
+                return b;
+            } else {
+                if (supers != null && !supers.isEmpty()) {
+                    looked.add(this);
+                    for (State p : supers) {
+                        b = p.lookupAttr(attr);
+                        if (b != null) {
+                            looked.remove(this);
+                            return b;
+                        }
+                    }
