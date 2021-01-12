@@ -21,4 +21,9 @@ public class Stack<T>
     {
         if (!content.isEmpty())
         {
-            return
+            return content.remove(content.size() - 1);
+        } else {
+            return null;
+        }
+    }
+}
