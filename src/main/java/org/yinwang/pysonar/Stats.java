@@ -9,4 +9,12 @@ public class Stats {
 
 
     public void putInt(String key, long value) {
-    
+        contents.put(key, value);
+    }
+
+
+    public void inc(String key, long x) {
+        Long old = getInt(key);
+
+        if (old == null) {
+            contents.pu
