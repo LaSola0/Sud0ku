@@ -273,3 +273,144 @@ public class State {
                             return b;
                         }
                     }
+                    looked.remove(this);
+                    return null;
+                } else {
+                    return null;
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Look for a binding named {@code name} and if found, return its type.
+     */
+    @Nullable
+    public Type lookupType(String name) {
+        Set<Binding> bs = lookup(name);
+        if (bs == null) {
+            return null;
+        } else {
+            return makeUnion(bs);
+        }
+    }
+
+
+    /**
+     * Look for a attribute named {@code attr} and if found, return its type.
+     */
+    @Nullable
+    public Type lookupAttrType(String attr) {
+        Set<Binding> bs = lookupAttr(attr);
+        if (bs == null) {
+            return null;
+        } else {
+            return makeUnion(bs);
+        }
+    }
+
+
+    public static Type makeUnion(Set<Binding> bs) {
+        Type t = Types.UNKNOWN;
+        for (Binding b : bs) {
+            t = UnionType.union(t, b.type);
+        }
+        return t;
+    }
+
+
+    /**
+     * Find a symbol table of a certain type in the enclosing scopes.
+     */
+    @Nullable
+    public State getStateOfType(StateType type) {
+        if (stateType == type) {
+            return this;
+        } else if (parent == null) {
+            return null;
+        } else {
+            return parent.getStateOfType(type);
+        }
+    }
+
+
+    /**
+     * Returns the global scope (i.e. the module scope for the current module).
+     */
+    @NotNull
+    public State getGlobalTable() {
+        State result = getStateOfType(StateType.MODULE);
+        if (result != null) {
+            return result;
+        } else {
+            $.die("Couldn't find global table. Shouldn't happen");
+            return this;
+        }
+    }
+
+
+    /**
+     * If {@code name} is declared as a global, return the module binding.
+     */
+    @Nullable
+    private Set<Binding> getModuleBindingIfGlobal(@NotNull String name) {
+        if (isGlobalName(name)) {
+            State module = getGlobalTable();
+            if (module != this) {
+                return module.lookupLocal(name);
+            }
+        }
+        return null;
+    }
+
+
+    public void putAll(@NotNull State other) {
+        table.putAll(other.table);
+    }
+
+
+    @NotNull
+    public Set<String> keySet() {
+        return table.keySet();
+    }
+
+
+    @NotNull
+    public Collection<Binding> values() {
+        Set<Binding> ret = new HashSet<>();
+        for (Set<Binding> bs : table.values()) {
+            ret.addAll(bs);
+        }
+        return ret;
+    }
+
+
+    @NotNull
+    public Set<Entry<String, Set<Binding>>> entrySet() {
+        return table.entrySet();
+    }
+
+
+    public boolean isEmpty() {
+        return table.isEmpty();
+    }
+
+
+    @NotNull
+    public String extendPath(@NotNull String name) {
+        name = $.moduleName(name);
+        if (path.equals("")) {
+            return name;
+        }
+        return path + "." + name;
+    }
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<State:" + stateType + ":" + table.keySet() + ">";
+    }
+
+}
