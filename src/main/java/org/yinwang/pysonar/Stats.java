@@ -17,4 +17,16 @@ public class Stats {
         Long old = getInt(key);
 
         if (old == null) {
-            contents.pu
+            contents.put(key, x);
+        } else {
+            contents.put(key, old + x);
+        }
+    }
+
+
+    public void inc(String key) {
+        inc(key, 1);
+    }
+
+
+    public Long getInt(String key) 
