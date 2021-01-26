@@ -99,3 +99,189 @@ public class TestInference
                     writeout.put("dests", dests);
                     refs.add(writeout);
                 }
+            }
+        }
+
+        String json = gson.toJson(refs);
+        $.writeFile(expecteRefsFile, json);
+    }
+
+    public boolean checkRefs(Analyzer analyzer)
+    {
+        List<String> missing = new ArrayList<>();
+        List<String> wrongType = new ArrayList<>();
+        String json = $.readFile(expecteRefsFile);
+        if (json == null)
+        {
+            $.msg("Expected refs not found in: " + expecteRefsFile +
+                  "Please run Test with -generate to generate");
+            return false;
+        }
+        List<Map<String, Object>> expectedRefs = gson.fromJson(json, List.class);
+        for (Map<String, Object> r : expectedRefs)
+        {
+            Map<String, Object> refMap = (Map) r.get("ref");
+            Dummy dummy = makeDummy(refMap);
+
+            List<Map<String, Object>> dests = (List) r.get("dests");
+            List<Binding> actual = analyzer.references.get(dummy);
+
+            for (Map<String, Object> d : dests)
+            {
+                String name1 = (String) refMap.get("name");
+                String file1 = (String) refMap.get("file");
+                int line1 = (int) Math.floor((double) refMap.get("line"));
+                int col1 = (int) Math.floor((double) refMap.get("col"));
+                String[] type1 = new String[1];
+
+                String fileShort2 = (String) d.get("file");
+                String file2 = $.projAbsPath(fileShort2);
+                int start2 = (int) Math.floor((double) d.get("start"));
+                int end2 = (int) Math.floor((double) d.get("end"));
+                int line2 = (int) Math.floor((double) d.get("line"));
+                int col2 = (int) Math.floor((double) d.get("col"));
+                String type2 = (String) d.get("type");
+
+                if (!checkExist(actual, file2, start2, end2))
+                {
+                    String variable = name1 + ":" + line1 + ":" + col1;
+                    String loc = name1 + ":" + line2 + ":" + col2;
+                    if (!file1.equals(fileShort2))
+                    {
+                        loc = fileShort2 + ":" + loc;
+                    }
+                    String msg = "Missing reference from " + variable + " to " + loc;
+                    missing.add(msg);
+                }
+                else if (!checkType(actual, file2, start2, end2, type2, type1))
+                {
+                    String variable = name1 + ":" + line1 + ":" + col1;
+                    String loc = name1 + ":" + line2 + ":" + col2;
+                    if (!file1.equals(fileShort2))
+                    {
+                        loc = fileShort2 + ":" + loc;
+                    }
+                    String msg = "Inferred wrong type for " + variable + ". ";
+                    msg += "Localtion: " + loc + ", ";
+                    msg += "Expected: " + type1[0] + ", ";
+                    msg += "Actual: " + type2 + ".";
+                    wrongType.add(msg);
+                }
+            }
+        }
+
+        boolean success = true;
+
+        // record the ref & failed dests if any
+        if (missing.isEmpty() && wrongType.isEmpty())
+        {
+            $.testmsg("   " + testFile);
+        }
+        else
+        {
+            $.testmsg(" - " + testFile);
+        }
+
+        if (!missing.isEmpty())
+        {
+            String report = String.join("\n     * ", missing);
+            report = "     * " + report;
+            $.testmsg(report);
+            $.writeFile(missingRefsFile, report);
+            success = false;
+        }
+        else
+        {
+            $.deleteFile(missingRefsFile);
+        }
+
+        if (!wrongType.isEmpty())
+        {
+            String report = String.join("\n     * ", wrongType);
+            report = "     * " + report;
+            $.testmsg(report);
+            $.writeFile(wrongTypeFile, report);
+            success = false;
+        } else {
+            $.deleteFile(wrongTypeFile);
+        }
+
+        return success;
+    }
+
+    private boolean checkExist(List<Binding> bindings, String file, int start, int end)
+    {
+        if (bindings == null)
+        {
+            return false;
+        }
+
+        for (Binding b : bindings)
+        {
+            if (((b.getFile() == null && file == null) ||
+                 (b.getFile() != null && file != null && b.getFile().equals(file))) &&
+                b.start == start && b.end == end)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkType(List<Binding> bindings, String file, int start, int end, String type, String[] actualType)
+    {
+        if (bindings == null)
+        {
+            return false;
+        }
+
+        for (Binding b : bindings)
+        {
+            if (((b.getFile() == null && file == null) ||
+                 (b.getFile() != null && file != null && b.getFile().equals(file))) &&
+                b.start == start && b.end == end && b.type.toString().equals(type))
+            {
+                return true;
+            } else {
+                actualType[0] = b.type.toString();
+            }
+        }
+
+        return false;
+    }
+
+    public static Dummy makeDummy(Map<String, Object> m)
+    {
+        String file = $.projAbsPath((String) m.get("file"));
+        int start = (int) Math.floor((double) m.get("start"));
+        int end = (int) Math.floor((double) m.get("end"));
+        return new Dummy(file, start, end, -1, -1);
+    }
+
+    public void generateTest()
+    {
+        Analyzer analyzer = runAnalysis(testFile);
+        generateRefs(analyzer);
+        $.testmsg("  * " + testFile);
+    }
+
+    public boolean runTest()
+    {
+        Analyzer analyzer = runAnalysis(testFile);
+        boolean result = checkRefs(analyzer);
+        return result;
+    }
+
+    // ------------------------- static part -----------------------
+
+    @Nullable
+    public static List<String> testAll(String path, boolean generate)
+    {
+        List<String> failed = new ArrayList<>();
+        if (generate)
+        {
+            $.testmsg("Generating tests:");
+        }
+        else
+        {
