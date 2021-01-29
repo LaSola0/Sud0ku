@@ -285,3 +285,63 @@ public class TestInference
         }
         else
         {
+            $.testmsg("Verifying tests:");
+        }
+
+        testRecursive(path, generate, failed);
+
+        if (generate)
+        {
+            $.testmsg("All tests generated.");
+            return null;
+        }
+        else if (failed.isEmpty())
+        {
+            $.testmsg("All tests passed.");
+            return null;
+        }
+        else
+        {
+            return failed;
+        }
+    }
+
+    public static void testRecursive(String path, boolean generate, List<String> failed)
+    {
+        File file_or_dir = new File(path);
+
+        if (file_or_dir.isDirectory())
+        {
+            if (path.endsWith(".test"))
+            {
+                TestInference test = new TestInference(path);
+                if (generate)
+                {
+                    test.generateTest();
+                }
+                else if (!test.runTest())
+                {
+                    failed.add(path);
+                }
+            }
+            else
+            {
+                for (File file : file_or_dir.listFiles())
+                {
+                    testRecursive(file.getPath(), generate, failed);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception
+    {
+        Options options = new Options(args);
+        List<String> argsList = options.getArgs();
+        String inputDir = $.unifyPath(argsList.get(0));
+
+        // generate expected file?
+        boolean generate = options.hasOption("generate");
+        testAll(inputDir, generate);
+    }
+}
