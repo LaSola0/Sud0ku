@@ -24,4 +24,14 @@ public class TypeStack {
     private List<Pair> stack = new ArrayList<>();
 
 
-    public void push(Obj
+    public void push(Object first, Object second) {
+        stack.add(new Pair(first, second));
+    }
+
+
+    public void pop(Object first, Object second) {
+        stack.remove(stack.size() - 1);
+    }
+
+
+    publi
