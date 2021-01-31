@@ -14,3 +14,14 @@ public class TypeStack {
 
 
         public Pair(Object first, Object second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+
+
+    @NotNull
+    private List<Pair> stack = new ArrayList<>();
+
+
+    public void push(Obj
