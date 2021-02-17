@@ -9,4 +9,12 @@ public class Assert extends Node {
 
     public Assert(Node test, Node msg, String file, int start, int end, int line, int col) {
         super(NodeType.ASSERT, file, start, end, line, col);
-        th
+        this.test = test;
+        this.msg = msg;
+        addChildren(test, msg);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<Assert:
