@@ -14,3 +14,11 @@ public class Attribute extends Node {
         this.target = target;
         this.attr = attr;
         addChildren(target, attr);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<Attribute:" + line + ":" + col + ":" + target + "." + attr.id + ">";
+    }
+}
