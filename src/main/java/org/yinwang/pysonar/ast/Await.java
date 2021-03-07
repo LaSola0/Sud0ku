@@ -6,4 +6,12 @@ public class Await extends Node {
 
     public Node value;
 
-    public Await(Node n, String file, int start, i
+    public Await(Node n, String file, int start, int end, int line, int col) {
+        super(NodeType.AWAIT, file, start, end, line, col);
+        this.value = n;
+        addChildren(n);
+    }
+
+    @NotNull
+    @Override
+    public Stri
