@@ -14,4 +14,8 @@ public class Await extends Node {
 
     @NotNull
     @Override
-    public Stri
+    public String toString() {
+        return "<Await:" + value + ">";
+    }
+
+}
