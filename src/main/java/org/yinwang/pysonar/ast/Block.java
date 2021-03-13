@@ -15,4 +15,10 @@ public class Block extends Node {
         addChildren(seq);
     }
 
-    @N
+    @NotNull
+    @Override
+    public String toString() {
+        return "(block:" + seq + ")";
+    }
+
+}
