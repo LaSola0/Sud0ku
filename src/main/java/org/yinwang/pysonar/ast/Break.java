@@ -1,3 +1,8 @@
 package org.yinwang.pysonar.ast;
 
-import org.j
+import org.jetbrains.annotations.NotNull;
+
+public class Break extends Node {
+
+    public Break(String file, int start, int end, int line, int col) {
+        super(NodeType.BREAK, file, start, end,
