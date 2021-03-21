@@ -13,4 +13,8 @@ public class Bytes extends Node {
 
     @NotNull
     @Override
-    public String toStri
+    public String toString() {
+        return "(bytes: " + value + ")";
+    }
+
+}
