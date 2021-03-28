@@ -10,4 +10,9 @@ public class Call extends Node {
     public Node func;
     public List<Node> args;
     @Nullable
-    public List<Keyword> k
+    public List<Keyword> keywords;
+    public Node kwargs;
+    public Node starargs;
+
+    public Call(Node func, List<Node> args, @Nullable List<Keyword> keywords,
+        Node kwargs, Node starargs, Strin
