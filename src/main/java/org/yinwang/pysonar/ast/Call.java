@@ -19,4 +19,8 @@ public class Call extends Node {
         super(NodeType.CALL, file, start, end, line, col);
         this.func = func;
         this.args = args;
-   
+        this.keywords = keywords;
+        this.kwargs = kwargs;
+        this.starargs = starargs;
+        addChildren(func, kwargs, starargs);
+        addChildren
