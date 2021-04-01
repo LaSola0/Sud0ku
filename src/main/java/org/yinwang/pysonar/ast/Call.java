@@ -23,4 +23,12 @@ public class Call extends Node {
         this.kwargs = kwargs;
         this.starargs = starargs;
         addChildren(func, kwargs, starargs);
-        addChildren
+        addChildren(args);
+        addChildren(keywords);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "(call:" + func + ":" + args + ":" + start + ")";
+    }
