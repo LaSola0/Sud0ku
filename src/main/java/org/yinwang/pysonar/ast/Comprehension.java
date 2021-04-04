@@ -10,4 +10,8 @@ public class Comprehension extends Node {
     public Node iter;
     public List<Node> ifs;
 
-    public Comprehension(Node target, Node iter, List<Node> ifs, String file,
+    public Comprehension(Node target, Node iter, List<Node> ifs, String file, int start, int end, int line, int col) {
+        super(NodeType.COMPREHENSION, file, start, end, line, col);
+        this.target = target;
+        this.iter = iter;
+        this.
