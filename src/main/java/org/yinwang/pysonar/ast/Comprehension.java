@@ -14,4 +14,12 @@ public class Comprehension extends Node {
         super(NodeType.COMPREHENSION, file, start, end, line, col);
         this.target = target;
         this.iter = iter;
-        this.
+        this.ifs = ifs;
+        addChildren(target, iter);
+        addChildren(ifs);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "
