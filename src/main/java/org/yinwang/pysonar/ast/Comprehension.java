@@ -22,4 +22,7 @@ public class Comprehension extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "
+        return "<Comprehension:" + start + ":" + target + ":" + iter + ":" + ifs + ">";
+    }
+
+}
