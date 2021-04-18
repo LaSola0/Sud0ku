@@ -15,4 +15,11 @@ public class DictComp extends Node {
         this.key = key;
         this.value = value;
         this.generators = generators;
-   
+        addChildren(key);
+        addChildren(generators);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<DictComp:" + start + ":" + key + ">";
