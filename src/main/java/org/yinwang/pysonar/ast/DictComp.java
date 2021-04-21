@@ -23,3 +23,6 @@ public class DictComp extends Node {
     @Override
     public String toString() {
         return "<DictComp:" + start + ":" + key + ">";
+    }
+
+}
