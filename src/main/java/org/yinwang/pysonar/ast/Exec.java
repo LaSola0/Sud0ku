@@ -8,4 +8,6 @@ public class Exec extends Node {
     public Node globals;
     public Node locals;
 
-    p
+    public Exec(Node body, Node globals, Node locals, String file, int start, int end, int line, int col) {
+        super(NodeType.EXEC, file, start, end, line, col);
+        this.body = body;
