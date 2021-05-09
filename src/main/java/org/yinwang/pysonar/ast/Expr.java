@@ -5,4 +5,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Expression statement.
  */
-public
+public class Expr extends Node {
+
+    public Node value;
+
+    public Expr(Node n, String file, int start, int end, int line, int col) {
+        super(NodeType.EXPR, file, start, end, line, col
