@@ -8,4 +8,6 @@ public class ExtSlice extends Node {
 
     public List<Node> dims;
 
-    public 
+    public ExtSlice(List<Node> dims, String file, int start, int end, int line, int col) {
+        super(NodeType.EXTSLICE, file, start, end, line, col);
+      
