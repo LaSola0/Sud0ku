@@ -14,3 +14,12 @@ public class Handler extends Node {
         super(NodeType.HANDLER, file, start, end, line, col);
         this.binder = binder;
         this.exceptions = exceptions;
+        this.body = body;
+        addChildren(binder, body);
+        addChildren(exceptions);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        retur
