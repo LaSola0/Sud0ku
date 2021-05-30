@@ -22,4 +22,7 @@ public class Handler extends Node {
     @NotNull
     @Override
     public String toString() {
-        retur
+        return "(handler:" + start + ":" + exceptions + ":" + binder + ")";
+    }
+
+}
