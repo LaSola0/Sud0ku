@@ -13,4 +13,11 @@ public class If extends Node {
         super(NodeType.IF, file, start, end, line, col);
         this.test = test;
         this.body = body;
-        this.orelse = ore
+        this.orelse = orelse;
+        addChildren(test, body, orelse);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<If:" + start + ":" + test + ":" + body + ":" + orelse
