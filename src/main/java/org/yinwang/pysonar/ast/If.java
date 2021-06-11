@@ -20,4 +20,7 @@ public class If extends Node {
     @NotNull
     @Override
     public String toString() {
-        return "<If:" + start + ":" + test + ":" + body + ":" + orelse
+        return "<If:" + start + ":" + test + ":" + body + ":" + orelse + ">";
+    }
+
+}
