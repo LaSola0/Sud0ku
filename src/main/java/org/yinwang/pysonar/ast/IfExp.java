@@ -18,3 +18,8 @@ public class IfExp extends Node {
 
     @NotNull
     @Override
+    public String toString() {
+        return "<IfExp:" + start + ":" + test + ":" + body + ":" + orelse + ">";
+    }
+
+}
