@@ -14,4 +14,10 @@ public class Import extends Node {
         addChildren(names);
     }
 
-    @No
+    @NotNull
+    @Override
+    public String toString() {
+        return "<Import:" + names + ">";
+    }
+
+}
