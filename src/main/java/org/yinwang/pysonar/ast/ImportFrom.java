@@ -13,4 +13,10 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-publi
+public class ImportFrom extends Node {
+
+    public List<Name> module;
+    public List<Alias> names;
+    public int level;
+
+    public ImportFrom(List<Name> module, List<Alias
