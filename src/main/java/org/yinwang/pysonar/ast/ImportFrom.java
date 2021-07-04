@@ -19,4 +19,6 @@ public class ImportFrom extends Node {
     public List<Alias> names;
     public int level;
 
-    public ImportFrom(List<Name> module, List<Alias
+    public ImportFrom(List<Name> module, List<Alias> names, int level, String file, int start, int end, int line, int col) {
+        super(NodeType.IMPORTFROM, file, start, end, line, col);
+        th
