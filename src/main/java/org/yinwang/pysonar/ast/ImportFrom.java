@@ -35,3 +35,10 @@ public class ImportFrom extends Node {
         if (mt == null || mt.file == null) {
             return;
         }
+
+        Node node = Analyzer.self.getAstForFile(mt.file);
+        if (node == null) {
+            return;
+        }
+
+        List<String> names =
