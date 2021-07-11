@@ -28,4 +28,10 @@ public class ImportFrom extends Node {
     }
 
     public boolean isImportStar() {
-        return names.size() == 1 && "*".equa
+        return names.size() == 1 && "*".equals(names.get(0).name.get(0).id);
+    }
+
+    public void importStar(@NotNull State s, @Nullable Type mt) {
+        if (mt == null || mt.file == null) {
+            return;
+        }
