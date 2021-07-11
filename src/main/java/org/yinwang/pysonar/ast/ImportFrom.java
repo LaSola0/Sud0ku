@@ -21,4 +21,11 @@ public class ImportFrom extends Node {
 
     public ImportFrom(List<Name> module, List<Alias> names, int level, String file, int start, int end, int line, int col) {
         super(NodeType.IMPORTFROM, file, start, end, line, col);
-        th
+        this.module = module;
+        this.level = level;
+        this.names = names;
+        addChildren(names);
+    }
+
+    public boolean isImportStar() {
+        return names.size() == 1 && "*".equa
