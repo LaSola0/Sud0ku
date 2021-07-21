@@ -50,4 +50,13 @@ public class ImportFrom extends Node {
             for (Object o : lt.values) {
                 if (o instanceof String) {
                     names.add((String) o);
-       
+                }
+            }
+        }
+
+        if (!names.isEmpty()) {
+            int start = this.start;
+            int col = this.col;
+
+            for (String name : names) {
+              
