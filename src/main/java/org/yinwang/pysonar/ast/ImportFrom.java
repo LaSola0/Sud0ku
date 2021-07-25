@@ -65,4 +65,8 @@ public class ImportFrom extends Node {
                 } else {
                     List<Name> m2 = new ArrayList<>(module);
                     Name fakeName = new Name(name, this.file, start, start + name.length(), this.line, col);
-                    m2.add(fakeName
+                    m2.add(fakeName);
+                    Type type = Analyzer.self.loadModule(m2, s);
+                    if (type != null) {
+                        start += name.length();
+                        col += name
