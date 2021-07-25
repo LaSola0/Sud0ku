@@ -63,4 +63,6 @@ public class ImportFrom extends Node {
                 if (b != null) {
                     s.update(name, b);
                 } else {
-                    List<Name> m2 = new ArrayL
+                    List<Name> m2 = new ArrayList<>(module);
+                    Name fakeName = new Name(name, this.file, start, start + name.length(), this.line, col);
+                    m2.add(fakeName
