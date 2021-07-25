@@ -59,4 +59,8 @@ public class ImportFrom extends Node {
             int col = this.col;
 
             for (String name : names) {
-              
+                Set<Binding> b = mt.table.lookupLocal(name);
+                if (b != null) {
+                    s.update(name, b);
+                } else {
+                    List<Name> m2 = new ArrayL
