@@ -69,4 +69,8 @@ public class ImportFrom extends Node {
                     Type type = Analyzer.self.loadModule(m2, s);
                     if (type != null) {
                         start += name.length();
-                        col += name
+                        col += name.length();
+                        s.insert(name, fakeName, type, Binding.Kind.VARIABLE);
+                    }
+                }
+          
