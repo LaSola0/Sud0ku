@@ -73,4 +73,8 @@ public class ImportFrom extends Node {
                         s.insert(name, fakeName, type, Binding.Kind.VARIABLE);
                     }
                 }
-          
+            }
+        } else {
+            // Fall back to importing all names not starting with "_".
+            for (Entry<String, Set<Binding>> e : mt.table.entrySet()) {
+                if
