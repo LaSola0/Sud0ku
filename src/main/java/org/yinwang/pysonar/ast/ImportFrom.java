@@ -85,4 +85,9 @@ public class ImportFrom extends Node {
     }
 
     @NotNull
-    @Overrid
+    @Override
+    public String toString() {
+        return "<FromImport:" + module + ":" + names + ">";
+    }
+
+}
