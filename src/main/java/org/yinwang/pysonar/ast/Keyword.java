@@ -27,4 +27,7 @@ public class Keyword extends Node {
     @NotNull
     @Override
     public String toDisplay() {
-        return ar
+        return arg;
+    }
+
+}
