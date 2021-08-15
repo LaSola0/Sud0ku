@@ -20,4 +20,11 @@ public class Keyword extends Node {
 
     @NotNull
     @Override
-    public String toSt
+    public String toString() {
+        return "(keyword:" + arg + ":" + value + ")";
+    }
+
+    @NotNull
+    @Override
+    public String toDisplay() {
+        return ar
