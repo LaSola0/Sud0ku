@@ -11,4 +11,16 @@ public enum NodeType {
     BREAK,
     BYTES,
     CALL,
-    CLA
+    CLASSDEF,
+    COMPREHENSION,
+    CONTINUE,
+    DELETE,
+    DICT,
+    DICTCOMP,
+    DUMMY,
+    ELLIPSIS,
+    EXEC,
+    EXPR,
+    EXTSLICE,
+    FOR,
+   
