@@ -23,4 +23,17 @@ public enum NodeType {
     EXPR,
     EXTSLICE,
     FOR,
-   
+    FUNCTIONDEF,
+    GENERATOREXP,
+    GLOBAL,
+    HANDLER,
+    IF,
+    IFEXP,
+    IMPORT,
+    IMPORTFROM,
+    INDEX,
+    KEYWORD,
+    LISTCOMP,
+    MODULE,
+    NAME,
+    NAM
