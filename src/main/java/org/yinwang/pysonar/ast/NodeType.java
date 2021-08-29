@@ -64,4 +64,5 @@ public enum NodeType {
     WITH,
     WITHITEM,
     YIELD,
-    YIEL
+    YIELDFROM,
+}
