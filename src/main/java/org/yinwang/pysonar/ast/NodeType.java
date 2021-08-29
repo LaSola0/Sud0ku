@@ -51,4 +51,17 @@ public enum NodeType {
     RETURN,
     SEQUENCE,
     SETCOMP,
-    SLI
+    SLICE,
+    STARRED,
+    STR,
+    SUBSCRIPT,
+    TRY,
+    TUPLE,
+    UNARYOP,
+    UNSUPPORTED,
+    URL,
+    WHILE,
+    WITH,
+    WITHITEM,
+    YIELD,
+    YIEL
