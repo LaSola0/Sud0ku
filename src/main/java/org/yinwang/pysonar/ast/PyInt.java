@@ -8,4 +8,7 @@ public class PyInt extends Node {
 
     public BigInteger value;
 
-    publ
+    public PyInt(String s, String file, int start, int end, int line, int col) {
+        super(NodeType.PYINT, file, start, end, line, col);
+
+        s = s.replaceAll("_", "");
