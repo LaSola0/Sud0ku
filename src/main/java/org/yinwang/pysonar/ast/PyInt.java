@@ -26,4 +26,9 @@ public class PyInt extends Node {
             base = 2;
             s = s.substring(2);
         } else if (s.startsWith("0x")) {
-       
+            base = 16;
+            s = s.substring(2);
+        } else if (s.startsWith("x")) {
+            base = 16;
+            s = s.substring(1);
+        } else i
