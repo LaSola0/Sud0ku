@@ -12,3 +12,10 @@ public class PyInt extends Node {
         super(NodeType.PYINT, file, start, end, line, col);
 
         s = s.replaceAll("_", "");
+        int sign = 1;
+
+        if (s.startsWith("+")) {
+            s = s.substring(1);
+        } else if (s.startsWith("-")) {
+            s = s.substring(1);
+            sign = 
