@@ -18,4 +18,12 @@ public class PyInt extends Node {
             s = s.substring(1);
         } else if (s.startsWith("-")) {
             s = s.substring(1);
-            sign = 
+            sign = -1;
+        }
+
+        int base;
+        if (s.startsWith("0b")) {
+            base = 2;
+            s = s.substring(2);
+        } else if (s.startsWith("0x")) {
+       
