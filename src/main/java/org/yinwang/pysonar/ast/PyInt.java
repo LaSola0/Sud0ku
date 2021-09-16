@@ -31,4 +31,8 @@ public class PyInt extends Node {
         } else if (s.startsWith("x")) {
             base = 16;
             s = s.substring(1);
-        } else i
+        } else if (s.startsWith("0o")) {
+            base = 8;
+            s = s.substring(2);
+        } else if (s.startsWith("0") && s.length() >= 2) {
+            base = 
