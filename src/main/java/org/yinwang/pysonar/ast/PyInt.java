@@ -35,4 +35,12 @@ public class PyInt extends Node {
             base = 8;
             s = s.substring(2);
         } else if (s.startsWith("0") && s.length() >= 2) {
-            base = 
+            base = 8;
+            s = s.substring(1);
+        } else {
+            base = 10;
+        }
+
+        value = new BigInteger(s, base);
+        if (sign == -1) {
+    
