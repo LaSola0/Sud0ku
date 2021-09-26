@@ -43,4 +43,14 @@ public class PyInt extends Node {
 
         value = new BigInteger(s, base);
         if (sign == -1) {
-    
+            value = value.negate();
+        }
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "(int:" + value + ")";
+    }
+
+}
