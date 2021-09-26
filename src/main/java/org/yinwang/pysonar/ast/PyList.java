@@ -12,4 +12,8 @@ public class PyList extends Sequence {
 
     @NotNull
     @Override
-    public String toString() 
+    public String toString() {
+        return "<List:" + start + ":" + elts + ">";
+    }
+
+}
