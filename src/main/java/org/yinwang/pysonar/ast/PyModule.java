@@ -11,4 +11,13 @@ public class PyModule extends Node {
         super(NodeType.MODULE, file, start, end, line, col);
         this.name = $.moduleName(file);
         this.body = body;
-        addChildren(thi
+        addChildren(this.body);
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "(module:" + file + ")";
+    }
+
+}
