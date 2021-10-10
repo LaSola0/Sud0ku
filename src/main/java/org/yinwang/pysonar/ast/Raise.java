@@ -8,4 +8,6 @@ public class Raise extends Node {
     public Node inst;
     public Node traceback;
 
-    public Raise(Node ex
+    public Raise(Node exceptionType, Node inst, Node traceback, String file, int start, int end, int line, int col) {
+        super(NodeType.RAISE, file, start, end, line, col);
+        this.ex
