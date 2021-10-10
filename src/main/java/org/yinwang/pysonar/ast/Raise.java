@@ -16,4 +16,10 @@ public class Raise extends Node {
         addChildren(exceptionType, inst, traceback);
     }
 
-    
+    @NotNull
+    @Override
+    public String toString() {
+        return "<Raise:" + traceback + ":" + exceptionType + ">";
+    }
+
+}
