@@ -6,4 +6,12 @@ public class Return extends Node {
 
     public Node value;
 
-    public Return(Node n, String file, in
+    public Return(Node n, String file, int start, int end, int line, int col) {
+        super(NodeType.RETURN, file, start, end, line, col);
+        this.value = n;
+        addChildren(n);
+    }
+
+    @NotNull
+    @Override
+   
