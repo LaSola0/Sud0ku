@@ -15,3 +15,7 @@ public class Starred extends Node {
     @NotNull
     @Override
     public String toString() {
+        return "<starred:" + value + ">";
+    }
+
+}
