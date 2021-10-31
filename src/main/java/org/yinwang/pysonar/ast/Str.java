@@ -8,4 +8,12 @@ public class Str extends Node {
 
     public Str(@NotNull Object value, String file, int start, int end, int line, int col) {
         super(NodeType.STR, file, start, end, line, col);
-   
+        this.value = value.toString();
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        String summary;
+        if (value.length() > 10) {
+      
