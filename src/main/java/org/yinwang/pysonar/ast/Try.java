@@ -16,4 +16,12 @@ public class Try extends Node {
         super(NodeType.TRY, file, start, end, line, col);
         this.handlers = handlers;
         this.body = body;
-        this.or
+        this.orelse = orelse;
+        this.finalbody = finalbody;
+        addChildren(handlers);
+        addChildren(body, orelse);
+    }
+
+    @NotNull
+    @Override
+    public String toString(
