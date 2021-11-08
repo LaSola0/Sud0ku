@@ -24,4 +24,12 @@ public class Tuple extends Sequence {
 
         int idx = 0;
         for (Node n : elts) {
-            if (idx != 0)
+            if (idx != 0) {
+                sb.append(", ");
+            }
+            idx++;
+            sb.append(n.toDisplay());
+        }
+
+        sb.append(")");
+        return sb.t
