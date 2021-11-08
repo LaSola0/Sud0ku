@@ -18,4 +18,10 @@ public class Tuple extends Sequence {
 
     @NotNull
     @Override
-    public String toD
+    public String toDisplay() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+
+        int idx = 0;
+        for (Node n : elts) {
+            if (idx != 0)
