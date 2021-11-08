@@ -4,4 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public c
+public class Tuple extends Sequence {
+
+    public Tuple(List<Node> elts, String file, int start, int end, int line, int col) {
+        super(NodeType.TUPLE, elts, file, start, end, line,
