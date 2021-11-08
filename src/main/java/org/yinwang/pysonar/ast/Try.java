@@ -24,4 +24,8 @@ public class Try extends Node {
 
     @NotNull
     @Override
-    public String toString(
+    public String toString() {
+        return "<Try:" + handlers + ":" + body + ":" + orelse + ">";
+    }
+
+}
