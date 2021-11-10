@@ -5,4 +5,7 @@ import org.jetbrains.annotations.NotNull;
 public class UnaryOp extends Node {
 
     public Op op;
-    public N
+    public Node operand;
+
+    public UnaryOp(Op op, Node operand, String file, int start, int end, int line, int col) {
+        super(NodeType.UNARYOP, file, start, end, line
