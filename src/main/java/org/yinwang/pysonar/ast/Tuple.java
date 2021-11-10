@@ -32,4 +32,7 @@ public class Tuple extends Sequence {
         }
 
         sb.append(")");
-        return sb.t
+        return sb.toString();
+    }
+
+}
