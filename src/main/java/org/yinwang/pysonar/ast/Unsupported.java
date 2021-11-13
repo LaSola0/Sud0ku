@@ -8,4 +8,9 @@ public class Unsupported extends Node {
         super(NodeType.UNSUPPORTED, file, start, end, line, col);
     }
 
-   
+    @NotNull
+    @Override
+    public String toString() {
+        return "(unsupported)";
+    }
+}
