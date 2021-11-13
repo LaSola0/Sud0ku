@@ -16,3 +16,11 @@ public class While extends Node {
         this.orelse = orelse;
         addChildren(test, body, orelse);
     }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<While:" + test + ":" + body + ":" + orelse + ":" + start + ">";
+    }
+
+}
