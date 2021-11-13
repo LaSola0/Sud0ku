@@ -10,4 +10,14 @@ public class Url extends Node {
 
     public String url;
 
-    public Url(S
+    public Url(String url) {
+        this.url = url;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "<Url:\"" + url + "\">";
+    }
+
+}
