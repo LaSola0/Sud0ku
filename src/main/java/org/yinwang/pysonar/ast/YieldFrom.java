@@ -13,4 +13,9 @@ public class YieldFrom extends Node {
     }
 
     @NotNull
-    
+    @Override
+    public String toString() {
+        return "<YieldFrom:" + start + ":" + value + ">";
+    }
+
+}
