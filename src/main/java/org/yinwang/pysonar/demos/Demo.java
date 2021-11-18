@@ -14,4 +14,7 @@ import java.util.Map;
 
 public class Demo {
 
-    private static Fil
+    private static File OUTPUT_DIR;
+
+    private static final String CSS = $.readResource("org/yinwang/pysonar/css/demo.css");
+    private static final String JS = $.readResource("org/yinwang
