@@ -17,4 +17,7 @@ public class Demo {
     private static File OUTPUT_DIR;
 
     private static final String CSS = $.readResource("org/yinwang/pysonar/css/demo.css");
-    private static final String JS = $.readResource("org/yinwang
+    private static final String JS = $.readResource("org/yinwang/pysonar/javascript/highlight.js");
+    private static final String JS_DEBUG = $.readResource("org/yinwang/pysonar/javascript/highlight-debug.js");
+
+    private Analyzer analyzer;
