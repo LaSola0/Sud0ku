@@ -28,4 +28,8 @@ public class Demo {
     private void makeOutputDir() {
         if (!OUTPUT_DIR.exists()) {
             OUTPUT_DIR.mkdirs();
-         
+            $.msg("Created directory: " + OUTPUT_DIR.getAbsolutePath());
+        }
+    }
+
+    private void start(@NotNull String fileOrDir, Map<String, Object> options) throws Exc
