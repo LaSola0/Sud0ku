@@ -32,4 +32,10 @@ public class Demo {
         }
     }
 
-    private void start(@NotNull String fileOrDir, Map<String, Object> options) throws Exc
+    private void start(@NotNull String fileOrDir, Map<String, Object> options) throws Exception
+    {
+        File f = new File(fileOrDir);
+        File rootDir = f.isFile() ? f.getParentFile() : f;
+        try
+        {
+            rootPath = $.unifyPath(
