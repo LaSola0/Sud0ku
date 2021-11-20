@@ -38,4 +38,11 @@ public class Demo {
         File rootDir = f.isFile() ? f.getParentFile() : f;
         try
         {
-            rootPath = $.unifyPath(
+            rootPath = $.unifyPath(rootDir);
+        }
+        catch (Exception e)
+        {
+            $.die("File not found: " + f);
+        }
+
+        analyzer = new Analyzer(
