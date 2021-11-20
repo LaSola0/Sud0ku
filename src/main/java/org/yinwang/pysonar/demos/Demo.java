@@ -21,3 +21,11 @@ public class Demo {
     private static final String JS_DEBUG = $.readResource("org/yinwang/pysonar/javascript/highlight-debug.js");
 
     private Analyzer analyzer;
+    private String rootPath;
+    private Linker linker;
+
+
+    private void makeOutputDir() {
+        if (!OUTPUT_DIR.exists()) {
+            OUTPUT_DIR.mkdirs();
+         
