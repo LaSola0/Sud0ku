@@ -45,4 +45,10 @@ public class Demo {
             $.die("File not found: " + f);
         }
 
-        analyzer = new Analyzer(
+        analyzer = new Analyzer(options);
+        $.msg("Loading and analyzing files");
+        try
+        {
+            analyzer.analyze(f.getPath());
+        }
+        finally
