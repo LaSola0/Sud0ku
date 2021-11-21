@@ -70,4 +70,10 @@ public class Demo {
         int rootLength = rootPath.length();
 
         int total = 0;
-        f
+        for (String path : analyzer.getLoadedFiles()) {
+            if (path.startsWith(rootPath)) {
+                total++;
+            }
+        }
+
+        Progress 
