@@ -62,4 +62,12 @@ public class Demo {
 
     private void generateHtml() {
         $.msg("\nGenerating HTML");
-      
+        makeOutputDir();
+
+        linker = new Linker(rootPath, OUTPUT_DIR);
+        linker.findLinks(analyzer);
+
+        int rootLength = rootPath.length();
+
+        int total = 0;
+        f
