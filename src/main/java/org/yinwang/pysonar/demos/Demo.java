@@ -76,4 +76,9 @@ public class Demo {
             }
         }
 
-        Progress 
+        Progress progress = new Progress(total, 50);
+
+        for (String path : analyzer.getLoadedFiles()) {
+            if (path.startsWith(rootPath)) {
+                progress.tick();
+                F
