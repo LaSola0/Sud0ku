@@ -52,3 +52,14 @@ public class Demo {
             analyzer.analyze(f.getPath());
         }
         finally
+        {
+            analyzer.finish();
+        }
+
+        generateHtml();
+    }
+
+
+    private void generateHtml() {
+        $.msg("\nGenerating HTML");
+      
