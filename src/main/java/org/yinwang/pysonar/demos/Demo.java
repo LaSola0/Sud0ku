@@ -81,4 +81,6 @@ public class Demo {
         for (String path : analyzer.getLoadedFiles()) {
             if (path.startsWith(rootPath)) {
                 progress.tick();
-                F
+                File destFile = $.joinPath(OUTPUT_DIR, path.substring(rootLength));
+                destFile.getParentFile().mkdirs();
+                String destPath = destFile.getAbsol
