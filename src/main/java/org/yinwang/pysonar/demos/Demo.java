@@ -87,4 +87,10 @@ public class Demo {
                 String html = markup(path);
                 try {
                     $.writeFile(destPath, html);
-                } catch (E
+                } catch (Exception e) {
+                    $.msg("Failed to write: " + destPath);
+                }
+            }
+        }
+
+        $.msg("\nWrote " + analyzer.getLoadedFiles().size()
