@@ -111,4 +111,10 @@ public class Demo {
         List<Style> styles = new ArrayList<>(linker.getStyles(path));
 
         String styledSource = new StyleApplier(path, source, styles).apply();
-        String outline = new HtmlOutline(analyzer).generate(p
+        String outline = new HtmlOutline(analyzer).generate(path);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html>\n")
+            .append("<head>\n")
+            .append("<meta charset=\"utf-8\">\n")
+            
