@@ -103,4 +103,9 @@ public class Demo {
 
         try {
             source = $.readFile(path);
-        } cat
+        } catch (Exception e) {
+            $.die("Failed to read file: " + path);
+            return "";
+        }
+
+        List<Style> styles = new ArrayList<>(linker.getStyles(p
