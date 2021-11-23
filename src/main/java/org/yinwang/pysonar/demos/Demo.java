@@ -83,4 +83,8 @@ public class Demo {
                 progress.tick();
                 File destFile = $.joinPath(OUTPUT_DIR, path.substring(rootLength));
                 destFile.getParentFile().mkdirs();
-                String destPath = destFile.getAbsol
+                String destPath = destFile.getAbsolutePath() + ".html";
+                String html = markup(path);
+                try {
+                    $.writeFile(destPath, html);
+                } catch (E
