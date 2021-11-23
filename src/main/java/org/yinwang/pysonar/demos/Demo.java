@@ -93,4 +93,14 @@ public class Demo {
             }
         }
 
-        $.msg("\nWrote " + analyzer.getLoadedFiles().size()
+        $.msg("\nWrote " + analyzer.getLoadedFiles().size() + " files to " + OUTPUT_DIR);
+    }
+
+
+    @NotNull
+    private String markup(String path) {
+        String source;
+
+        try {
+            source = $.readFile(path);
+        } cat
