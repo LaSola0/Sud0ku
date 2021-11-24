@@ -122,4 +122,7 @@ public class Demo {
             .append("<script language=\"JavaScript\" type=\"text/javascript\">\n")
             .append(Analyzer.self.hasOption("debug") ? JS_DEBUG : JS)
             .append("</script>\n")
-          
+            .append("</head>\n<body>\n")
+            .append("<table width=100% border='1px solid gray'><tr><td valign='top'>")
+            .append(outline)
+            .a
