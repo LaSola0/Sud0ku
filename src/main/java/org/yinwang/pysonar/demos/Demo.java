@@ -117,4 +117,6 @@ public class Demo {
         sb.append("<html>\n")
             .append("<head>\n")
             .append("<meta charset=\"utf-8\">\n")
-            
+            .append("<title>").append(path).append("</title>\n")
+            .append("<style type='text/css'>\n").append(CSS).append("\n</style>\n")
+            .append("<script langu
