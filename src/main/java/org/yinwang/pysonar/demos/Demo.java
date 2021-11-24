@@ -119,4 +119,7 @@ public class Demo {
             .append("<meta charset=\"utf-8\">\n")
             .append("<title>").append(path).append("</title>\n")
             .append("<style type='text/css'>\n").append(CSS).append("\n</style>\n")
-            .append("<script langu
+            .append("<script language=\"JavaScript\" type=\"text/javascript\">\n")
+            .append(Analyzer.self.hasOption("debug") ? JS_DEBUG : JS)
+            .append("</script>\n")
+          
