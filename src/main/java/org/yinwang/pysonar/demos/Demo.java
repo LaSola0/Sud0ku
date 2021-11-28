@@ -136,4 +136,7 @@ public class Demo {
 
     @NotNull
     private String addLineNumbers(@NotNull String source) {
-        StringBuilder result = new Strin
+        StringBuilder result = new StringBuilder((int) (source.length() * 1.2));
+        int count = 1;
+        for (String line : source.split("\n")) {
+            result.append("<span class='linen
