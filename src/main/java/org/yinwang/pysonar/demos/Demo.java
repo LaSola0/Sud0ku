@@ -129,4 +129,11 @@ public class Demo {
             .append("<pre>")
             .append(addLineNumbers(styledSource))
             .append("</pre>")
-            .append("<
+            .append("</td></tr></table></body></html>");
+        return sb.toString();
+    }
+
+
+    @NotNull
+    private String addLineNumbers(@NotNull String source) {
+        StringBuilder result = new Strin
