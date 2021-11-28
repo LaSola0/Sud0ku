@@ -125,4 +125,8 @@ public class Demo {
             .append("</head>\n<body>\n")
             .append("<table width=100% border='1px solid gray'><tr><td valign='top'>")
             .append(outline)
-            .a
+            .append("</td><td>")
+            .append("<pre>")
+            .append(addLineNumbers(styledSource))
+            .append("</pre>")
+            .append("<
