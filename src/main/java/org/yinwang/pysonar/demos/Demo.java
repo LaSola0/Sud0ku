@@ -167,4 +167,9 @@ public class Demo {
     }
 
 
-    public static void main(@NotNull String[] args) throws Exception 
+    public static void main(@NotNull String[] args) throws Exception {
+        Options options = new Options(args);
+
+        List<String> argsList = options.getArgs();
+        String fileOrDir = argsList.get(0);
+        OUTPU
