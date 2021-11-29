@@ -160,4 +160,11 @@ public class Demo {
     @NotNull
     private static File checkFile(String path) {
         File f = new File(path);
-        if (!f.canRead
+        if (!f.canRead()) {
+            $.die("Path not found or not readable: " + path);
+        }
+        return f;
+    }
+
+
+    public static void main(@NotNull String[] args) throws Exception 
