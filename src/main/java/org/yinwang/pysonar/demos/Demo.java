@@ -143,3 +143,11 @@ public class Demo {
             result.append(String.format("%1$4d", count++));
             result.append("</span> ");
             result.append(line);
+            result.append("\n");
+        }
+        return result.toString();
+    }
+
+
+    private static void usage() {
+        $.msg("Usage:  java -jar pysonar-2.
