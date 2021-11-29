@@ -152,4 +152,12 @@ public class Demo {
     private static void usage() {
         $.msg("Usage:  java -jar pysonar-2.0-SNAPSHOT.jar <file-or-dir> <output-dir>");
         $.msg("Example that generates an index for Python 2.7 standard library:");
-        $.msg(" java -jar pysonar-2.0-SNAPSHO
+        $.msg(" java -jar pysonar-2.0-SNAPSHOT.jar /usr/lib/python2.7 ./html");
+        System.exit(0);
+    }
+
+
+    @NotNull
+    private static File checkFile(String path) {
+        File f = new File(path);
+        if (!f.canRead
