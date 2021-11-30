@@ -200,3 +200,107 @@ class Linker {
      *
      * @param path an absolute source path
      * @return a possibly-empty list of styles for that path
+     */
+    public List<Style> getStyles(String path) {
+        return stylesForFile(path);
+    }
+
+
+    private List<Style> stylesForFile(String path) {
+        List<Style> styles = fileStyles.get(path);
+        if (styles == null) {
+            styles = new ArrayList<>();
+            fileStyles.put(path, styles);
+        }
+        return styles;
+    }
+
+
+    private void addFileStyle(String path, Style style) {
+        stylesForFile(path).add(style);
+    }
+
+
+    /**
+     * Add additional highlighting styles based on information not evident from
+     * the AST.
+     */
+    private void addSemanticStyles(@NotNull Binding nb) {
+        boolean isConst = CONSTANT.matcher(nb.name).matches();
+        switch (nb.kind) {
+            case SCOPE:
+                if (isConst) {
+                    addSemanticStyle(nb, Style.Type.CONSTANT);
+                }
+                break;
+            case VARIABLE:
+                addSemanticStyle(nb, isConst ? Style.Type.CONSTANT : Style.Type.IDENTIFIER);
+                break;
+            case PARAMETER:
+                addSemanticStyle(nb, Style.Type.PARAMETER);
+                break;
+            case CLASS:
+                addSemanticStyle(nb, Style.Type.TYPE_NAME);
+                break;
+        }
+    }
+
+
+    private void addSemanticStyle(@NotNull Binding binding, Style.Type type) {
+        String path = binding.getFile();
+        if (path != null) {
+            addFileStyle(path, new Style(type, binding.start, binding.end));
+        }
+    }
+
+
+    private void processDiagnostic(@NotNull Diagnostic d) {
+        Style style = new Style(Style.Type.WARNING, d.start, d.end);
+        style.message = d.msg;
+        style.url = d.file;
+        addFileStyle(d.file, style);
+    }
+
+
+    @Nullable
+    private String toURL(@NotNull Binding binding, String filename) {
+
+        if (binding.isBuiltin()) {
+            return binding.getURL();
+        }
+
+        String destPath;
+        if (binding.type instanceof ModuleType) {
+            destPath = binding.type.asModuleType().file;
+        } else {
+            destPath = binding.getFile();
+        }
+
+        if (destPath == null) {
+            return null;
+        }
+
+        String anchor = "#" + binding.qname;
+        if (binding.getFirstFile().equals(filename)) {
+            return anchor;
+        }
+
+        if (destPath.startsWith(rootPath)) {
+            String relpath;
+            if (filename != null) {
+                relpath = $.relPath(filename, destPath);
+            } else {
+                relpath = destPath;
+            }
+
+            if (relpath != null) {
+                return relpath + ".html" + anchor;
+            } else {
+                return anchor;
+            }
+        } else {
+            return "file://" + destPath + anchor;
+        }
+    }
+
+}
