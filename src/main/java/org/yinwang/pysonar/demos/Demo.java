@@ -172,4 +172,7 @@ public class Demo {
 
         List<String> argsList = options.getArgs();
         String fileOrDir = argsList.get(0);
-        OUTPU
+        OUTPUT_DIR = new File(argsList.get(1));
+
+//        System.out.println("options: " + options.getOptionsMap());
+        new Demo().start(fileOrDir, options.getOptionsMap())
