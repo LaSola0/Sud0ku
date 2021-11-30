@@ -8,4 +8,12 @@ import java.util.List;
 
 
 /**
- * Represents a simple style run for purposes of source highlight
+ * Represents a simple style run for purposes of source highlighting.
+ */
+public class Style implements Comparable<Style> {
+
+    public enum Type {
+        KEYWORD,
+        COMMENT,
+        STRING,
+        DOC_ST
