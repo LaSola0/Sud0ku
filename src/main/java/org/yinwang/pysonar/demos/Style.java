@@ -22,4 +22,8 @@ public class Style implements Comparable<Style> {
         NUMBER,
         CONSTANT,       // ALL_CAPS identifier
         FUNCTION,       // function name
-        PARAMETE
+        PARAMETER,      // function parameter
+        LOCAL,          // local variable
+        DECORATOR,      // function decorator
+        CLASS,          // class name
+   
