@@ -175,4 +175,7 @@ public class Demo {
         OUTPUT_DIR = new File(argsList.get(1));
 
 //        System.out.println("options: " + options.getOptionsMap());
-        new Demo().start(fileOrDir, options.getOptionsMap())
+        new Demo().start(fileOrDir, options.getOptionsMap());
+        $.msg($.getGCStats());
+    }
+}
