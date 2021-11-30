@@ -16,4 +16,10 @@ public class Style implements Comparable<Style> {
         KEYWORD,
         COMMENT,
         STRING,
-        DOC_ST
+        DOC_STRING,
+        IDENTIFIER,
+        BUILTIN,
+        NUMBER,
+        CONSTANT,       // ALL_CAPS identifier
+        FUNCTION,       // function name
+        PARAMETE
