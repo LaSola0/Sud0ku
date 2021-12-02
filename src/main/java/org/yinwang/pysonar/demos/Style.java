@@ -30,4 +30,14 @@ public class Style implements Comparable<Style> {
         LINK,           // hyperlink
         ANCHOR,         // name anchor
         DELIMITER,
-        TYPE_NAME,      // refe
+        TYPE_NAME,      // reference to a type (e.g. function or class name)
+
+        ERROR,
+        WARNING,
+        INFO
+    }
+
+
+    public Type type;
+    public int start;
+    public
