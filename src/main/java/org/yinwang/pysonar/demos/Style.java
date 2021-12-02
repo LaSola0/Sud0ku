@@ -46,4 +46,9 @@ public class Style implements Comparable<Style> {
     @Nullable
     public String url;      // internal or external link
     @Nullable
-    pu
+    public String id;       // for hover highlight
+    public List<String> highlight;   // for hover highlight
+
+
+    public Style(Type type, int start, int end) {
+ 
