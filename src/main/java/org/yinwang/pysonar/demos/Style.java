@@ -51,4 +51,13 @@ public class Style implements Comparable<Style> {
 
 
     public Style(Type type, int start, int end) {
- 
+        this.type = type;
+        this.start = start;
+        this.end = end;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Style)) {
+           
