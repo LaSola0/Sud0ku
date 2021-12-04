@@ -2,4 +2,5 @@ package org.yinwang.pysonar.hash;
 
 
 public abstract class EqualFunction {
-    p
+    public abstract boolean equals(Object x, Object y);
+}
