@@ -87,4 +87,7 @@ public class Style implements Comparable<Style> {
 
     @NotNull
     @Override
-    public String toS
+    public String toString() {
+        return "[" + type + " start=" + start + " end=" + end + "]";
+    }
+}
