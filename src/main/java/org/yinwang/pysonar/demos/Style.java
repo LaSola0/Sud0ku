@@ -65,4 +65,11 @@ public class Style implements Comparable<Style> {
         Style other = (Style) o;
         return other.type == this.type
                 && other.start == this.start
-              
+                && other.end == this.end
+                && $.same(other.message, this.message)
+                && $.same(other.url, this.url);
+    }
+
+
+    @Override
+    public int compareTo(@NotNull Style
