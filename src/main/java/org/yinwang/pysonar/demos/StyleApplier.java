@@ -105,3 +105,96 @@ class StyleApplier {
                 }
             }
             if (style.message != null) {
+                buffer.append(", title='");
+                buffer.append(style.message);
+                buffer.append("'");
+            }
+            buffer.append(">");
+        }
+    }
+
+
+    class EndTag extends Tag {
+        public EndTag(@NotNull Style style) {
+            offset = style.end;
+            this.style = style;
+        }
+
+
+        @Override
+        void insert() {
+            super.insert();
+            switch (style.type) {
+                case ANCHOR:
+                case LINK:
+                    buffer.append("</a>");
+                    break;
+                default:
+                    buffer.append("</span>");
+                    break;
+            }
+        }
+    }
+
+
+    public StyleApplier(String path, String src, @NotNull List<Style> runs) {
+        source = src;
+        for (Style run : runs) {
+            tags.add(new StartTag(run));
+            tags.add(new EndTag(run));
+        }
+    }
+
+
+    /**
+     * @return the html
+     */
+    @NotNull
+    public String apply() {
+        buffer = new StringBuilder();
+
+        for (Tag tag : tags) {
+            tag.insert();
+        }
+        // Copy in remaining source beyond last tag.
+        if (sourceOffset < source.length()) {
+            copySource(sourceOffset, source.length());
+        }
+        return buffer.toString();
+    }
+
+
+    /**
+     * Copies code from the input source to the output html.
+     *
+     * @param begin the starting source offset
+     * @param end   the end offset, or -1 to go to end of file
+     */
+    private void copySource(int begin, int end) {
+        // Be robust if the analyzer gives us bad offsets.
+        try {
+            String src = escape((end == -1)
+                    ? source.substring(begin)
+                    : source.substring(begin, end));
+            buffer.append(src);
+        } catch (RuntimeException x) {
+            // This can happen with files with weird encodings
+            // Igore them because of the rareness
+        }
+        sourceOffset = end;
+    }
+
+
+    private String escape(@NotNull String s) {
+        return s.replace("&", "&amp;")
+                .replace("'", "&#39;")
+                .replace("\"", "&quot;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
+    }
+
+
+    private String toCSS(@NotNull Style style) {
+        return style.type.toString().toLowerCase().replace("_", "-");
+    }
+}
