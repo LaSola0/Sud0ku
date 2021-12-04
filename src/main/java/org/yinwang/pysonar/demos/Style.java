@@ -77,4 +77,14 @@ public class Style implements Comparable<Style> {
             return 0;
         } else if (this.start < other.start) {
             return -1;
-        } else if (this.s
+        } else if (this.start > other.start) {
+            return 1;
+        } else {
+            return this.hashCode() - other.hashCode();
+        }
+    }
+
+
+    @NotNull
+    @Override
+    public String toS
