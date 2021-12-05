@@ -8,4 +8,9 @@ public class FunTypeEqualFunction extends EqualFunction {
     @Override
     public boolean equals(Object x, Object y) {
         if (x instanceof FunType && y instanceof FunType) {
-            FunType 
+            FunType xx = (FunType) x;
+            FunType yy = (FunType) y;
+            return xx == yy ||
+                    xx.table.path.equals(yy.table.path);
+        } else {
+           
