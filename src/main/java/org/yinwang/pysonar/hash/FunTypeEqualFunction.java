@@ -13,4 +13,7 @@ public class FunTypeEqualFunction extends EqualFunction {
             return xx == yy ||
                     xx.table.path.equals(yy.table.path);
         } else {
-           
+            return x.equals(y);
+        }
+    }
+}
