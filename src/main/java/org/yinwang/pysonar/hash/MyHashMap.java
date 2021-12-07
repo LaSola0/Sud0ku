@@ -341,3 +341,184 @@ public class MyHashMap<K, V>
                 if (v1 == v2 || (v1 != null && v1.equals(v2))) {
                     return true;
                 }
+            }
+            return false;
+        }
+
+
+        @Override
+        public final int hashCode() {
+            return Objects.hashCode(getKey()) ^ Objects.hashCode(getValue());
+        }
+
+
+        @Override
+        public final String toString() {
+            return getKey() + "=" + getValue();
+        }
+    }
+
+
+    void addEntry(int h, @NotNull K key, V value, int bucketIndex) {
+        if (size >= threshold && table[bucketIndex] != null) {
+            resize(2 * table.length);
+            h = hash(key);
+            bucketIndex = slot(h, table.length);
+        }
+
+        createEntry(h, key, value, bucketIndex);
+    }
+
+
+    void createEntry(int hash, K key, V value, int bucketIndex) {
+        Entry<K, V> e = table[bucketIndex];
+        table[bucketIndex] = new Entry<>(hash, key, value, e);
+        size++;
+    }
+
+
+    private abstract class HashIterator<E> implements Iterator<E> {
+        Entry<K, V> next;
+        int expectedModCount;
+        int index;
+        Entry<K, V> current;
+
+
+        HashIterator() {
+            expectedModCount = modCount;
+            if (size > 0) {
+                Entry[] t = table;
+                for (int i = 0; i < t.length; i++) {
+                    if (t[i] != null) {
+                        next = t[i];
+                        index = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        @Override
+        public final boolean hasNext() {
+            return next != null;
+        }
+
+
+        final Entry<K, V> nextEntry() {
+            if (modCount != expectedModCount) {
+                throw new ConcurrentModificationException();
+            }
+            if (next == null) {
+                throw new NoSuchElementException();
+            }
+
+            Entry<K, V> ret = next;
+            next = ret.next;
+            if (next == null) {
+                Entry[] t = table;
+                for (int i = index + 1; i < t.length; i++) {
+                    if (t[i] != null) {
+                        index = i;
+                        next = t[i];
+                        break;
+                    }
+                }
+            }
+            current = ret;
+            return ret;
+        }
+
+
+        @Override
+        public void remove() {
+            if (current == null) {
+                throw new IllegalStateException();
+            }
+            if (modCount != expectedModCount) {
+                throw new ConcurrentModificationException();
+            }
+            Object k = current.key;
+            current = null;
+            MyHashMap.this.removeEntry(k);
+            expectedModCount = modCount;
+        }
+    }
+
+    private final class ValueIterator extends HashIterator<V> {
+        @Override
+        public V next() {
+            return nextEntry().value;
+        }
+    }
+
+    private final class KeyIterator extends HashIterator<K> {
+        @Override
+        public K next() {
+            return nextEntry().getKey();
+        }
+    }
+
+    private final class EntryIterator extends HashIterator<Map.Entry<K, V>> {
+        @Override
+        public Map.Entry<K, V> next() {
+            return nextEntry();
+        }
+    }
+
+
+    @Override
+    public Set<K> keySet() {
+        if (keySet == null) {
+            keySet = new KeySet();
+        }
+        return keySet;
+    }
+
+
+    private final class KeySet extends AbstractSet<K> {
+        @Override
+        public Iterator<K> iterator() {
+            return new KeyIterator();
+        }
+
+
+        @Override
+        public int size() {
+            return size;
+        }
+
+
+        @Override
+        public boolean contains(Object o) {
+            return containsKey(o);
+        }
+
+
+        @Override
+        public boolean remove(Object o) {
+            return MyHashMap.this.removeEntry(o) != null;
+        }
+
+
+        @Override
+        public void clear() {
+            MyHashMap.this.clear();
+        }
+    }
+
+
+    @Override
+    public Collection<V> values() {
+        if (values == null) {
+            values = new Values();
+        }
+        return values;
+    }
+
+
+    private final class Values extends AbstractCollection<V> {
+        @Override
+        public Iterator<V> iterator() {
+            return new ValueIterator();
+        }
