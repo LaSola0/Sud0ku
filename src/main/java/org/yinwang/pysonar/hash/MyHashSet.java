@@ -11,4 +11,8 @@ public class MyHashSet<E>
         implements Set<E>
 {
     private transient MyHashMap<E, Object> map;
-    private st
+    private static final Object PRESENT = new Object();
+
+
+    public MyHashSet(HashFunction hashFunction, EqualFunction equalFunction) {
+        map = new MyHashMap<
