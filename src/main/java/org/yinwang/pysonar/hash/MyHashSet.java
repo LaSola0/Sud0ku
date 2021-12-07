@@ -15,4 +15,9 @@ public class MyHashSet<E>
 
 
     public MyHashSet(HashFunction hashFunction, EqualFunction equalFunction) {
-        map = new MyHashMap<
+        map = new MyHashMap<>(hashFunction, equalFunction);
+    }
+
+
+    public MyHashSet(Collection<? extends E> c, HashFunction hashFunction, EqualFunction equalFunction) {
+        map = new MyHash
