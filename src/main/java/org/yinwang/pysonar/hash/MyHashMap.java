@@ -522,3 +522,72 @@ public class MyHashMap<K, V>
         public Iterator<V> iterator() {
             return new ValueIterator();
         }
+
+
+        @Override
+        public int size() {
+            return size;
+        }
+
+
+        @Override
+        public boolean contains(Object o) {
+            return containsValue(o);
+        }
+
+
+        @Override
+        public void clear() {
+            MyHashMap.this.clear();
+        }
+    }
+
+
+    @Override
+    public Set<Map.Entry<K, V>> entrySet() {
+        if (entrySet == null) {
+            entrySet = new EntrySet();
+        }
+        return entrySet;
+    }
+
+
+    private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
+        @Override
+        public Iterator<Map.Entry<K, V>> iterator() {
+            return new EntryIterator();
+        }
+
+
+        @Override
+        public boolean contains(Object o) {
+            if (!(o instanceof Map.Entry)) {
+                return false;
+            }
+            Map.Entry<K, V> e = (Map.Entry<K, V>) o;
+            Entry<K, V> candidate = getEntry(e.getKey());
+            return candidate != null && candidate.equals(e);
+        }
+
+
+        @Override
+        public boolean remove(Object o) {
+            if (isEmpty() || !(o instanceof Map.Entry)) {
+                return false;
+            }
+            return removeMapping((Map.Entry) o) != null;
+        }
+
+
+        @Override
+        public int size() {
+            return size;
+        }
+
+
+        @Override
+        public void clear() {
+            MyHashMap.this.clear();
+        }
+    }
+}
