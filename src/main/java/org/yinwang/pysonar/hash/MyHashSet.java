@@ -20,4 +20,9 @@ public class MyHashSet<E>
 
 
     public MyHashSet(Collection<? extends E> c, HashFunction hashFunction, EqualFunction equalFunction) {
-        map = new MyHash
+        map = new MyHashMap<>(Math.max((int) (c.size() / .75f) + 1, 16), hashFunction, equalFunction);
+        addAll(c);
+    }
+
+
+    public MyHashSet(int initialCapacity, float loadFactor, HashFunction hashFun
