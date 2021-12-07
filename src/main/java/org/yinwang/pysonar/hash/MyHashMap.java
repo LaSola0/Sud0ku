@@ -180,3 +180,164 @@ public class MyHashMap<K, V>
             threshold = (int) Math.min(size * loadFactor, MAXIMUM_CAPACITY + 1);
         }
     }
+
+
+    @Override
+    public void putAll(Map<? extends K, ? extends V> m) {
+        for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
+            put(e.getKey(), e.getValue());
+        }
+    }
+
+
+    @Override
+    public V remove(Object key) {
+        Entry<K, V> e = removeEntry(key);
+        return e == null ? null : e.value;
+    }
+
+
+    Entry<K, V> removeEntry(Object key) {
+        if (isEmpty()) {
+            return null;
+        }
+        int h = key == null ? 0 : hash(key);
+        int i = slot(h, table.length);
+        Entry<K, V> prev = table[i];
+        Entry<K, V> e = prev;
+
+        while (e != null) {
+            Entry<K, V> next = e.next;
+            if (equalFunction.equals(e.key, key)) {
+                modCount++;
+                size--;
+                if (prev == e) {
+                    table[i] = next;
+                } else {
+                    prev.next = next;
+                }
+                return e;
+            }
+            prev = e;
+            e = next;
+        }
+
+        return e;
+    }
+
+
+    Entry<K, V> removeMapping(Map.Entry entry) {
+        Object key = entry.getKey();
+        int hash = (key == null) ? 0 : hash(key);
+        int i = slot(hash, table.length);
+        Entry<K, V> prev = table[i];
+        Entry<K, V> e = prev;
+
+        while (e != null) {
+            Entry<K, V> next = e.next;
+            if (e.hash == hash && e.equals(entry)) {
+                modCount++;
+                size--;
+                if (prev == e) {
+                    table[i] = next;
+                } else {
+                    prev.next = next;
+                }
+                return e;
+            }
+            prev = e;
+            e = next;
+        }
+
+        return e;
+    }
+
+
+    @Override
+    public void clear() {
+        modCount++;
+        Arrays.fill(table, null);
+        size = 0;
+    }
+
+
+    @Override
+    public boolean containsValue(Object value) {
+        if (value == null) {
+            return containsNullValue();
+        }
+
+        Entry[] tab = table;
+        for (Entry entry : tab) {
+            for (Entry e = entry; e != null; e = e.next) {
+                if (equalFunction.equals(value, e.value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    private boolean containsNullValue() {
+        Entry[] tab = table;
+        for (Entry entry : tab) {
+            for (Entry e = entry; e != null; e = e.next) {
+                if (e.value == null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    static class Entry<K, V> implements Map.Entry<K, V> {
+        final K key;
+        V value;
+        Entry<K, V> next;
+        int hash;
+
+
+        Entry(int h, K k, V v, Entry<K, V> n) {
+            value = v;
+            next = n;
+            key = k;
+            hash = h;
+        }
+
+
+        @Override
+        public final K getKey() {
+            return key;
+        }
+
+
+        @Override
+        public final V getValue() {
+            return value;
+        }
+
+
+        @Override
+        public final V setValue(V newValue) {
+            V oldValue = value;
+            value = newValue;
+            return oldValue;
+        }
+
+
+        @Override
+        public final boolean equals(Object o) {
+            if (!(o instanceof Map.Entry)) {
+                return false;
+            }
+            Map.Entry e = (Map.Entry) o;
+            Object k1 = getKey();
+            Object k2 = e.getKey();
+            if (k1 == k2 || k1.equals(k2)) {
+                Object v1 = getValue();
+                Object v2 = e.getValue();
+                if (v1 == v2 || (v1 != null && v1.equals(v2))) {
+                    return true;
+                }
