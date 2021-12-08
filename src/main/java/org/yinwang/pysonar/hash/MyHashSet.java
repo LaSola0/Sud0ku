@@ -25,4 +25,9 @@ public class MyHashSet<E>
     }
 
 
-    public MyHashSet(int initialCapacity, float loadFactor, HashFunction hashFun
+    public MyHashSet(int initialCapacity, float loadFactor, HashFunction hashFunction, EqualFunction equalFunction) {
+        map = new MyHashMap<>(initialCapacity, loadFactor, hashFunction, equalFunction);
+    }
+
+
+    public MyHashSet(i
