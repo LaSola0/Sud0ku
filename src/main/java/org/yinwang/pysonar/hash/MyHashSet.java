@@ -35,4 +35,11 @@ public class MyHashSet<E>
     }
 
 
-  
+    public MyHashSet() {
+        map = new MyHashMap<>(new GenericHashFunction(), new GenericEqualFunction());
+    }
+
+
+    @Override
+    public Iterator<E> iterator() {
+   
