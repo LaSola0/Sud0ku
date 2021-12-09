@@ -42,4 +42,16 @@ public class MyHashSet<E>
 
     @Override
     public Iterator<E> iterator() {
+        return map.keySet().iterator();
+    }
+
+
+    @Override
+    public int size() {
+        return map.size();
+    }
+
+
+    @Override
+    public boolean isEmpty() {
    
