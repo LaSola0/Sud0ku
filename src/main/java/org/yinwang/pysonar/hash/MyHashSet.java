@@ -54,4 +54,16 @@ public class MyHashSet<E>
 
     @Override
     public boolean isEmpty() {
-   
+        return map.isEmpty();
+    }
+
+
+    @Override
+    public boolean contains(Object o) {
+        return map.containsKey(o);
+    }
+
+
+    @Override
+    public boolean add(E e) {
+        return m
