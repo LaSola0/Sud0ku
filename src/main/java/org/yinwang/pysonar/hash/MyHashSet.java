@@ -30,4 +30,9 @@ public class MyHashSet<E>
     }
 
 
-    public MyHashSet(i
+    public MyHashSet(int initialCapacity, HashFunction hashFunction, EqualFunction equalFunction) {
+        map = new MyHashMap<>(initialCapacity, hashFunction, equalFunction);
+    }
+
+
+  
