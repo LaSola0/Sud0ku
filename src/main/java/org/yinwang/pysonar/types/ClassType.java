@@ -35,4 +35,11 @@ public class ClassType extends Type {
     }
 
 
-    public
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public void addSuper(@NotNull Type superclass) {
+        this.superclass = superclass;
+        table.addSu
