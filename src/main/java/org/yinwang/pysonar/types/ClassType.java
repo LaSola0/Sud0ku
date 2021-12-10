@@ -8,3 +8,11 @@ import org.yinwang.pysonar.visitor.TypeInferencer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+public class ClassType extends Type {
+
+    public String name;
+    public Type superclass;
+    private InstanceType instance;
+
+    public ClassType(@NotNull String name, @
