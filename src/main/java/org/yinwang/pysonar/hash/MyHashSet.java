@@ -66,4 +66,15 @@ public class MyHashSet<E>
 
     @Override
     public boolean add(E e) {
-        return m
+        return map.put(e, PRESENT) == null;
+    }
+
+
+    @Override
+    public boolean remove(Object o) {
+        return map.remove(o) == PRESENT;
+    }
+
+
+    @Override
+    
