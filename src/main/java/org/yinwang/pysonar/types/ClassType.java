@@ -19,4 +19,12 @@ public class ClassType extends Type {
         this.name = name;
         this.setTable(new State(parent, State.StateType.CLASS));
         table.setType(this);
-        if (parent != nul
+        if (parent != null) {
+            table.setPath(parent.extendPath(name));
+        } else {
+            table.setPath(name);
+        }
+    }
+
+
+    public ClassType(@NotNull String name, State p
