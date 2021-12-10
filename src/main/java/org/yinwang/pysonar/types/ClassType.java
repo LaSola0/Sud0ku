@@ -49,4 +49,9 @@ public class ClassType extends Type {
         if (instance == null) {
             instance = new InstanceType(this);
         }
-        r
+        return instance;
+    }
+
+    public InstanceType getInstance(List<Type> args, TypeInferencer inferencer, Node call) {
+        if (instance == null) {
+            List<Typ
