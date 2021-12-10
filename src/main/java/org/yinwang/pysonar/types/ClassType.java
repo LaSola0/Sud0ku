@@ -42,4 +42,11 @@ public class ClassType extends Type {
 
     public void addSuper(@NotNull Type superclass) {
         this.superclass = superclass;
-        table.addSu
+        table.addSuper(superclass.table);
+    }
+
+    public InstanceType getInstance() {
+        if (instance == null) {
+            instance = new InstanceType(this);
+        }
+        r
