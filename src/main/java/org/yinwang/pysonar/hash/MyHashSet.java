@@ -77,4 +77,7 @@ public class MyHashSet<E>
 
 
     @Override
-    
+    public void clear() {
+        map.clear();
+    }
+}
