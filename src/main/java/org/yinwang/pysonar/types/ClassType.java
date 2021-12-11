@@ -60,4 +60,10 @@ public class ClassType extends Type {
         return instance;
     }
 
-    public v
+    public void setInstance(InstanceType instance) {
+        this.instance = instance;
+    }
+
+    @Override
+    public boolean typeEquals(Object other) {
+        return this == other
