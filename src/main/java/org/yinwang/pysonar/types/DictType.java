@@ -11,4 +11,9 @@ public class DictType extends Type {
         keyType = key0;
         valueType = val0;
         table.addSuper(Types.BaseDict.table);
-        table.setPath(Types.BaseDict
+        table.setPath(Types.BaseDict.table.path);
+    }
+
+    public void add(@NotNull Type key, @NotNull Type val) {
+        keyType = UnionType.union(keyType, key);
+        valueType = Union
