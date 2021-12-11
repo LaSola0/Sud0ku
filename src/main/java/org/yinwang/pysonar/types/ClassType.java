@@ -66,4 +66,11 @@ public class ClassType extends Type {
 
     @Override
     public boolean typeEquals(Object other) {
-        return this == other
+        return this == other;
+    }
+
+    @Override
+    protected String printType(CyclicTypeRecorder ctr) {
+        return "<" + name + ">";
+    }
+}
