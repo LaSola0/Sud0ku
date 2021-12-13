@@ -54,4 +54,11 @@ public class DictType extends Type {
         this.keyType = keyType;
     }
 
-    public void setVal
+    public void setValueType(Type valueType)
+    {
+        this.valueType = valueType;
+    }
+
+    @Override
+    protected String printType(@NotNull CyclicTypeRecorder ctr) {
+//       
