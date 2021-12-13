@@ -45,4 +45,13 @@ public class DictType extends Type {
     }
 
     @Override
-    publ
+    public int hashCode() {
+        return "DictType".hashCode();
+    }
+
+    public void setKeyType(Type keyType)
+    {
+        this.keyType = keyType;
+    }
+
+    public void setVal
