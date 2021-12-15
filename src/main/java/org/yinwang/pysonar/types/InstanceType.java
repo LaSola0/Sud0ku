@@ -13,4 +13,8 @@ public class InstanceType extends Type {
     public Type classType;
 
 
-    public InstanceType(@NotNull
+    public InstanceType(@NotNull Type c) {
+        table.setStateType(State.StateType.INSTANCE);
+        table.addSuper(c.table);
+        table.setPath(c.table.path);
+        classType = c;
