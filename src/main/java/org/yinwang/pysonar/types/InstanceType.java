@@ -18,3 +18,11 @@ public class InstanceType extends Type {
         table.addSuper(c.table);
         table.setPath(c.table.path);
         classType = c;
+    }
+
+    public InstanceType(@NotNull Type c, List<Type> args, TypeInferencer inferencer, Node call)
+    {
+        this(c);
+
+        // call constructor
+        Type initFunc = ta
