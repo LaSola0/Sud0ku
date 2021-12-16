@@ -25,4 +25,7 @@ public class InstanceType extends Type {
         this(c);
 
         // call constructor
-        Type initFunc = ta
+        Type initFunc = table.lookupAttrType("__init__");
+        if (initFunc != null &&
+            initFunc instanceof FunType &&
+            ((FunType) initFunc).func !=
