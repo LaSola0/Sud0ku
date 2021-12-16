@@ -51,4 +51,12 @@ public class InstanceType extends Type {
 
     @Override
     public int hashCode() {
-        return
+        return classType.hashCode();
+    }
+
+
+    @Override
+    protected String printType(CyclicTypeRecorder ctr) {
+        return ((ClassType) classType).name;
+    }
+}
