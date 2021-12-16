@@ -35,4 +35,11 @@ public class InstanceType extends Type {
 
         if (classType instanceof ClassType)
         {
-            ((Cl
+            ((ClassType) classType).setInstance(this);
+        }
+    }
+
+
+    @Override
+    public boolean typeEquals(Object other) {
+        if (other instanceof InstanceType) 
