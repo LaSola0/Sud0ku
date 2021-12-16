@@ -28,4 +28,11 @@ public class InstanceType extends Type {
         Type initFunc = table.lookupAttrType("__init__");
         if (initFunc != null &&
             initFunc instanceof FunType &&
-            ((FunType) initFunc).func !=
+            ((FunType) initFunc).func != null)
+        {
+            inferencer.apply((FunType) initFunc, this, args, null, null, null, call);
+        }
+
+        if (classType instanceof ClassType)
+        {
+            ((Cl
