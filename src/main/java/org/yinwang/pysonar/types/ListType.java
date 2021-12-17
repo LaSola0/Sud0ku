@@ -29,4 +29,14 @@ public class ListType extends Type {
 
 
     public void setElementType(Type eltType) {
-        th
+        this.eltType = eltType;
+    }
+
+
+    public void add(@NotNull Type another) {
+        eltType = UnionType.union(eltType, another);
+        positional.add(another);
+    }
+
+
+    pub
