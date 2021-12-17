@@ -23,4 +23,10 @@ public class ListType extends Type {
 
     public ListType(Type elt0) {
         eltType = elt0;
-        table.addSuper(Analyzer.self
+        table.addSuper(Analyzer.self.builtins.BaseList.table);
+        table.setPath(Analyzer.self.builtins.BaseList.table.path);
+    }
+
+
+    public void setElementType(Type eltType) {
+        th
