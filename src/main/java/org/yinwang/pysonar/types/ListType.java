@@ -13,4 +13,14 @@ public class ListType extends Type {
     @NotNull
     public List<Type> positional = new ArrayList<>();
     @NotNull
-    public List<Object> values 
+    public List<Object> values = new ArrayList<>();
+
+
+    public ListType() {
+        this(Types.UNKNOWN);
+    }
+
+
+    public ListType(Type elt0) {
+        eltType = elt0;
+        table.addSuper(Analyzer.self
