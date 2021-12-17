@@ -39,4 +39,15 @@ public class ListType extends Type {
     }
 
 
-    pub
+    public void addValue(Object v) {
+        values.add(v);
+    }
+
+
+    public Type get(int i) {
+        return positional.get(i);
+    }
+
+
+    @NotNull
+    public Tuple
