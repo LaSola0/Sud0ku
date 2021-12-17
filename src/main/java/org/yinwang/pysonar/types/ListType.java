@@ -7,4 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ListTy
+public class ListType extends Type {
+
+    public Type eltType;
+    @NotNull
+    public List<Type> positional = new ArrayList<>();
+    @NotNull
+    public List<Object> values 
