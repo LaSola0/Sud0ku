@@ -54,4 +54,16 @@ public class ListType extends Type {
         TupleType ret = new TupleType();
         for (int i = 0; i < n; i++) {
             ret.add(eltType);
-   
+        }
+        return ret;
+    }
+
+
+    @NotNull
+    public TupleType toTupleType() {
+        return new TupleType(positional);
+    }
+
+
+    @Override
+    public boo
