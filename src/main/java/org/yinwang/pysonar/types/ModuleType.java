@@ -14,4 +14,8 @@ public class ModuleType extends Type {
     public String qname;
 
 
-    public ModuleType(@NotNull S
+    public ModuleType(@NotNull String name, @Nullable String file, @NotNull State parent) {
+        this.name = name;
+        this.file = file;  // null for builtin modules
+        if (file != null) {
+            // This 
