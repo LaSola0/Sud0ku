@@ -83,4 +83,12 @@ public class ListType extends Type {
 
     @Override
     public int hashCode() {
-      
+        return "ListType".hashCode();
+    }
+
+
+    @Override
+    protected String printType(@NotNull CyclicTypeRecorder ctr) {
+        StringBuilder sb = new StringBuilder();
+
+        Integer num = ctr.visit(t
