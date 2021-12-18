@@ -97,4 +97,12 @@ public class ListType extends Type {
         } else {
             ctr.push(this);
             sb.append("[");
-            sb.ap
+            sb.append(eltType.printType(ctr));
+            sb.append("]");
+            ctr.pop(this);
+        }
+
+        return sb.toString();
+    }
+
+}
