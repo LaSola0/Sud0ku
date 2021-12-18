@@ -91,4 +91,10 @@ public class ListType extends Type {
     protected String printType(@NotNull CyclicTypeRecorder ctr) {
         StringBuilder sb = new StringBuilder();
 
-        Integer num = ctr.visit(t
+        Integer num = ctr.visit(this);
+        if (num != null) {
+            sb.append("#").append(num);
+        } else {
+            ctr.push(this);
+            sb.append("[");
+            sb.ap
