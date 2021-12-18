@@ -73,3 +73,14 @@ public class ListType extends Type {
             ListType co = (ListType) other;
             typeStack.push(this, other);
             boolean result = co.eltType.typeEquals(eltType);
+            typeStack.pop(this, other);
+            return result;
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public int hashCode() {
+      
