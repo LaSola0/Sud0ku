@@ -70,4 +70,6 @@ public class ListType extends Type {
         if (typeStack.contains(this, other)) {
             return true;
         } else if (other instanceof ListType) {
-          
+            ListType co = (ListType) other;
+            typeStack.push(this, other);
+            boolean result = co.eltType.typeEquals(eltType);
