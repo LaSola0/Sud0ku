@@ -66,4 +66,8 @@ public class ListType extends Type {
 
 
     @Override
-    public boo
+    public boolean typeEquals(Object other) {
+        if (typeStack.contains(this, other)) {
+            return true;
+        } else if (other instanceof ListType) {
+          
