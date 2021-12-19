@@ -18,4 +18,6 @@ public class ModuleType extends Type {
         this.name = name;
         this.file = file;  // null for builtin modules
         if (file != null) {
-            // This 
+            // This will return null iff specified file is not prefixed by
+            // any path in the module search path -- i.e., the caller asked
+            // the analyzer to load a
