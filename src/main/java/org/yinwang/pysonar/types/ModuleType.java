@@ -26,4 +26,9 @@ public class ModuleType extends Type {
         if (qname == null) {
             qname = name;
         }
-        setTable(new State(parent, Sta
+        setTable(new State(parent, State.StateType.MODULE));
+        table.setPath(qname);
+        table.setType(this);
+
+        // null during bootstrapping of built-in types
+        if (Analyzer.self.
