@@ -31,4 +31,11 @@ public class ModuleType extends Type {
         table.setType(this);
 
         // null during bootstrapping of built-in types
-        if (Analyzer.self.
+        if (Analyzer.self.builtins != null) {
+            table.addSuper(Analyzer.self.builtins.BaseModule.table);
+        }
+    }
+
+
+    public void setName(String name) {
+        thi
