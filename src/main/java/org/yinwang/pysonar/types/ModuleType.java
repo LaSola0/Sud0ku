@@ -38,4 +38,15 @@ public class ModuleType extends Type {
 
 
     public void setName(String name) {
-        thi
+        this.name = name;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return "ModuleType".hashCode();
+    }
+
+
+    @Override
+    public boolean typeEquals(Object ot
