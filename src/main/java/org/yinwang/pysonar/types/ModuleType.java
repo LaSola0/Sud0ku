@@ -54,4 +54,14 @@ public class ModuleType extends Type {
             ModuleType co = (ModuleType) other;
             if (file != null) {
                 return file.equals(co.file);
-     
+            }
+        }
+        return this == other;
+    }
+
+
+    @Override
+    protected String printType(CyclicTypeRecorder ctr) {
+        return name;
+    }
+}
