@@ -49,4 +49,9 @@ public class ModuleType extends Type {
 
 
     @Override
-    public boolean typeEquals(Object ot
+    public boolean typeEquals(Object other) {
+        if (other instanceof ModuleType) {
+            ModuleType co = (ModuleType) other;
+            if (file != null) {
+                return file.equals(co.file);
+     
