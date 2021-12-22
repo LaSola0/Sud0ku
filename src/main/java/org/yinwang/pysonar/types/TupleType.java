@@ -15,4 +15,10 @@ public class TupleType extends Type {
 
 
     public TupleType() {
-        this.eltT
+        this.eltTypes = new ArrayList<>();
+        table.addSuper(Analyzer.self.builtins.BaseTuple.table);
+        table.setPath(Analyzer.self.builtins.BaseTuple.table.path);
+    }
+
+
+    public
