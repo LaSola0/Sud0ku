@@ -21,4 +21,12 @@ public class TupleType extends Type {
     }
 
 
-    public
+    public TupleType(List<Type> eltTypes) {
+        this();
+        this.eltTypes = eltTypes;
+    }
+
+
+    public TupleType(Type elt0) {
+        this();
+        this.eltTy
