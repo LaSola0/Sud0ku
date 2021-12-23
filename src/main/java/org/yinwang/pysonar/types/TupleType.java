@@ -47,4 +47,17 @@ public class TupleType extends Type {
 
 
     public void setElementTypes(List<Type> eltTypes) {
-        this.eltTypes =
+        this.eltTypes = eltTypes;
+    }
+
+
+    public void add(Type elt) {
+        eltTypes.add(elt);
+    }
+
+
+    public Type get(int i) {
+        return eltTypes.get(i);
+    }
+
+    public in
