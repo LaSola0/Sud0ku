@@ -67,4 +67,14 @@ public class TupleType extends Type {
     @NotNull
     public ListType toListType() {
         ListType t = new ListType();
-        for (Type e : eltTypes)
+        for (Type e : eltTypes) {
+            t.add(e);
+        }
+        return t;
+    }
+
+
+    @Override
+    public boolean typeEquals(Object other) {
+        if (typeStack.contains(this, other)) {
+   
