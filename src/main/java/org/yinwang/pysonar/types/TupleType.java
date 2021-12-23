@@ -40,4 +40,11 @@ public class TupleType extends Type {
     }
 
 
-    public TupleType(Ty
+    public TupleType(Type... types) {
+        this();
+        Collections.addAll(this.eltTypes, types);
+    }
+
+
+    public void setElementTypes(List<Type> eltTypes) {
+        this.eltTypes =
