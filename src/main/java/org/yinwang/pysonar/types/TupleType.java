@@ -60,4 +60,11 @@ public class TupleType extends Type {
         return eltTypes.get(i);
     }
 
-    public in
+    public int size() {
+        return eltTypes.size();
+    }
+
+    @NotNull
+    public ListType toListType() {
+        ListType t = new ListType();
+        for (Type e : eltTypes)
