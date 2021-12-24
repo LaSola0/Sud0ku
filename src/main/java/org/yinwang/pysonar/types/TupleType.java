@@ -77,4 +77,7 @@ public class TupleType extends Type {
     @Override
     public boolean typeEquals(Object other) {
         if (typeStack.contains(this, other)) {
-   
+            return true;
+        } else if (other instanceof TupleType) {
+            List<Type> types1 = eltTypes;
+            List<Type> types2 = ((TupleType) ot
