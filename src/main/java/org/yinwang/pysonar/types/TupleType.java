@@ -87,4 +87,12 @@ public class TupleType extends Type {
                 for (int i = 0; i < types1.size(); i++) {
                     if (!types1.get(i).typeEquals(types2.get(i))) {
                         typeStack.pop(this, other);
-                        return
+                        return false;
+                    }
+                }
+                typeStack.pop(this, other);
+                return true;
+            } else {
+                return false;
+            }
+     
