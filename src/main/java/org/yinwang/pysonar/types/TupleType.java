@@ -80,4 +80,8 @@ public class TupleType extends Type {
             return true;
         } else if (other instanceof TupleType) {
             List<Type> types1 = eltTypes;
-            List<Type> types2 = ((TupleType) ot
+            List<Type> types2 = ((TupleType) other).eltTypes;
+
+            if (types1.size() == types2.size()) {
+                typeStack.push(this, other);
+                for (int i = 0; i < types1.s
