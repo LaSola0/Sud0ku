@@ -95,4 +95,17 @@ public class TupleType extends Type {
             } else {
                 return false;
             }
-     
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public int hashCode() {
+        return "TupleType".hashCode();
+    }
+
+
+    @Override
+    protect
