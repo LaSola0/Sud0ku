@@ -117,4 +117,11 @@ public class TupleType extends Type {
         } else {
             int newNum = ctr.push(this);
             boolean first = true;
-            if (eltTypes.size() 
+            if (eltTypes.size() != 1) {
+                sb.append("(");
+            }
+
+            for (Type t : eltTypes) {
+                if (!first) {
+                    sb.append(", ");
+        
