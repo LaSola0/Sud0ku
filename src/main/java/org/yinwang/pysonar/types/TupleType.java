@@ -108,4 +108,8 @@ public class TupleType extends Type {
 
 
     @Override
-    protect
+    protected String printType(@NotNull CyclicTypeRecorder ctr) {
+        StringBuilder sb = new StringBuilder();
+
+        Integer num = ctr.visit(this);
+        if (num != null) {
