@@ -113,3 +113,8 @@ public class TupleType extends Type {
 
         Integer num = ctr.visit(this);
         if (num != null) {
+            sb.append("#").append(num);
+        } else {
+            int newNum = ctr.push(this);
+            boolean first = true;
+            if (eltTypes.size() 
