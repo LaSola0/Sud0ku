@@ -130,4 +130,10 @@ public class TupleType extends Type {
             }
 
             if (ctr.isUsed(this)) {
-  
+                sb.append("=#").append(newNum).append(":");
+            }
+
+            if (eltTypes.size() != 1) {
+                sb.append(")");
+            }
+            ctr.pop(
