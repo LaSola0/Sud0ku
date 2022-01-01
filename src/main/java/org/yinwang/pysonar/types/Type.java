@@ -17,4 +17,15 @@ public abstract class Type {
     public State table = new State(null, State.StateType.SCOPE);
     public String file = null;
     @NotNull
-    protected sta
+    protected static TypeStack typeStack = new TypeStack();
+
+
+    public Type() {
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return typeEquals(other);
+    }
+
+   
