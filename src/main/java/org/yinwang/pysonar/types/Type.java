@@ -28,4 +28,11 @@ public abstract class Type {
         return typeEquals(other);
     }
 
-   
+    public abstract boolean typeEquals(Object other);
+
+    public void setTable(@NotNull State table) {
+        this.table = table;
+    }
+
+
+    public void setFile(Stri
