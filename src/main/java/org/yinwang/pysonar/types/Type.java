@@ -11,4 +11,10 @@ import java.util.Map;
 import java.util.Set;
 
 
-public abstract class Ty
+public abstract class Type {
+
+    @NotNull
+    public State table = new State(null, State.StateType.SCOPE);
+    public String file = null;
+    @NotNull
+    protected sta
