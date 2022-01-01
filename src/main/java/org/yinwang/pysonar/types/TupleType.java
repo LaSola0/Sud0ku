@@ -136,4 +136,9 @@ public class TupleType extends Type {
             if (eltTypes.size() != 1) {
                 sb.append(")");
             }
-            ctr.pop(
+            ctr.pop(this);
+        }
+        return sb.toString();
+    }
+
+}
