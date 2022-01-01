@@ -124,4 +124,10 @@ public class TupleType extends Type {
             for (Type t : eltTypes) {
                 if (!first) {
                     sb.append(", ");
-        
+                }
+                sb.append(t.printType(ctr));
+                first = false;
+            }
+
+            if (ctr.isUsed(this)) {
+  
