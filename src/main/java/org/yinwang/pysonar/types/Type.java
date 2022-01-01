@@ -45,4 +45,12 @@ public abstract class Type {
     }
 
 
-    public b
+    public boolean isUnknownType() {
+        return this == Types.UNKNOWN;
+    }
+
+
+    @NotNull
+    public ModuleType asModuleType() {
+        if (this instanceof UnionType) {
+  
