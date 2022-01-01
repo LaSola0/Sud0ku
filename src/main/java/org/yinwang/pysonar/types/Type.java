@@ -35,4 +35,14 @@ public abstract class Type {
     }
 
 
-    public void setFile(Stri
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+
+    public boolean isNumType() {
+	    return this == Types.IntInstance || this == Types.FloatInstance;
+    }
+
+
+    public b
