@@ -53,4 +53,9 @@ public abstract class Type {
     @NotNull
     public ModuleType asModuleType() {
         if (this instanceof UnionType) {
-  
+            for (Type t : ((UnionType) this).types) {
+                if (t instanceof ModuleType) {
+                    return t.asModuleType();
+                }
+            }
+     
