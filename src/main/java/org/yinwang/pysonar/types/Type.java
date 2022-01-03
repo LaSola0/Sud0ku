@@ -61,4 +61,8 @@ public abstract class Type {
             $.die("Not containing a ModuleType");
             // can't get here, just to make the @NotNull annotation happy
             return new ModuleType(null, null, null);
-        } e
+        } else if (this instanceof ModuleType) {
+            return (ModuleType) this;
+        } else {
+            $.die("Not a ModuleType");
+    
