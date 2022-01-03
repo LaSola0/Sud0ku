@@ -58,4 +58,7 @@ public abstract class Type {
                     return t.asModuleType();
                 }
             }
-     
+            $.die("Not containing a ModuleType");
+            // can't get here, just to make the @NotNull annotation happy
+            return new ModuleType(null, null, null);
+        } e
