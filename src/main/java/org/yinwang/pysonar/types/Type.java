@@ -77,3 +77,9 @@ public abstract class Type {
     protected class CyclicTypeRecorder {
         int count = 0;
         @NotNull
+        private Map<Type, Integer> elements = new HashMap<>();
+        @NotNull
+        private Set<Type> used = new HashSet<>();
+
+
+        public Inte
