@@ -82,4 +82,12 @@ public abstract class Type {
         private Set<Type> used = new HashSet<>();
 
 
-        public Inte
+        public Integer push(Type t) {
+            count += 1;
+            elements.put(t, count);
+            return count;
+        }
+
+
+        public void pop(Type t) {
+            ele
