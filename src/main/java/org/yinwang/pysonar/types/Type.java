@@ -90,4 +90,12 @@ public abstract class Type {
 
 
         public void pop(Type t) {
-            ele
+            elements.remove(t);
+            used.remove(t);
+        }
+
+
+        public Integer visit(Type t) {
+            Integer i = elements.get(t);
+            if (i != null) {
+       
