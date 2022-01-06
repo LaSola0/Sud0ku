@@ -110,4 +110,10 @@ public abstract class Type {
     }
 
 
- 
+    protected abstract String printType(CyclicTypeRecorder ctr);
+
+
+    @NotNull
+    @Override
+    public String toString() {
+        return printType(new Cy
