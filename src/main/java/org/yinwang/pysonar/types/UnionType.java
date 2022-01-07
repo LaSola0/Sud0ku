@@ -20,3 +20,14 @@ public class UnionType extends Type {
         this();
         for (Type nt : initialTypes) {
             addType(nt);
+        }
+    }
+
+
+    public boolean isEmpty() {
+        return types.isEmpty();
+    }
+
+
+    /**
+     * Returns true if t1 == t2 or t1 is a un
