@@ -116,4 +116,7 @@ public abstract class Type {
     @NotNull
     @Override
     public String toString() {
-        return printType(new Cy
+        return printType(new CyclicTypeRecorder());
+    }
+
+}
