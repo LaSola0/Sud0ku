@@ -12,4 +12,11 @@ public class UnionType extends Type {
 
 
     public UnionType() {
-        th
+        this.types = new HashSet<>();
+    }
+
+
+    public UnionType(@NotNull Type... initialTypes) {
+        this();
+        for (Type nt : initialTypes) {
+            addType(nt);
