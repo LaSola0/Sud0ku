@@ -30,4 +30,8 @@ public class UnionType extends Type {
 
 
     /**
-     * Returns true if t1 == t2 or t1 is a un
+     * Returns true if t1 == t2 or t1 is a union type that contains t2.
+     */
+    public static boolean contains(Type t1, Type t2) {
+        if (t1 instanceof UnionType) {
+            return ((UnionT
