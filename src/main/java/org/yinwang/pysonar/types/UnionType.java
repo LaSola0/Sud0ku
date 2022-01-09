@@ -34,4 +34,12 @@ public class UnionType extends Type {
      */
     public static boolean contains(Type t1, Type t2) {
         if (t1 instanceof UnionType) {
-            return ((UnionT
+            return ((UnionType) t1).contains(t2);
+        } else {
+            return t1.equals(t2);
+        }
+    }
+
+
+    public static Type remove(Type t1, Type t2) {
+        if (t1 i
