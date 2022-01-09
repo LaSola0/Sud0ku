@@ -42,4 +42,7 @@ public class UnionType extends Type {
 
 
     public static Type remove(Type t1, Type t2) {
-        if (t1 i
+        if (t1 instanceof UnionType) {
+            Set<Type> types = new HashSet<>(((UnionType) t1).types);
+            types.remove(t2);
+            return UnionType.newUnion(t
