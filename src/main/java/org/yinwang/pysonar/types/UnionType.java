@@ -58,4 +58,16 @@ public class UnionType extends Type {
     public static Type newUnion(@NotNull Collection<Type> types) {
         Type t = Types.UNKNOWN;
         for (Type nt : types) {
-            t = union(t, 
+            t = union(t, nt);
+        }
+        return t;
+    }
+
+
+    public void setTypes(Set<Type> types) {
+        this.types = types;
+    }
+
+
+    public void addType(@NotNull Type t) {
+        if (t instanceo
