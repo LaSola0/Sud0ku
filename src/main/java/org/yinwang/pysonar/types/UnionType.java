@@ -45,4 +45,12 @@ public class UnionType extends Type {
         if (t1 instanceof UnionType) {
             Set<Type> types = new HashSet<>(((UnionType) t1).types);
             types.remove(t2);
-            return UnionType.newUnion(t
+            return UnionType.newUnion(types);
+        } else if (t1 != Types.CONT && t1 == t2) {
+            return Types.UNKNOWN;
+        } else {
+            return t1;
+        }
+    }
+
+
