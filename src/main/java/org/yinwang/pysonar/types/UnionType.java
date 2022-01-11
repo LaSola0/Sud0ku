@@ -79,4 +79,11 @@ public class UnionType extends Type {
 
 
     public boolean contains(Type t) {
-        return 
+        return types.contains(t);
+    }
+
+
+    // take a union of two types
+    // with preference: other > None > Cont > unknown
+    @NotNull
+    public static Type union(@NotNull Type u, 
