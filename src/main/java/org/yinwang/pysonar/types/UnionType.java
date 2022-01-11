@@ -86,4 +86,9 @@ public class UnionType extends Type {
     // take a union of two types
     // with preference: other > None > Cont > unknown
     @NotNull
-    public static Type union(@NotNull Type u, 
+    public static Type union(@NotNull Type u, @NotNull Type v) {
+        if (u.equals(v)) {
+            return u;
+        } else if (u != Types.UNKNOWN && v == Types.UNKNOWN) {
+            return u;
+        } else if (v != 
