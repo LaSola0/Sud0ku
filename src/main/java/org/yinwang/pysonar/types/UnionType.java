@@ -70,4 +70,13 @@ public class UnionType extends Type {
 
 
     public void addType(@NotNull Type t) {
-        if (t instanceo
+        if (t instanceof UnionType) {
+            types.addAll(((UnionType) t).types);
+        } else {
+            types.add(t);
+        }
+    }
+
+
+    public boolean contains(Type t) {
+        return 
