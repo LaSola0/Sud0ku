@@ -91,4 +91,8 @@ public class UnionType extends Type {
             return u;
         } else if (u != Types.UNKNOWN && v == Types.UNKNOWN) {
             return u;
-        } else if (v != 
+        } else if (v != Types.UNKNOWN && u == Types.UNKNOWN) {
+            return v;
+        } else if (u != Types.NoneInstance && v == Types.NoneInstance) {
+            return u;
+        } else if (v != Types.NoneInstance && u 
