@@ -95,4 +95,7 @@ public class UnionType extends Type {
             return v;
         } else if (u != Types.NoneInstance && v == Types.NoneInstance) {
             return u;
-        } else if (v != Types.NoneInstance && u 
+        } else if (v != Types.NoneInstance && u == Types.NoneInstance) {
+            return v;
+        } else if (u instanceof TupleType && v instanceof TupleType &&
+                   ((TupleType)
