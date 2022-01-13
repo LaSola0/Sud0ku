@@ -106,4 +106,7 @@ public class UnionType extends Type {
     }
 
     @NotNull
-    public s
+    public static Type union(@NotNull TupleType u, @NotNull TupleType v) {
+        List<Type> types = new ArrayList<>();
+        for (int i = 0; i < u.size(); i++) {
+            types.add(un
