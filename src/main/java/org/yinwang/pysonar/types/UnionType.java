@@ -109,4 +109,10 @@ public class UnionType extends Type {
     public static Type union(@NotNull TupleType u, @NotNull TupleType v) {
         List<Type> types = new ArrayList<>();
         for (int i = 0; i < u.size(); i++) {
-            types.add(un
+            types.add(union(u.get(i), v.get(i)));
+        }
+        return new TupleType(types);
+    }
+
+    public static Type union(Collection<Type> types) {
+        
