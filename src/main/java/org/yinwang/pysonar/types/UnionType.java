@@ -115,4 +115,11 @@ public class UnionType extends Type {
     }
 
     public static Type union(Collection<Type> types) {
-        
+        Type result = Types.UNKNOWN;
+        for (Type type: types) {
+            result = UnionType.union(result, type);
+        }
+        return result;
+    }
+
+    pu
