@@ -128,4 +128,13 @@ public class UnionType extends Type {
 
     @Nullable
     public Type firstUseful() {
-        for (Type type : 
+        for (Type type : types) {
+            if (!type.isUnknownType() && type != Types.NoneInstance) {
+                return type;
+            }
+        }
+        return null;
+    }
+
+
+    @Overrid
