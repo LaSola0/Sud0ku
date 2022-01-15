@@ -122,4 +122,10 @@ public class UnionType extends Type {
         return result;
     }
 
-    pu
+    public static Type union(Type... types) {
+        return union(Arrays.asList(types));
+    }
+
+    @Nullable
+    public Type firstUseful() {
+        for (Type type : 
