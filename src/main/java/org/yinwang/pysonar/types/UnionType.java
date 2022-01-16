@@ -137,4 +137,8 @@ public class UnionType extends Type {
     }
 
 
-    @Overrid
+    @Override
+    public boolean typeEquals(Object other) {
+        if (typeStack.contains(this, other)) {
+            return true;
+        } else if (other instanceof UnionType) 
