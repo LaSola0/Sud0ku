@@ -141,4 +141,9 @@ public class UnionType extends Type {
     public boolean typeEquals(Object other) {
         if (typeStack.contains(this, other)) {
             return true;
-        } else if (other instanceof UnionType) 
+        } else if (other instanceof UnionType) {
+            Set<Type> types1 = types;
+            Set<Type> types2 = ((UnionType) other).types;
+            if (types1.size() != types2.size()) {
+                return false;
+    
