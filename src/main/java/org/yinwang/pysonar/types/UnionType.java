@@ -146,4 +146,9 @@ public class UnionType extends Type {
             Set<Type> types2 = ((UnionType) other).types;
             if (types1.size() != types2.size()) {
                 return false;
-    
+            } else {
+                for (Type t : types2) {
+                    if (!types1.contains(t)) {
+                        return false;
+                    }
+          
