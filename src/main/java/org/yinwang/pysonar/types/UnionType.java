@@ -151,4 +151,9 @@ public class UnionType extends Type {
                     if (!types1.contains(t)) {
                         return false;
                     }
-          
+                }
+                for (Type t : types1) {
+                    if (!types2.contains(t)) {
+                        return false;
+                    }
+             
