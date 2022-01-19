@@ -156,4 +156,15 @@ public class UnionType extends Type {
                     if (!types2.contains(t)) {
                         return false;
                     }
-             
+                }
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public int hashCode() {
+        return "Union
