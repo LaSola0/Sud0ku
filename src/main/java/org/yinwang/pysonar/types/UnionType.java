@@ -167,4 +167,12 @@ public class UnionType extends Type {
 
     @Override
     public int hashCode() {
-        return "Union
+        return "UnionType".hashCode();
+    }
+
+
+    @Override
+    protected String printType(@NotNull CyclicTypeRecorder ctr) {
+        StringBuilder sb = new StringBuilder();
+
+        Intege
