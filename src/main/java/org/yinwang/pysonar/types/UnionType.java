@@ -190,4 +190,10 @@ public class UnionType extends Type {
             }
 
             sb.append("}");
-            ctr
+            ctr.pop(this);
+        }
+
+        return sb.toString();
+    }
+
+}
