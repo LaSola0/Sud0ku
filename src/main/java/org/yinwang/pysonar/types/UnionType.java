@@ -175,4 +175,9 @@ public class UnionType extends Type {
     protected String printType(@NotNull CyclicTypeRecorder ctr) {
         StringBuilder sb = new StringBuilder();
 
-        Intege
+        Integer num = ctr.visit(this);
+        if (num != null) {
+            sb.append("#").append(num);
+        } else {
+            int newNum = ctr.push(this);
+            List<String> type
