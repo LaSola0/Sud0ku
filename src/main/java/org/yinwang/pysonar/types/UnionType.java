@@ -180,4 +180,7 @@ public class UnionType extends Type {
             sb.append("#").append(num);
         } else {
             int newNum = ctr.push(this);
-            List<String> type
+            List<String> typeStrings = types.stream().map(x->x.printType(ctr)).collect(Collectors.toList());
+            Collections.sort(typeStrings);
+            sb.append("{");
+            sb.
