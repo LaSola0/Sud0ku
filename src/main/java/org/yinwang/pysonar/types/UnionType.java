@@ -183,4 +183,11 @@ public class UnionType extends Type {
             List<String> typeStrings = types.stream().map(x->x.printType(ctr)).collect(Collectors.toList());
             Collections.sort(typeStrings);
             sb.append("{");
-            sb.
+            sb.append(String.join(" | ", typeStrings));
+
+            if (ctr.isUsed(this)) {
+                sb.append("=#").append(newNum).append(":");
+            }
+
+            sb.append("}");
+            ctr
