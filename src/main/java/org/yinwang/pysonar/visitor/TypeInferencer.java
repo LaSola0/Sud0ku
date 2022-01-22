@@ -21,4 +21,7 @@ import org.yinwang.pysonar.types.Types;
 import org.yinwang.pysonar.types.UnionType;
 
 import static org.yinwang.pysonar.Binding.Kind.ATTRIBUTE;
+import static org.yinwang.pysonar.Binding.Kind.CLASS;
+import static org.yinwang.pysonar.Binding.Kind.CONSTRUCTOR;
+import static org.yinwang.pysonar.Binding.Kind.FUNCTION;
 import static org.yinwang.pyso
