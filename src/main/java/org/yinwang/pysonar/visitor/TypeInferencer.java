@@ -17,4 +17,8 @@ import org.yinwang.pysonar.types.ListType;
 import org.yinwang.pysonar.types.ModuleType;
 import org.yinwang.pysonar.types.TupleType;
 import org.yinwang.pysonar.types.Type;
-import org.yin
+import org.yinwang.pysonar.types.Types;
+import org.yinwang.pysonar.types.UnionType;
+
+import static org.yinwang.pysonar.Binding.Kind.ATTRIBUTE;
+import static org.yinwang.pyso
