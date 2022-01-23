@@ -27,4 +27,10 @@ import static org.yinwang.pysonar.Binding.Kind.FUNCTION;
 import static org.yinwang.pysonar.Binding.Kind.METHOD;
 import static org.yinwang.pysonar.Binding.Kind.MODULE;
 import static org.yinwang.pysonar.Binding.Kind.PARAMETER;
-import static org.yinwang.pysonar
+import static org.yinwang.pysonar.Binding.Kind.SCOPE;
+import static org.yinwang.pysonar.Binding.Kind.VARIABLE;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+impor
