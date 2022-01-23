@@ -33,4 +33,9 @@ import static org.yinwang.pysonar.Binding.Kind.VARIABLE;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-impor
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class TypeInferencer implements Visitor1<Type, State>
