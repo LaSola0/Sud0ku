@@ -51,4 +51,16 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             visit(node.body, mt.table);
         }
-        return m
+        return mt;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Alias node, State s)
+    {
+        return Types.UNKNOWN;
+    }
+
+    @NotNull
+    @Override
+    public Typ
