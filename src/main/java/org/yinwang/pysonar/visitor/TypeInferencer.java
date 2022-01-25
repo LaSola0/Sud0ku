@@ -87,4 +87,9 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Type v
+    public Type visit(Attribute node, State s)
+    {
+        Type targetType = visit(node.target, s);
+        if (targetType instanceof UnionType)
+        {
+            Set<Type> types = ((UnionType) targ
