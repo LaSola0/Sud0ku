@@ -39,3 +39,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class TypeInferencer implements Visitor1<Type, State>
+{
+
+    @NotNull
+    @Override
+    public Type visit(PyModule node, State s)
+    {
+        ModuleType mt = new ModuleType(node.name, node.file, Analyz
