@@ -79,4 +79,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     @NotNull
     @Override
     public Type visit(Assign node, State s)
-  
+    {
+        Type valueType = visit(node.value, s);
+        bind(s, node.target, valueType);
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    public Type v
