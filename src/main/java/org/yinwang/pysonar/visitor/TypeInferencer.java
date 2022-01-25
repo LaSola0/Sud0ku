@@ -96,4 +96,15 @@ public class TypeInferencer implements Visitor1<Type, State>
             Type retType = Types.UNKNOWN;
             for (Type tt : types)
             {
-                retType = UnionType.union(retType, getAttrTy
+                retType = UnionType.union(retType, getAttrType(node, tt));
+            }
+            return retType;
+        }
+        else
+        {
+            return getAttrType(node, targetType);
+        }
+    }
+
+    @NotNull
+    
