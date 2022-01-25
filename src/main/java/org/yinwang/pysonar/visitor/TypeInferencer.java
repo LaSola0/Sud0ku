@@ -63,4 +63,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Typ
+    public Type visit(Assert node, State s)
+    {
+        if (node.test != null)
+        {
+            visit(node.test, s);
+        }
+        if (node.msg != null)
+        {
+    
