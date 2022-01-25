@@ -92,4 +92,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         Type targetType = visit(node.target, s);
         if (targetType instanceof UnionType)
         {
-            Set<Type> types = ((UnionType) targ
+            Set<Type> types = ((UnionType) targetType).types;
+            Type retType = Types.UNKNOWN;
+            for (Type tt : types)
+            {
+                retType = UnionType.union(retType, getAttrTy
