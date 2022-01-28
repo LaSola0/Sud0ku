@@ -154,4 +154,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             if (rtype == Types.NoneInstance)
             {
-                return l
+                return ltype;
+            }
+            else if (ltype == Types.NoneInstance)
+            {
+                return rtype;
+            }
+        }
+        
