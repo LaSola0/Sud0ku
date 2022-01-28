@@ -134,4 +134,11 @@ public class TypeInferencer implements Visitor1<Type, State>
                 return result;
             }
         }
-        else if (Op.isBoolean(node.op)
+        else if (Op.isBoolean(node.op))
+        {
+            return Types.BoolInstance;
+        }
+        else if (ltype == Types.UNKNOWN)
+        {
+            return rtype;
+        }
