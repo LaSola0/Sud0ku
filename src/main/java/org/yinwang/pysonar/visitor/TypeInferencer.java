@@ -165,4 +165,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             if (rtype == Types.NoneInstance || ltype == Types.NoneInstance)
             {
-                return Types.NoneInstanc
+                return Types.NoneInstance;
+            }
+        }
+
+        addWarningToNode(node,
+                         "Cannot apply binary operator " + node.op.getRep() + " to type " + ltype + " and " + r
