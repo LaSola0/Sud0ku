@@ -116,4 +116,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else
         {
-            return visit(node
+            return visit(node.value, s);
+        }
+    }
+
+    @NotNull
+    @Override
+    public Type visit(BinOp node, State s)
+    {
+        Type ltype = visit(node.left, s);
+        Type rtype = 
