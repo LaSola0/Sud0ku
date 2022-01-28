@@ -125,4 +125,7 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(BinOp node, State s)
     {
         Type ltype = visit(node.left, s);
-        Type rtype = 
+        Type rtype = visit(node.right, s);
+        if (operatorOverridden(ltype, node.op.getMethod()))
+        {
+            Type result = applyOp(node.op, ltype, rtype, node.op.getMethod(), node, 
