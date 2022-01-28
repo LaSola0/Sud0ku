@@ -142,3 +142,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             return rtype;
         }
+        else if (rtype == Types.UNKNOWN)
+        {
+            return ltype;
+        }
+        else if (ltype.typeEquals(rtype))
+        {
+     
