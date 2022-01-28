@@ -128,4 +128,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         Type rtype = visit(node.right, s);
         if (operatorOverridden(ltype, node.op.getMethod()))
         {
-            Type result = applyOp(node.op, ltype, rtype, node.op.getMethod(), node, 
+            Type result = applyOp(node.op, ltype, rtype, node.op.getMethod(), node, node.left);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+        else if (Op.isBoolean(node.op)
