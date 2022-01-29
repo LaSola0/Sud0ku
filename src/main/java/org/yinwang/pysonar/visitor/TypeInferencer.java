@@ -170,4 +170,12 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
 
         addWarningToNode(node,
-                         "Cannot apply binary operator " + node.op.getRep() + " to type " + ltype + " and " + r
+                         "Cannot apply binary operator " + node.op.getRep() + " to type " + ltype + " and " + rtype);
+        return Types.UNKNOWN;
+    }
+
+    private boolean operatorOverridden(Type type, String method)
+    {
+        if (type instanceof InstanceType)
+        {
+            Type opTyp
