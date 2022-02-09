@@ -178,4 +178,11 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         if (type instanceof InstanceType)
         {
-            Type opTyp
+            Type opType = type.table.lookupAttrType(method);
+            if (opType != null)
+            {
+                return true;
+            }
+        }
+        return false;
+   
