@@ -209,4 +209,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         // first pass: mark global names
         for (Node n : node.seq)
         {
-            if (n instanceof Glo
+            if (n instanceof Global)
+            {
+                for (Name name : ((Global) n).names)
+                {
+                    s.addGlobalName(name.id);
+                    Set<Binding> nb = s.lookup(nam
