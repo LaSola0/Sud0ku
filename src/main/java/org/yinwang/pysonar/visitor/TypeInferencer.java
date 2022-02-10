@@ -214,4 +214,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                 for (Name name : ((Global) n).names)
                 {
                     s.addGlobalName(name.id);
-                    Set<Binding> nb = s.lookup(nam
+                    Set<Binding> nb = s.lookup(name.id);
+                    if (nb != null)
+                    {
+                        Analyzer.self.putRef(name, nb);
+                    }
+                }
+            }
