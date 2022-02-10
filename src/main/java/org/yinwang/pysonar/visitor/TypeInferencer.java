@@ -195,4 +195,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             return apply((FunType) opType, ltype, Collections.singletonList(rtype), null, null, null, node);
         }
-  
+        else
+        {
+            addWarningToNode(left, "Operator method " + method + " is not a function");
+            return null;
+        }
+    }
+
+    @NotNu
