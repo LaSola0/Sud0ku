@@ -185,4 +185,9 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
         }
         return false;
-   
+    }
+
+    @Nullable
+    private Type applyOp(Op op, Type ltype, Type rtype, String method, Node node, Node left)
+    {
+        Type opType = ltype.table.lookupAttrType(me
