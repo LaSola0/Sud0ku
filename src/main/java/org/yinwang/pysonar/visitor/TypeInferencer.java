@@ -190,4 +190,9 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Nullable
     private Type applyOp(Op op, Type ltype, Type rtype, String method, Node node, Node left)
     {
-        Type opType = ltype.table.lookupAttrType(me
+        Type opType = ltype.table.lookupAttrType(method);
+        if (opType instanceof FunType)
+        {
+            return apply((FunType) opType, ltype, Collections.singletonList(rtype), null, null, null, node);
+        }
+  
