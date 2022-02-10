@@ -202,4 +202,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
     }
 
-    @NotNu
+    @NotNull
+    @Override
+    public Type visit(Block node, State s)
+    {
+        // first pass: mark global names
+        for (Node n : node.seq)
+        {
+            if (n instanceof Glo
