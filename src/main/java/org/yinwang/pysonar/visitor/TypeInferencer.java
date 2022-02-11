@@ -229,3 +229,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         for (Node n : node.seq)
         {
             Type t = visit(n, s);
+            if (!returned)
+            {
+                retType = UnionType.union(retType, t);
+                if (!UnionType.contains(t, Types.CONT))
+         
