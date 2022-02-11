@@ -233,4 +233,11 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 retType = UnionType.union(retType, t);
                 if (!UnionType.contains(t, Types.CONT))
-         
+                {
+                    returned = true;
+                    retType = UnionType.remove(retType, Types.CONT);
+                }
+            }
+        }
+
+        
