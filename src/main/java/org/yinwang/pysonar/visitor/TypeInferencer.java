@@ -221,3 +221,11 @@ public class TypeInferencer implements Visitor1<Type, State>
                     }
                 }
             }
+        }
+
+        boolean returned = false;
+        Type retType = Types.UNKNOWN;
+
+        for (Node n : node.seq)
+        {
+            Type t = visit(n, s);
