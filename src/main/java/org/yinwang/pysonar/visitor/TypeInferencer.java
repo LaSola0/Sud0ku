@@ -240,4 +240,16 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
         }
 
-        
+        return retType;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Break node, State s)
+    {
+        return Types.NoneInstance;
+    }
+
+    @NotNull
+    @Override
+    pu
