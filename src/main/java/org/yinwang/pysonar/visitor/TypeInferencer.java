@@ -261,3 +261,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Call node, State s)
     {
+        Type fun;
+        Type selfType = null;
+
+        if (node.func instanceof Attribute)
+        {
+            Node target = ((Attribute) node.func).target;
+      
