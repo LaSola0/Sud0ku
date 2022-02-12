@@ -252,4 +252,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    pu
+    public Type visit(Bytes node, State s)
+    {
+        return Types.StrInstance;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Call node, State s)
+    {
