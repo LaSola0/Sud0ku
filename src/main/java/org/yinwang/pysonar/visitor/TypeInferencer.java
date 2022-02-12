@@ -267,4 +267,6 @@ public class TypeInferencer implements Visitor1<Type, State>
         if (node.func instanceof Attribute)
         {
             Node target = ((Attribute) node.func).target;
-      
+            Name attr = ((Attribute) node.func).attr;
+            Type targetType = visit(target, s);
+            if (!(targetType instanceof ModuleTyp
