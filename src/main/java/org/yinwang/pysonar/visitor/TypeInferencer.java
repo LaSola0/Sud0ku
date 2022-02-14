@@ -292,3 +292,9 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         // Infer positional argument types
         List<Type> positional = visit(node.args, s);
+
+        // Infer keyword argument types
+        Map<String, Type> kwTypes = new HashMap<>();
+        if (node.keywords != null)
+        {
+            for (Keyword k : node.k
