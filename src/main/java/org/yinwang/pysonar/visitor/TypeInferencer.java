@@ -308,4 +308,8 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (fun instanceof UnionType)
         {
-            Set<Type> types = ((Uni
+            Set<Type> types = ((UnionType) fun).types;
+            Type resultType = Types.UNKNOWN;
+            for (Type funType : types)
+            {
+                Type returnType = resolveCall(funType, 
