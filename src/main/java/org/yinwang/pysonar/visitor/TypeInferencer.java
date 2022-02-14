@@ -303,4 +303,9 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
         }
 
-        Type kwArg = node.kwargs == null ? null : visit(node
+        Type kwArg = node.kwargs == null ? null : visit(node.kwargs, s);
+        Type starArg = node.starargs == null ? null : visit(node.starargs, s);
+
+        if (fun instanceof UnionType)
+        {
+            Set<Type> types = ((Uni
