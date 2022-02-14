@@ -274,4 +274,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                 selfType = targetType;
             }
             Set<Binding> b = targetType.table.lookupAttr(attr.id);
-         
+            if (b != null)
+            {
+                Analyzer.self.putRef(attr, b);
+                fun = State.makeUnion(b);
+            }
+            else
+  
