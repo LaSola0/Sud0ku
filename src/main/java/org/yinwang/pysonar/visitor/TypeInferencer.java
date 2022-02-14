@@ -312,4 +312,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             Type resultType = Types.UNKNOWN;
             for (Type funType : types)
             {
-                Type returnType = resolveCall(funType, 
+                Type returnType = resolveCall(funType, selfType, positional, kwTypes, kwArg, starArg, node);
+                resultType = UnionType.union(resultType, returnType);
+            }
+            return resultType;
+        
