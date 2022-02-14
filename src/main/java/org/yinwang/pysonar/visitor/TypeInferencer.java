@@ -285,4 +285,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                 fun = Types.UNKNOWN;
             }
         }
-  
+        else
+        {
+            fun = visit(node.func, s);
+        }
+
+        // Infer positional argument types
+        List<Type> positional = visit(node.args, s);
