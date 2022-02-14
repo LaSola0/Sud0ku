@@ -280,4 +280,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                 fun = State.makeUnion(b);
             }
             else
+            {
+                Analyzer.self.putProblem(attr, "Attribute is not found in type: " + attr.id);
+                fun = Types.UNKNOWN;
+            }
+        }
   
