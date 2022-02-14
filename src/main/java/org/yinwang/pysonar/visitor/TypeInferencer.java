@@ -297,4 +297,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         Map<String, Type> kwTypes = new HashMap<>();
         if (node.keywords != null)
         {
-            for (Keyword k : node.k
+            for (Keyword k : node.keywords)
+            {
+                kwTypes.put(k.arg, visit(k.value, s));
+            }
+        }
+
+        Type kwArg = node.kwargs == null ? null : visit(node
