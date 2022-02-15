@@ -329,4 +329,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         ClassType classType = new ClassType(node.name.id, s);
         List<Type> baseTypes = new ArrayList<>();
-        for (Node base : node.ba
+        for (Node base : node.bases)
+        {
+            Type baseType = visit(base, s);
+            if (baseType instanceof ClassType)
+            {
+                classType.addSuper(baseType);
+            }
