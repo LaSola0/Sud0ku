@@ -325,4 +325,8 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Type visit(Clas
+    public Type visit(ClassDef node, State s)
+    {
+        ClassType classType = new ClassType(node.name.id, s);
+        List<Type> baseTypes = new ArrayList<>();
+        for (Node base : node.ba
