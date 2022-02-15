@@ -316,4 +316,13 @@ public class TypeInferencer implements Visitor1<Type, State>
                 resultType = UnionType.union(resultType, returnType);
             }
             return resultType;
-        
+        }
+        else
+        {
+            return resolveCall(fun, selfType, positional, kwTypes, kwArg, starArg, node);
+        }
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Clas
