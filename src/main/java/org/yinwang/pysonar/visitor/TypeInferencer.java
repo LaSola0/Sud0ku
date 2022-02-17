@@ -355,4 +355,6 @@ public class TypeInferencer implements Visitor1<Type, State>
         node.addSpecialAttribute(classType.table, "__bases__", new TupleType(baseTypes));
         node.addSpecialAttribute(classType.table, "__name__", Types.StrInstance);
         node.addSpecialAttribute(classType.table, "__dict__",
-                              
+                                 new DictType(Types.StrInstance, Types.UNKNOWN));
+        node.addSpecialAttribute(classType.table, "__module__", Types.StrInstance);
+        node.addSpecialAttribute(classType
