@@ -336,3 +336,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 classType.addSuper(baseType);
             }
+            else if (baseType instanceof UnionType)
+            {
+                for (Type parent : ((UnionType) baseType).types)
+                {
+             
