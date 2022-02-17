@@ -351,4 +351,6 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
 
         // XXX: Not sure if we should add "bases", "name" and "dict" here. They
-        // must be added _somewhere_ b
+        // must be added _somewhere_ but I'm just not sure if it should be HERE.
+        node.addSpecialAttribute(classType.table, "__bases__", new TupleType(baseTypes));
+        node.
