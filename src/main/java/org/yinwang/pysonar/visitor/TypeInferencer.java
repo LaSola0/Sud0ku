@@ -345,4 +345,10 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
             else
             {
-                addWarningToNode(base, base + " is
+                addWarningToNode(base, base + " is not a class");
+            }
+            baseTypes.add(baseType);
+        }
+
+        // XXX: Not sure if we should add "bases", "name" and "dict" here. They
+        // must be added _somewhere_ b
