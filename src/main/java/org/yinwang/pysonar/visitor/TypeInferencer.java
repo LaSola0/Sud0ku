@@ -340,4 +340,9 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 for (Type parent : ((UnionType) baseType).types)
                 {
-             
+                    classType.addSuper(parent);
+                }
+            }
+            else
+            {
+                addWarningToNode(base, base + " is
