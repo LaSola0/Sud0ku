@@ -361,4 +361,9 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         // Bind ClassType to name here before resolving the body because the
         // methods need node type as self.
-       
+        bind(s, node.name, classType, CLASS);
+        if (node.body != null)
+        {
+            visit(node.body, classType.table);
+        }
+        return Types.CONT;
