@@ -357,4 +357,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         node.addSpecialAttribute(classType.table, "__dict__",
                                  new DictType(Types.StrInstance, Types.UNKNOWN));
         node.addSpecialAttribute(classType.table, "__module__", Types.StrInstance);
-        node.addSpecialAttribute(classType
+        node.addSpecialAttribute(classType.table, "__doc__", Types.StrInstance);
+
+        // Bind ClassType to name here before resolving the body because the
+        // methods need node type as self.
+       
