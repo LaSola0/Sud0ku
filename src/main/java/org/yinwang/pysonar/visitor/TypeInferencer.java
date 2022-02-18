@@ -387,3 +387,10 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
+    public Type visit(Delete node, State s)
+    {
+        for (Node n : node.targets)
+        {
+            visit(n, s);
+            if (n instanceof Name)
+ 
