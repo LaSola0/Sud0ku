@@ -374,4 +374,16 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(Comprehension node, State s)
     {
         bindIter(s, node.target, node.iter, SCOPE);
-        visit(node.i
+        visit(node.ifs, s);
+        return visit(node.target, s);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Continue node, State s)
+    {
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
