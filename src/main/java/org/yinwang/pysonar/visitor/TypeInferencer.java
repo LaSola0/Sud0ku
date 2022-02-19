@@ -393,4 +393,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             visit(n, s);
             if (n instanceof Name)
- 
+            {
+                s.remove(((Name) n).id);
+            }
+        }
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Dict
