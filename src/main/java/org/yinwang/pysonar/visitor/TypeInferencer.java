@@ -406,4 +406,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         Type keyType = resolveUnion(node.keys, s);
         Type valType = resolveUnion(node.values, s);
-        return new DictType(
+        return new DictType(keyType, valType);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(DictComp node, State s)
+    {
+        visit(node.generators, s);
+        Type keyType = visit(node.key, s)
