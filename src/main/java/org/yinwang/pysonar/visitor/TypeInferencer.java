@@ -414,4 +414,11 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(DictComp node, State s)
     {
         visit(node.generators, s);
-        Type keyType = visit(node.key, s)
+        Type keyType = visit(node.key, s);
+        Type valueType = visit(node.value, s);
+        return new DictType(keyType, valueType);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Dummy n
