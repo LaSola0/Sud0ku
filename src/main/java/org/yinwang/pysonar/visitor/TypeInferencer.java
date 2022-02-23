@@ -447,4 +447,15 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         if (node.locals != null)
         {
-            visit(node.locals
+            visit(node.locals, s);
+        }
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Expr node, State s)
+    {
+        if (node.value != null)
+        {
+      
