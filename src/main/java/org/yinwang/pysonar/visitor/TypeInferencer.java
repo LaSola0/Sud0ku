@@ -441,4 +441,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             visit(node.body, s);
         }
-        if (no
+        if (node.globals != null)
+        {
+            visit(node.globals, s);
+        }
+        if (node.locals != null)
+        {
+            visit(node.locals
