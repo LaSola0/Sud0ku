@@ -421,4 +421,17 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Type visit(Dummy n
+    public Type visit(Dummy node, State s)
+    {
+        return Types.UNKNOWN;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Ellipsis node, State s)
+    {
+        return Types.NoneInstance;
+    }
+
+    @NotNull
+    @
