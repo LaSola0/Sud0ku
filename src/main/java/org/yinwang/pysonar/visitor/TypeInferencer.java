@@ -469,4 +469,14 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(ExtSlice node, State s)
     {
         for (Node d : node.dims)
-    
+        {
+            visit(d, s);
+        }
+        return new ListType();
+    }
+
+    @NotNull
+    @Override
+    public Type visit(For node, State s)
+    {
+        bindIter(s, node.targe
