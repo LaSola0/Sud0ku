@@ -479,4 +479,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(For node, State s)
     {
-        bindIter(s, node.targe
+        bindIter(s, node.target, node.iter, SCOPE);
+        Type t1 = Types.UNKNOWN;
+        Type t2 = Types.UNKNOWN;
+        Type t3 = Types.UNKNOWN;
+
+        State s1 = s.copy();
+        State s2 = s.cop
