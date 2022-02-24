@@ -458,4 +458,15 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         if (node.value != null)
         {
-      
+            visit(node.value, s);
+        }
+        return Types.CONT;
+
+    }
+
+    @NotNull
+    @Override
+    public Type visit(ExtSlice node, State s)
+    {
+        for (Node d : node.dims)
+    
