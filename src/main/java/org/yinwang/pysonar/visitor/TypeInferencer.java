@@ -485,4 +485,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         Type t3 = Types.UNKNOWN;
 
         State s1 = s.copy();
-        State s2 = s.cop
+        State s2 = s.copy();
+
+        if (node.body != null)
+        {
+            t1 = visit(node.body, s1);
+            s.merge(s1);
+            t2 = visit(node.body, s1);
+            s.merge(s1
