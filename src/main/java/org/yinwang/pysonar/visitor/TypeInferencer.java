@@ -505,3 +505,9 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     @NotNull
+    @Override
+    public Type visit(FunctionDef node, State s)
+    {
+        State env = s.getForwarding();
+        FunType fun = new FunType(node, env);
+        fun.table.
