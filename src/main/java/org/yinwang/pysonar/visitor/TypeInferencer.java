@@ -513,4 +513,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         fun.table.setParent(s);
         fun.table.setPath(s.extendPath(node.name.id));
         fun.setDefaultTypes(visit(node.defaults, s));
-        Analyzer.self.addU
+        Analyzer.self.addUncalled(fun);
+        Binding.Kind funkind;
+
+        if (node.isLamba)
+        {
+            return fun;
+        }
+        else
+        {
+            if (s.stateType
