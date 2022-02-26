@@ -510,4 +510,7 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         State env = s.getForwarding();
         FunType fun = new FunType(node, env);
-        fun.table.
+        fun.table.setParent(s);
+        fun.table.setPath(s.extendPath(node.name.id));
+        fun.setDefaultTypes(visit(node.defaults, s));
+        Analyzer.self.addU
