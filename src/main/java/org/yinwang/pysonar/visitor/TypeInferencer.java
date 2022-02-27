@@ -522,4 +522,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else
         {
-            if (s.stateType
+            if (s.stateType == State.StateType.CLASS)
+            {
+                if ("__init__".equals(node.name.id))
+                {
+                    funkind = CONSTRUCTOR;
+                }
+                e
