@@ -538,4 +538,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                 funkind = FUNCTION;
             }
 
-            Type o
+            Type outType = s.type;
+            if (outType instanceof ClassType)
+            {
+                fun.setCls((ClassType) outType);
+            }
+
+            bind(s, node.name, fu
