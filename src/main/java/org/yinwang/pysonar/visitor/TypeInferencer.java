@@ -528,4 +528,14 @@ public class TypeInferencer implements Visitor1<Type, State>
                 {
                     funkind = CONSTRUCTOR;
                 }
-                e
+                else
+                {
+                    funkind = METHOD;
+                }
+            }
+            else
+            {
+                funkind = FUNCTION;
+            }
+
+            Type o
