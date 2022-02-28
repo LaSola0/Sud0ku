@@ -544,4 +544,13 @@ public class TypeInferencer implements Visitor1<Type, State>
                 fun.setCls((ClassType) outType);
             }
 
-            bind(s, node.name, fu
+            bind(s, node.name, fun, funkind);
+            return Types.CONT;
+        }
+    }
+
+    @NotNull
+    @Override
+    public Type visit(GeneratorExp node, State s)
+    {
+        visi
