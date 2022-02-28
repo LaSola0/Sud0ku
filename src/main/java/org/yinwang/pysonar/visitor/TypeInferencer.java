@@ -561,4 +561,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Global node, State s)
     {
-        re
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Handler node, State s)
+    {
+        Type typeval = Types.UNKNOWN;
+        if (nod
