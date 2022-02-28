@@ -569,4 +569,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(Handler node, State s)
     {
         Type typeval = Types.UNKNOWN;
-        if (nod
+        if (node.exceptions != null)
+        {
+            typeval = resolveUnion(node.exceptions, s);
+        }
+        if (node.binder != null)
+        {
+            bind(s, node.binder, t
