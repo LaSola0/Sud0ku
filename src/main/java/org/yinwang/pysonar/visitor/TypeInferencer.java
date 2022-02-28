@@ -575,4 +575,12 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         if (node.binder != null)
         {
-            bind(s, node.binder, t
+            bind(s, node.binder, typeval);
+        }
+        if (node.body != null)
+        {
+            return visit(node.body, s);
+        }
+        else
+        {
+            ret
