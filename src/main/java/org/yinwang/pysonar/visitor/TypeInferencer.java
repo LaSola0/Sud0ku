@@ -583,4 +583,14 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else
         {
-            ret
+            return Types.UNKNOWN;
+        }
+    }
+
+    @NotNull
+    @Override
+    public Type visit(If node, State s)
+    {
+        Type type1, type2;
+        State s1 = s.copy();
+        Sta
