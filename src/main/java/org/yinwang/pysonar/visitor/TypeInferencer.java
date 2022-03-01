@@ -609,4 +609,12 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
 
         if (node.orelse != null)
-  
+        {
+            type2 = visit(node.orelse, s2);
+        }
+        else
+        {
+            type2 = Types.CONT;
+        }
+
+        boolean cont1 = UnionTyp
