@@ -599,4 +599,14 @@ public class TypeInferencer implements Visitor1<Type, State>
         visit(node.test, s);
         inferInstance(node.test, s, s1);
 
-        i
+        if (node.body != null)
+        {
+            type1 = visit(node.body, s1);
+        }
+        else
+        {
+            type1 = Types.CONT;
+        }
+
+        if (node.orelse != null)
+  
