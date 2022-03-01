@@ -593,4 +593,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         Type type1, type2;
         State s1 = s.copy();
-        Sta
+        State s2 = s.copy();
+
+        // Ignore result because Python can treat anything as bool
+        visit(node.test, s);
+        inferInstance(node.test, s, s1);
+
+        i
