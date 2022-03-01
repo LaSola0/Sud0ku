@@ -621,4 +621,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         boolean cont2 = UnionType.contains(type2, Types.CONT);
 
         // decide which branch affects the downstream state
-     
+        if (cont1 && cont2)
+        {
+            s1.merge(s2);
+            s.overwrite(s1);
+        }
+        else if (cont1)
+        {
+            s.overwrite(s1);
+        }
+        els
