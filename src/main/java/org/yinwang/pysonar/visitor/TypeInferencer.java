@@ -630,4 +630,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             s.overwrite(s1);
         }
-        els
+        else if (cont2)
+        {
+            s.overwrite(s2);
+        }
+
+        return UnionType.union(type1, type2);
+    }
+
+    /**
+     * Helper for branch inference f
