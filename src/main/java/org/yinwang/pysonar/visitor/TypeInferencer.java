@@ -649,4 +649,9 @@ public class TypeInferencer implements Visitor1<Type, State>
             if (testCall.func instanceof Name)
             {
                 Name testFunc = (Name) testCall.func;
-                if (testFunc.id.equals("isinsta
+                if (testFunc.id.equals("isinstance"))
+                {
+                    if (testCall.args.size() >= 2)
+                    {
+                        Node id = testCall.args.get(0);
+               
