@@ -639,4 +639,11 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     /**
-     * Helper for branch inference f
+     * Helper for branch inference for 'isinstance'
+     */
+    private void inferInstance(Node test, State s, State s1)
+    {
+        if (test instanceof Call)
+        {
+            Call testCall = (Call) test;
+    
