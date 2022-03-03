@@ -646,4 +646,7 @@ public class TypeInferencer implements Visitor1<Type, State>
         if (test instanceof Call)
         {
             Call testCall = (Call) test;
-    
+            if (testCall.func instanceof Name)
+            {
+                Name testFunc = (Name) testCall.func;
+                if (testFunc.id.equals("isinsta
