@@ -654,4 +654,8 @@ public class TypeInferencer implements Visitor1<Type, State>
                     if (testCall.args.size() >= 2)
                     {
                         Node id = testCall.args.get(0);
-               
+                        if (id instanceof Name)
+                        {
+                            Node typeExp = testCall.args.get(1);
+                            Type type = visit(typeExp, s);
+      
