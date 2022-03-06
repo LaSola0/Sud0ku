@@ -658,4 +658,6 @@ public class TypeInferencer implements Visitor1<Type, State>
                         {
                             Node typeExp = testCall.args.get(1);
                             Type type = visit(typeExp, s);
-      
+                            if (type instanceof ClassType)
+                            {
+                                type = ((ClassType) type).getInstance(null, this, tes
