@@ -660,4 +660,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                             Type type = visit(typeExp, s);
                             if (type instanceof ClassType)
                             {
-                                type = ((ClassType) type).getInstance(null, this, tes
+                                type = ((ClassType) type).getInstance(null, this, test);
+                            }
+                            s1.insert(((Name) id).id, id, type, VARIABLE);
+                        }
+                    }
+
+      
