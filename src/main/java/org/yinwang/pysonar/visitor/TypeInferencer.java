@@ -682,4 +682,12 @@ public class TypeInferencer implements Visitor1<Type, State>
         Type type1, type2;
         visit(node.test, s);
 
-        i
+        if (node.body != null)
+        {
+            type1 = visit(node.body, s);
+        }
+        else
+        {
+            type1 = Types.CONT;
+        }
+        if (node.orels
