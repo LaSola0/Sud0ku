@@ -669,4 +669,17 @@ public class TypeInferencer implements Visitor1<Type, State>
                     if (testCall.args.size() != 2)
                     {
                         addWarningToNode(test, "Incorrect number of arguments for isinstance");
-                
+                    }
+                }
+            }
+        }
+    }
+
+    @NotNull
+    @Override
+    public Type visit(IfExp node, State s)
+    {
+        Type type1, type2;
+        visit(node.test, s);
+
+        i
