@@ -698,4 +698,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             type2 = Types.CONT;
         }
-        return UnionType.unio
+        return UnionType.union(type1, type2);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Import node, State s)
+    {
+        for (Alias a : node.names)
+        {
+            Type mod = Anal
