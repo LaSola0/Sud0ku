@@ -707,4 +707,9 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         for (Alias a : node.names)
         {
-            Type mod = Anal
+            Type mod = Analyzer.self.loadModule(a.name, s);
+            if (mod == null)
+            {
+                addWarningToNode(node, "Cannot load module");
+            }
+            else if (a.asn
