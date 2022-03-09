@@ -712,4 +712,13 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 addWarningToNode(node, "Cannot load module");
             }
-            else if (a.asn
+            else if (a.asname != null)
+            {
+                s.insert(a.asname.id, a.asname, mod, VARIABLE);
+            }
+        }
+        return Types.CONT;
+    }
+
+    @NotNull
+  
