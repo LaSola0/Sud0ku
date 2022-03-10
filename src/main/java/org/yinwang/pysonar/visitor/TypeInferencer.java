@@ -721,4 +721,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     @NotNull
-  
+    @Override
+    public Type visit(ImportFrom node, State s)
+    {
+        if (node.module == null)
+        {
+            return Types.CONT;
+        }
+
+        Type mod = Analyzer.se
