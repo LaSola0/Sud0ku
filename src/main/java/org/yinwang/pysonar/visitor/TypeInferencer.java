@@ -729,4 +729,10 @@ public class TypeInferencer implements Visitor1<Type, State>
             return Types.CONT;
         }
 
-        Type mod = Analyzer.se
+        Type mod = Analyzer.self.loadModule(node.module, s);
+
+        if (mod == null)
+        {
+            addWarningToNode(node, "Cannot load module");
+        }
+        else if (node
