@@ -735,4 +735,12 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             addWarningToNode(node, "Cannot load module");
         }
-        else if (node
+        else if (node.isImportStar())
+        {
+            node.importStar(s, mod);
+        }
+        else
+        {
+            for (Alias a : node.names)
+            {
+                Name first = a.
