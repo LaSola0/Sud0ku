@@ -757,4 +757,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                         s.update(first.id, bs);
                         Analyzer.self.putRef(first, bs);
                     }
-           
+                }
+                else
+                {
+                    List<Name> ext = new ArrayList<>(node.module);
+                    ext.add(first);
+                
