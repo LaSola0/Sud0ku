@@ -767,4 +767,6 @@ public class TypeInferencer implements Visitor1<Type, State>
                     {
                         if (a.asname != null)
                         {
-     
+                            Binding binding = Binding.createFileBinding(a.asname.id, mod2.file, mod2);
+                            s.update(a.asname.id, binding);
+              
