@@ -762,4 +762,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                 {
                     List<Name> ext = new ArrayList<>(node.module);
                     ext.add(first);
-                
+                    Type mod2 = Analyzer.self.loadModule(ext, s);
+                    if (mod2 != null)
+                    {
+                        if (a.asname != null)
+                        {
+     
