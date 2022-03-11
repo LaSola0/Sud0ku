@@ -743,4 +743,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             for (Alias a : node.names)
             {
-                Name first = a.
+                Name first = a.name.get(0);
+                Set<Binding> bs = mod.table.lookup(first.id);
+                if (bs != null)
+                {
+                    if (a.asname != null
