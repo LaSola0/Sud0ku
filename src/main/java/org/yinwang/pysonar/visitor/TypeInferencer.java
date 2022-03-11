@@ -747,4 +747,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                 Set<Binding> bs = mod.table.lookup(first.id);
                 if (bs != null)
                 {
-                    if (a.asname != null
+                    if (a.asname != null)
+                    {
+                        s.update(a.asname.id, bs);
+                        Analyzer.self.putRef(a.asname, bs);
+                    }
+            
