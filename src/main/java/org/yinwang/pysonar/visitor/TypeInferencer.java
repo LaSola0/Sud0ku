@@ -752,4 +752,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                         s.update(a.asname.id, bs);
                         Analyzer.self.putRef(a.asname, bs);
                     }
-            
+                    else
+                    {
+                        s.update(first.id, bs);
+                        Analyzer.self.putRef(first, bs);
+                    }
+           
