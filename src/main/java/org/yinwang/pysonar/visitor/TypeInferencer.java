@@ -796,4 +796,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Keyword node, State s)
     {
-        r
+        return visit(node.value, s);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(ListComp node, State s)
+    {
+        visit(node.generators, s);
+        retu
