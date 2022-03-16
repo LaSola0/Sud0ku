@@ -787,4 +787,13 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    publi
+    public Type visit(Index node, State s)
+    {
+        return visit(node.value, s);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Keyword node, State s)
+    {
+        r
