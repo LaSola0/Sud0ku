@@ -775,4 +775,16 @@ public class TypeInferencer implements Visitor1<Type, State>
                         {
                             Binding binding = Binding.createFileBinding(first.id, mod2.file, mod2);
                             s.update(first.id, binding);
-                            Analyzer.self.putRef
+                            Analyzer.self.putRef(first, binding);
+                        }
+                    }
+                }
+            }
+        }
+
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    publi
