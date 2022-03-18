@@ -811,4 +811,9 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Name node, State s)
     {
-        Set<Binding> b = s.lookup(node.
+        Set<Binding> b = s.lookup(node.id);
+        if (b != null)
+        {
+            Analyzer.self.putRef(node, b);
+            Analyzer.self.resolved.add(node);
+            Analyzer.self.unresolved.remove(node);
