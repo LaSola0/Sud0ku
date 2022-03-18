@@ -804,4 +804,11 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(ListComp node, State s)
     {
         visit(node.generators, s);
-        retu
+        return new ListType(visit(node.elt, s));
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Name node, State s)
+    {
+        Set<Binding> b = s.lookup(node.
