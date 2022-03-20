@@ -822,4 +822,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         else
         {
             addWarningToNode(node, "unbound variable " + node.id);
+            Analyzer.self.unresolved.add(node);
+            Type t = Types.UNKNOWN;
+            t.table.setPath(s.extendPath(node.id));
+            return t;
+        }
     
