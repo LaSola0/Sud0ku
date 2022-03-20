@@ -827,4 +827,15 @@ public class TypeInferencer implements Visitor1<Type, State>
             t.table.setPath(s.extendPath(node.id));
             return t;
         }
-    
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Pass node, State s)
+    {
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    p
