@@ -906,4 +906,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         ListType listType = null;
         for (Node elt : node.elts)
         {
-            if (lis
+            if (listType == null)
+            {
+                listType = new ListType(visit(elt, s));
+            }
+            else
+            {
+                listType.add(v
