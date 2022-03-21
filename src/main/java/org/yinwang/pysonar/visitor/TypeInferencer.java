@@ -855,4 +855,15 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(PyComplex node, State s)
     {
-        return Types.Comple
+        return Types.ComplexInstance;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(PyFloat node, State s)
+    {
+        return Types.FloatInstance;
+    }
+
+    @NotNull
+    
