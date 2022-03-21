@@ -866,4 +866,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     @NotNull
-    
+    @Override
+    public Type visit(PyInt node, State s)
+    {
+        return Types.IntInstance;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(PyList node, St
