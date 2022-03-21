@@ -845,4 +845,14 @@ public class TypeInferencer implements Visitor1<Type, State>
             visit(node.dest, s);
         }
         if (node.values != null)
-     
+        {
+            visit(node.values, s);
+        }
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(PyComplex node, State s)
+    {
+        return Types.Comple
