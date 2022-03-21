@@ -874,4 +874,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Type visit(PyList node, St
+    public Type visit(PyList node, State s)
+    {
+        if (node.elts.size() == 0)
+        {
+            return new ListType();  // list<unknown>
+        }
+
+        ListType listType = new ListType();
+     
