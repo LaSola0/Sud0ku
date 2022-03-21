@@ -882,4 +882,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
 
         ListType listType = new ListType();
-     
+        for (Node elt : node.elts)
+        {
+            listType.add(visit(elt, s));
+            if (elt instanceof Str)
+            {
+                listType.addValu
