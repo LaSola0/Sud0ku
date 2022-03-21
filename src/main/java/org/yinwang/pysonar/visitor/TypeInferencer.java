@@ -887,4 +887,15 @@ public class TypeInferencer implements Visitor1<Type, State>
             listType.add(visit(elt, s));
             if (elt instanceof Str)
             {
-                listType.addValu
+                listType.addValue(((Str) elt).value);
+            }
+        }
+
+        return listType;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(PySet node, State s)
+    {
+        if (node.elts.size
