@@ -838,4 +838,11 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    p
+    public Type visit(Print node, State s)
+    {
+        if (node.dest != null)
+        {
+            visit(node.dest, s);
+        }
+        if (node.values != null)
+     
