@@ -912,4 +912,15 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
             else
             {
-                listType.add(v
+                listType.add(visit(elt, s));
+            }
+        }
+
+        return listType;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Raise node, State s)
+    {
+        if (node.exceptionType
