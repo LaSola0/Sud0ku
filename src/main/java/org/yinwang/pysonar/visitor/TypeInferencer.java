@@ -931,4 +931,14 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             visit(node.inst, s);
         }
-        if (node.traceback !
+        if (node.traceback != null)
+        {
+            visit(node.traceback, s);
+        }
+        return Types.CONT;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Repr node, State s)
+  
