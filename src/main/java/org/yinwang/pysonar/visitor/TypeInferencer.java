@@ -923,4 +923,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Raise node, State s)
     {
-        if (node.exceptionType
+        if (node.exceptionType != null)
+        {
+            visit(node.exceptionType, s);
+        }
+        if (node.inst != null)
+        {
+            visit(node.inst, s);
+        }
+        if (node.traceback !
