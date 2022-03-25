@@ -951,4 +951,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Ty
+    public Type visit(Return node, State s)
+    {
+        if (node.value == null)
+        {
+            return Types.NoneInstance;
+        }
+        else
+        {
+            Type result = visit(no
