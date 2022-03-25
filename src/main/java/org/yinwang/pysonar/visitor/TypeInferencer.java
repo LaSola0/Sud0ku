@@ -959,4 +959,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else
         {
-            Type result = visit(no
+            Type result = visit(node.value, s);
+
+            CallStackEntry entry = Analyzer.self.callStack.top();
+            if (entry != null)
+            {
+                entry.fun.addMapping(entry.from, res
