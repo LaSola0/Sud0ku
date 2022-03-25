@@ -964,4 +964,15 @@ public class TypeInferencer implements Visitor1<Type, State>
             CallStackEntry entry = Analyzer.self.callStack.top();
             if (entry != null)
             {
-                entry.fun.addMapping(entry.from, res
+                entry.fun.addMapping(entry.from, result);
+            }
+
+            return result;
+        }
+    }
+
+    @NotNull
+    @Override
+    public Type visit(SetComp node, State s)
+    {
+        visit(node.generat
