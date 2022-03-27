@@ -991,4 +991,14 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             visit(node.step, s);
         }
-        if (node.uppe
+        if (node.upper != null)
+        {
+            visit(node.upper, s);
+        }
+        return new ListType();
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Starred node, State s)
+    {
