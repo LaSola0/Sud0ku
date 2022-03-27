@@ -1002,3 +1002,14 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Starred node, State s)
     {
+        return visit(node.value, s);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Str node, State s)
+    {
+        return Types.StrInstance;
+    }
+
+    @NotN
