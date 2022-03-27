@@ -983,4 +983,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Slice node, State s)
     {
-        if (nod
+        if (node.lower != null)
+        {
+            visit(node.lower, s);
+        }
+        if (node.step != null)
+        {
+            visit(node.step, s);
+        }
+        if (node.uppe
