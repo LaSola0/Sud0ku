@@ -1045,4 +1045,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (node.handlers != null)
         {
-            for
+            for (Handler h : node.handlers)
+            {
+                tph = UnionType.union(tph, visit(h, s));
+            }
+        }
+
+        if (node.body != null)
+        {
+            tp1 = visit(no
