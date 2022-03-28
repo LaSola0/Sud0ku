@@ -1063,4 +1063,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (node.finalbody != null)
         {
-            tpF
+            tpFinal = visit(node.finalbody, s);
+        }
+
+        return new UnionType(tp1, tp2, tph, tpFinal);
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Tuple no
