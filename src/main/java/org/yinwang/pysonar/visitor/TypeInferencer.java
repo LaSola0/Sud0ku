@@ -1017,4 +1017,11 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(Subscript node, State s)
     {
         Type vt = visit(node.value, s);
-        Type st = node.slice == null ? null : visit(nod
+        Type st = node.slice == null ? null : visit(node.slice, s);
+
+        if (vt instanceof UnionType)
+        {
+            Type retType = Types.UNKNOWN;
+            for (Type t : ((UnionType) vt).types)
+            {
+                r
