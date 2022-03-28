@@ -1053,4 +1053,14 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (node.body != null)
         {
-            tp1 = visit(no
+            tp1 = visit(node.body, s);
+        }
+
+        if (node.orelse != null)
+        {
+            tp2 = visit(node.orelse, s);
+        }
+
+        if (node.finalbody != null)
+        {
+            tpF
