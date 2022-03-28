@@ -1030,4 +1030,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else
         {
+            return getSubscript(node, vt, st, s);
+        }
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Try node, State s)
+    {
+        Type tp1 = Types.UNKNOWN;
       
