@@ -1012,4 +1012,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         return Types.StrInstance;
     }
 
-    @NotN
+    @NotNull
+    @Override
+    public Type visit(Subscript node, State s)
+    {
+        Type vt = visit(node.value, s);
+        Type st = node.slice == null ? null : visit(nod
