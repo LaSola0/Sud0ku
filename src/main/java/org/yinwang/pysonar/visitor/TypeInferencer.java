@@ -1039,4 +1039,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(Try node, State s)
     {
         Type tp1 = Types.UNKNOWN;
-      
+        Type tp2 = Types.UNKNOWN;
+        Type tph = Types.UNKNOWN;
+        Type tpFinal = Types.UNKNOWN;
+
+        if (node.handlers != null)
+        {
+            for
