@@ -1079,4 +1079,15 @@ public class TypeInferencer implements Visitor1<Type, State>
             t.add(visit(e, s));
         }
         return t;
-  
+    }
+
+    @NotNull
+    @Override
+    public Type visit(UnaryOp node, State s)
+    {
+        return visit(node.operand, s);
+    }
+
+    @NotNull
+    @Override
+    public Type vis
