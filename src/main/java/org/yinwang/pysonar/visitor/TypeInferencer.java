@@ -1071,4 +1071,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Type visit(Tuple no
+    public Type visit(Tuple node, State s)
+    {
+        TupleType t = new TupleType();
+        for (Node e : node.elts)
+        {
+            t.add(visit(e, s));
+        }
+        return t;
+  
