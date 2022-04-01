@@ -1090,4 +1090,13 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Type vis
+    public Type visit(Unsupported node, State s)
+    {
+        return Types.NoneInstance;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Url node, State s)
+    {
+        retu
