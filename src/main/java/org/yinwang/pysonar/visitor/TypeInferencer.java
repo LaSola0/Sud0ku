@@ -1121,4 +1121,15 @@ public class TypeInferencer implements Visitor1<Type, State>
 
             t2 = visit(node.body, s1);
             s.merge(s1);
-        
+        }
+
+        if (node.orelse != null)
+        {
+            t3 = visit(node.orelse, s2);
+            s.merge(s2);
+        }
+
+        return UnionType.union(t1, t2, t3);
+    }
+
+    @Not
