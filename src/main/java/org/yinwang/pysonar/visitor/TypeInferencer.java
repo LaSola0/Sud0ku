@@ -1107,4 +1107,11 @@ public class TypeInferencer implements Visitor1<Type, State>
     public Type visit(While node, State s)
     {
         visit(node.test, s);
-        Ty
+        Type t1 = Types.UNKNOWN;
+        Type t2 = Types.UNKNOWN;
+        Type t3 = Types.UNKNOWN;
+
+        State s1 = s.copy();
+        State s2 = s.copy();
+
+   
