@@ -1099,4 +1099,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     @Override
     public Type visit(Url node, State s)
     {
-        retu
+        return Types.StrInstance;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(While node, State s)
+    {
+        visit(node.test, s);
+        Ty
