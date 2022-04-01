@@ -1132,4 +1132,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         return UnionType.union(t1, t2, t3);
     }
 
-    @Not
+    @NotNull
+    @Override
+    public Type visit(With node, State s)
+    {
+        for (Withitem item : node.items)
+        {
+            Type val = visit(item.context_expr, s);
+            
