@@ -1156,4 +1156,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     @Override
-    public Type visit(Yield no
+    public Type visit(Yield node, State s)
+    {
+        if (node.value != null)
+        {
+            return new ListType(visit(node.value, s));
+        }
+        else
+        {
+          
