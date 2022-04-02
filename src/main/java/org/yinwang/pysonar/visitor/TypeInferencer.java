@@ -1148,4 +1148,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     @NotNull
-    
+    @Override
+    public Type visit(Withitem node, State s)
+    {
+        return Types.UNKNOWN;
+    }
+
+    @NotNull
+    @Override
+    public Type visit(Yield no
