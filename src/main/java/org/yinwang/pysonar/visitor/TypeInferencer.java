@@ -1139,4 +1139,13 @@ public class TypeInferencer implements Visitor1<Type, State>
         for (Withitem item : node.items)
         {
             Type val = visit(item.context_expr, s);
-            
+            if (item.optional_vars != null)
+            {
+                bind(s, item.optional_vars, val);
+            }
+        }
+        return visit(node.body, s);
+    }
+
+    @NotNull
+    
