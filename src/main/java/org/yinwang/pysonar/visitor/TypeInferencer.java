@@ -1183,4 +1183,9 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     @NotNull
-    private T
+    private Type resolveUnion(@NotNull Collection<? extends Node> nodes, State s)
+    {
+        Type result = Types.UNKNOWN;
+        for (Node node : nodes)
+        {
+  
