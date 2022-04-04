@@ -1194,4 +1194,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         return result;
     }
 
-    public vo
+    public void setAttr(Attribute node, State s, @NotNull Type v)
+    {
+        Type targetType = visit(node.target, s);
+        if (targetType instanceof UnionType)
+        {
