@@ -1188,4 +1188,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         Type result = Types.UNKNOWN;
         for (Node node : nodes)
         {
-  
+            Type nodeType = visit(node, s);
+            result = UnionType.union(result, nodeType);
+        }
+        return result;
+    }
+
+    public vo
