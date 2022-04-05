@@ -1203,4 +1203,12 @@ public class TypeInferencer implements Visitor1<Type, State>
             for (Type tp : types)
             {
                 setAttrType(node, tp, v);
- 
+            }
+        }
+        else
+        {
+            setAttrType(node, targetType, v);
+        }
+    }
+
+    private void setAttrType(Attribute node, @NotNull Type targetType, 
