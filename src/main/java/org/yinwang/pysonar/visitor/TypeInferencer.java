@@ -1211,4 +1211,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
     }
 
-    private void setAttrType(Attribute node, @NotNull Type targetType, 
+    private void setAttrType(Attribute node, @NotNull Type targetType, @NotNull Type v)
+    {
+        if (targetType.isUnknownType())
+        {
+            addWarningToNode(node, "Can't set attribute for UnknownType");
+            return;
+        
