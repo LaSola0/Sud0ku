@@ -1217,4 +1217,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             addWarningToNode(node, "Can't set attribute for UnknownType");
             return;
-        
+        }
+
+        Set<Binding> bs = targetType.table.lookupAttr(node.attr.id);
+        if (bs != null)
+        {
+            for (Binding b : bs)
+            {
+    
