@@ -1224,4 +1224,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             for (Binding b : bs)
             {
-    
+                b.addType(v);
+                Analyzer.self.putRef(node.attr, b);
+            }
+        }
+        else
+        {
+            targetType.table.insert(node.attr.id, node.attr, v, ATTRIBUTE)
