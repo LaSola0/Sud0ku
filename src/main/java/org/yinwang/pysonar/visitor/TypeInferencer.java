@@ -1230,4 +1230,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else
         {
-            targetType.table.insert(node.attr.id, node.attr, v, ATTRIBUTE)
+            targetType.table.insert(node.attr.id, node.attr, v, ATTRIBUTE);
+        }
+    }
+
+    public Type getAttrType(Attribute node, @NotNull Type targetType)
+    {
+        Set<Binding> bs = targetType.table.lookupAttr(node.attr.id);
+        if (bs == null)
