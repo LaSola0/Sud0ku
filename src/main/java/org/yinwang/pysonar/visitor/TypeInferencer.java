@@ -1241,4 +1241,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             addWarningToNode(node.attr, "attribute not found in type: " + targetType);
             Type t = Types.UNKNOWN;
-            t.table.setPath(targetTy
+            t.table.setPath(targetType.table.extendPath(node.attr.id));
+            return t;
+        }
+        else
+        {
+            for (Binding b : bs)
+            {
+                Analyzer.self.putRef(node
