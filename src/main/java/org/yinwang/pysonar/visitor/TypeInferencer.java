@@ -1248,4 +1248,12 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             for (Binding b : bs)
             {
-                Analyzer.self.putRef(node
+                Analyzer.self.putRef(node.attr, b);
+            }
+            return State.makeUnion(bs);
+        }
+    }
+
+    @NotNull
+    public Type resolveCall(@NotNull Type fun,
+                            @Nullabl
