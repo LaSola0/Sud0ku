@@ -1259,4 +1259,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                             @Nullable Type selfType,
                             @NotNull List<Type> positional,
                             @NotNull Map<String, Type> kwTypes,
-                            @Null
+                            @Nullable Type kwArg,
+                            @Nullable Type starArg,
+                            @NotNull Call node)
+    {
+        if (fun instanceof FunType)
+        {
+  
