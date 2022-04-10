@@ -1256,4 +1256,7 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     public Type resolveCall(@NotNull Type fun,
-                            @Nullabl
+                            @Nullable Type selfType,
+                            @NotNull List<Type> positional,
+                            @NotNull Map<String, Type> kwTypes,
+                            @Null
