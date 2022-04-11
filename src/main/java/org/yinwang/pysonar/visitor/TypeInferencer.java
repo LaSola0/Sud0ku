@@ -1284,4 +1284,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                       @Nullable List<Type> positional,
                       @Nullable Map<String, Type> kwTypes,
                       @Nullable Type kwArg,
-                      @
+                      @Nullable Type starArg,
+                      @Nullable Node call)
+    {
+        if (call instanceof Call &&
+            ((Call) call).func instanceof Attribute &&
+            ((
