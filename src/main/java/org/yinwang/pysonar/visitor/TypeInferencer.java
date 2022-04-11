@@ -1265,4 +1265,13 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         if (fun instanceof FunType)
         {
-  
+            return apply((FunType) fun, selfType, positional, kwTypes, kwArg, starArg, node);
+        }
+        else if (fun instanceof ClassType)
+        {
+            return new InstanceType(fun, positional, this, node);
+        }
+        else
+        {
+            addWarningToNode(node, "calling non-function and non-class: " + fun);
+       
