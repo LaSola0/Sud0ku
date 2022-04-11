@@ -1289,4 +1289,8 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         if (call instanceof Call &&
             ((Call) call).func instanceof Attribute &&
-            ((
+            ((Attribute) ((Call) call).func).attr.id.equals("append"))
+        {
+            if (selfType instanceof ListType)
+            {
+                ListType listType = (ListType) se
