@@ -1281,4 +1281,7 @@ public class TypeInferencer implements Visitor1<Type, State>
     @NotNull
     public Type apply(@NotNull FunType func,
                       @Nullable Type selfType,
-         
+                      @Nullable List<Type> positional,
+                      @Nullable Map<String, Type> kwTypes,
+                      @Nullable Type kwArg,
+                      @
