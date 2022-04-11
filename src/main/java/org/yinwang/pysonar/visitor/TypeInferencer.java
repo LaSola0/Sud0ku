@@ -1274,4 +1274,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         else
         {
             addWarningToNode(node, "calling non-function and non-class: " + fun);
-       
+            return Types.UNKNOWN;
+        }
+    }
+
+    @NotNull
+    public Type apply(@NotNull FunType func,
+                      @Nullable Type selfType,
+         
