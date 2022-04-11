@@ -1297,4 +1297,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                 if (positional != null && positional.size() == 1)
                 {
                     listType.add(positional.get(0));
-                
+                }
+                else
+                {
+                    Analyzer.self.putProblem(call, "Calling append with wrong argument types");
+                }
+            }
+        
