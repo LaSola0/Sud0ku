@@ -1293,4 +1293,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             if (selfType instanceof ListType)
             {
-                ListType listType = (ListType) se
+                ListType listType = (ListType) selfType;
+                if (positional != null && positional.size() == 1)
+                {
+                    listType.add(positional.get(0));
+                
