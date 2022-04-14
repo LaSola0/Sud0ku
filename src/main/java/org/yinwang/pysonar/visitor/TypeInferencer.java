@@ -1330,4 +1330,12 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         Analyzer.self.removeUncalled(func);
 
-        if (func.func != null && !func.func.called
+        if (func.func != null && !func.func.called)
+        {
+            Analyzer.self.nCalled++;
+            func.func.called = true;
+        }
+
+        if (func.func == null)
+        {
+            // func without definition 
