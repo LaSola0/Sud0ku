@@ -1312,4 +1312,9 @@ public class TypeInferencer implements Visitor1<Type, State>
             if (selfType instanceof DictType)
             {
                 DictType dict = (DictType) selfType;
-                if (positional != null && positional.size() == 
+                if (positional != null && positional.size() == 1)
+                {
+                    Type argType = positional.get(0);
+                    if (argType instanceof DictType)
+                    {
+                        dict
