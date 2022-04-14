@@ -1323,4 +1323,11 @@ public class TypeInferencer implements Visitor1<Type, State>
                 }
                 else
                 {
-                    Analyzer.self.putProblem(call, "Calling update with wrong 
+                    Analyzer.self.putProblem(call, "Calling update with wrong argument types");
+                }
+            }
+        }
+
+        Analyzer.self.removeUncalled(func);
+
+        if (func.func != null && !func.func.called
