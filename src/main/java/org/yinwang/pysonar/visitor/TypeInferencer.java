@@ -1303,4 +1303,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                     Analyzer.self.putProblem(call, "Calling append with wrong argument types");
                 }
             }
-        
+        }
+
+        if (call instanceof Call &&
+            ((Call) call).func instanceof Attribute &&
+            ((Attribute) ((Call) call).func).attr.id.equals("update"))
+        {
+    
