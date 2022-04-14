@@ -1338,4 +1338,10 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (func.func == null)
         {
-            // func without definition 
+            // func without definition (possibly builtins)
+            return func.getReturnType();
+        }
+
+        List<Type> argTypes = new ArrayList<>();
+
+        // Add class or object as first argument if
