@@ -1344,4 +1344,9 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         List<Type> argTypes = new ArrayList<>();
 
-        // Add class or object as first argument if
+        // Add class or object as first argument if it is not static method
+        if (!func.func.isStaticMethod())
+        {
+            if (func.func.isClassMethod())
+            {
+                if (func.cls !
