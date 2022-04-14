@@ -1309,4 +1309,7 @@ public class TypeInferencer implements Visitor1<Type, State>
             ((Call) call).func instanceof Attribute &&
             ((Attribute) ((Call) call).func).attr.id.equals("update"))
         {
-    
+            if (selfType instanceof DictType)
+            {
+                DictType dict = (DictType) selfType;
+                if (positional != null && positional.size() == 
