@@ -1317,4 +1317,6 @@ public class TypeInferencer implements Visitor1<Type, State>
                     Type argType = positional.get(0);
                     if (argType instanceof DictType)
                     {
-                        dict
+                        dict.keyType = UnionType.union(dict.keyType, ((DictType) argType).keyType);
+                        dict.valueType = UnionType.union(dict.valueType, ((DictType) argType).valueType);
+      
