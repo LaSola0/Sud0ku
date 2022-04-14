@@ -1319,4 +1319,8 @@ public class TypeInferencer implements Visitor1<Type, State>
                     {
                         dict.keyType = UnionType.union(dict.keyType, ((DictType) argType).keyType);
                         dict.valueType = UnionType.union(dict.valueType, ((DictType) argType).valueType);
-      
+                    }
+                }
+                else
+                {
+                    Analyzer.self.putProblem(call, "Calling update with wrong 
