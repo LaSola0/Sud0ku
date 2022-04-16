@@ -1354,4 +1354,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                     argTypes.add(func.cls);
                 }
                 else if (selfType != null && selfType instanceof InstanceType)
-           
+                {
+                    argTypes.add(((InstanceType) selfType).classType);
+                }
+            }
+            else
+            {
+                // usual meth
