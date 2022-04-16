@@ -1360,4 +1360,11 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
             else
             {
-                // usual meth
+                // usual method
+                if (selfType != null)
+                {
+                    argTypes.add(selfType);
+                }
+                else
+                {
+ 
