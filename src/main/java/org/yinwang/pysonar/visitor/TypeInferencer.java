@@ -1382,4 +1382,12 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
         }
 
-        // Put in positional argume
+        // Put in positional arguments
+        if (positional != null)
+        {
+            argTypes.addAll(positional);
+        }
+
+        bindMethodAttrs(func);
+
+        State callState = new State(func.env, 
