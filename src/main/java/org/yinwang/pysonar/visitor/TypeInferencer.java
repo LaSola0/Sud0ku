@@ -1401,4 +1401,11 @@ public class TypeInferencer implements Visitor1<Type, State>
             callState.setPath(func.func.name.id);
         }
 
-        Type fromType = bindParams(callState, func.func, argTypes, func.defaultTypes, kwT
+        Type fromType = bindParams(callState, func.func, argTypes, func.defaultTypes, kwTypes, kwArg, starArg);
+        Type cachedTo = func.getMapping(fromType);
+
+        if (cachedTo != null)
+        {
+            return cachedTo;
+        }
+        else if (func.overs
