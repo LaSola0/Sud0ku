@@ -1424,4 +1424,9 @@ public class TypeInferencer implements Visitor1<Type, State>
 
                 if (call != null)
                 {
-       
+                    addWarningToNode(call, "Call not always return a value");
+                }
+            }
+
+            toType = UnionType.remove(toType, Types.CONT);
+   
