@@ -1390,4 +1390,10 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         bindMethodAttrs(func);
 
-        State callState = new State(func.env, 
+        State callState = new State(func.env, State.StateType.FUNCTION);
+
+        if (func.table.parent != null)
+        {
+            callState.setPath(func.table.parent.extendPath(func.func.name.id));
+        }
+  
