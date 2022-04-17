@@ -1396,4 +1396,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             callState.setPath(func.table.parent.extendPath(func.func.name.id));
         }
-  
+        else
+        {
+            callState.setPath(func.func.name.id);
+        }
+
+        Type fromType = bindParams(callState, func.func, argTypes, func.defaultTypes, kwT
