@@ -1408,4 +1408,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             return cachedTo;
         }
-        else if (func.overs
+        else if (func.oversized())
+        {
+            return Types.UNKNOWN;
+        }
+        else
+        {
+            func.addMapping(fromType, Types.UNKNOWN);
+            Analyz
