@@ -1418,4 +1418,10 @@ public class TypeInferencer implements Visitor1<Type, State>
             Analyzer.self.callStack.push(new CallStackEntry(func, fromType));
             Type toType = visit(func.func.body, callState);
             Analyzer.self.callStack.pop();
-            if (mi
+            if (missingReturn(toType))
+            {
+                addWarningToNode(func.func.name, "Function not always return a value");
+
+                if (call != null)
+                {
+       
