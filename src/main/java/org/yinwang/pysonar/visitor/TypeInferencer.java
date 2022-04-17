@@ -1415,4 +1415,7 @@ public class TypeInferencer implements Visitor1<Type, State>
         else
         {
             func.addMapping(fromType, Types.UNKNOWN);
-            Analyz
+            Analyzer.self.callStack.push(new CallStackEntry(func, fromType));
+            Type toType = visit(func.func.body, callState);
+            Analyzer.self.callStack.pop();
+            if (mi
