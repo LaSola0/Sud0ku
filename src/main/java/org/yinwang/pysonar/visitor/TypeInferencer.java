@@ -1375,4 +1375,11 @@ public class TypeInferencer implements Visitor1<Type, State>
                         }
                         else
                         {
-                   
+                            argTypes.add(func.cls.getInstance());
+                        }
+                    }
+                }
+            }
+        }
+
+        // Put in positional argume
