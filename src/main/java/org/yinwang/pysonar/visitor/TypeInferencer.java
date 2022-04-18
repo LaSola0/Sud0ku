@@ -1447,4 +1447,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                             @NotNull FunctionDef func,
                             @Nullable List<Type> pTypes,
                             @Nullable List<Type> dTypes,
-                            @N
+                            @Nullable Map<String, Type> hash,
+                            @Nullable Type kw,
+                            @Nullable Type star)
+    {
+
+        List<Node
