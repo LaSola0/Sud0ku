@@ -1444,4 +1444,7 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     @NotNull
     private Type bindParams(@NotNull State state,
-               
+                            @NotNull FunctionDef func,
+                            @Nullable List<Type> pTypes,
+                            @Nullable List<Type> dTypes,
+                            @N
