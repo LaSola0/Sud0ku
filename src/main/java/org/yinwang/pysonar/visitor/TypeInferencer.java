@@ -1435,4 +1435,13 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
             else
             {
-           
+                func.removeMapping(fromType);
+            }
+
+            return toType;
+        }
+    }
+
+    @NotNull
+    private Type bindParams(@NotNull State state,
+               
