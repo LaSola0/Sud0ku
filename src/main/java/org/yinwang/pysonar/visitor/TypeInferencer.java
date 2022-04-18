@@ -1452,4 +1452,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                             @Nullable Type star)
     {
 
-        List<Node
+        List<Node> args = func.args;
+        Name rest = func.vararg;
+        Name restKw = func.kwarg;
+
+        TupleType fromType = new TupleType();
+        int pSize = args == null ? 0 : args.size()
