@@ -1457,4 +1457,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         Name restKw = func.kwarg;
 
         TupleType fromType = new TupleType();
-        int pSize = args == null ? 0 : args.size()
+        int pSize = args == null ? 0 : args.size();
+        int aSize = pTypes == null ? 0 : pTypes.size();
+        int dSize = dTypes == null ? 0 : dTypes.size();
+        int nPos = pSize - dSize;
+
+        if (star != null &
