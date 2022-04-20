@@ -1469,4 +1469,10 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         for (int i = 0, j = 0; i < pSize; i++)
         {
-            Node ar
+            Node arg = args.get(i);
+            Type aType;
+            if (i < aSize)
+            {
+                aType = pTypes.get(i);
+            }
+            else if (i - nPos >= 
