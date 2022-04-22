@@ -1475,4 +1475,10 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 aType = pTypes.get(i);
             }
-            else if (i - nPos >= 
+            else if (i - nPos >= 0 && i - nPos < dSize)
+            {
+                aType = dTypes.get(i - nPos);
+            }
+            else
+            {
+                if (hash != nu
