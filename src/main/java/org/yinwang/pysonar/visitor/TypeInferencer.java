@@ -1492,4 +1492,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                     if (star != null && star instanceof TupleType &&
                         j < ((TupleType) star).eltTypes.size())
                     {
-                 
+                        aType = ((TupleType) star).get(j++);
+                    }
+                    else
+                    {
+                        aType = Types.UNKNOWN;
+                     
