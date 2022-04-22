@@ -1481,4 +1481,7 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
             else
             {
-                if (hash != nu
+                if (hash != null && args.get(i) instanceof Name &&
+                    hash.containsKey(((Name) args.get(i)).id))
+                {
+        
