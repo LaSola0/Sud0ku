@@ -1488,4 +1488,8 @@ public class TypeInferencer implements Visitor1<Type, State>
                     hash.remove(((Name) args.get(i)).id);
                 }
                 else
-        
+                {
+                    if (star != null && star instanceof TupleType &&
+                        j < ((TupleType) star).eltTypes.size())
+                    {
+                 
