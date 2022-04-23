@@ -1497,4 +1497,8 @@ public class TypeInferencer implements Visitor1<Type, State>
                     else
                     {
                         aType = Types.UNKNOWN;
-                     
+                        addWarningToNode(args.get(i), "unable to bind argument:" + args.get(i));
+                    }
+                }
+            }
+            bind(state, arg, aType, P
