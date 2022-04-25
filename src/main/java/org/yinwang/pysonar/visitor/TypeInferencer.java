@@ -1512,4 +1512,12 @@ public class TypeInferencer implements Visitor1<Type, State>
                 Type hashType = UnionType.newUnion(hash.values());
                 bind(state, restKw, new DictType(Types.StrInstance, hashType), PARAMETER);
             }
-           
+            else
+            {
+                bind(state, restKw, Types.UNKNOWN, PARAMETER);
+            }
+        }
+
+        if (rest != null)
+        {
+            i
