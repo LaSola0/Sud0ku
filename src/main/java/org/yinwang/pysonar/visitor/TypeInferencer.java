@@ -1501,4 +1501,12 @@ public class TypeInferencer implements Visitor1<Type, State>
                     }
                 }
             }
-            bind(state, arg, aType, P
+            bind(state, arg, aType, PARAMETER);
+            fromType.add(aType);
+        }
+
+        if (restKw != null)
+        {
+            if (hash != null && !hash.isEmpty())
+            {
+                Type hashType = Union
