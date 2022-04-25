@@ -1509,4 +1509,7 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             if (hash != null && !hash.isEmpty())
             {
-                Type hashType = Union
+                Type hashType = UnionType.newUnion(hash.values());
+                bind(state, restKw, new DictType(Types.StrInstance, hashType), PARAMETER);
+            }
+           
