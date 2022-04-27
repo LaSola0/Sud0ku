@@ -1520,4 +1520,8 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (rest != null)
         {
-            i
+            if (pTypes.size() > pSize)
+            {
+                if (func.afterRest != null)
+                {
+                    int nAfter = func.afterRest.size(
