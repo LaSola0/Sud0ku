@@ -1524,4 +1524,7 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 if (func.afterRest != null)
                 {
-                    int nAfter = func.afterRest.size(
+                    int nAfter = func.afterRest.size();
+                    for (int i = 0; i < nAfter; i++)
+                    {
+                        bind(state, func.afterRest.get(i), pTypes.get(pTypes.size() - nAfter + i), PA
