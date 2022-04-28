@@ -1527,4 +1527,8 @@ public class TypeInferencer implements Visitor1<Type, State>
                     int nAfter = func.afterRest.size();
                     for (int i = 0; i < nAfter; i++)
                     {
-                        bind(state, func.afterRest.get(i), pTypes.get(pTypes.size() - nAfter + i), PA
+                        bind(state, func.afterRest.get(i), pTypes.get(pTypes.size() - nAfter + i), PARAMETER);
+                    }
+                    if (pTypes.size() - nAfter > 0)
+                    {
+                        Type restType = new TupleType(pTyp
