@@ -1531,4 +1531,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                     }
                     if (pTypes.size() - nAfter > 0)
                     {
-                        Type restType = new TupleType(pTyp
+                        Type restType = new TupleType(pTypes.subList(pSize, pTypes.size() - nAfter));
+                        bind(state, rest, restType, PARAMETER);
+                    }
+                }
+                else
+                {
+ 
