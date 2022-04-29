@@ -1550,4 +1550,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         return fromType;
     }
 
-    
+    static void bindMethodAttrs(@NotNull FunType cl)
+    {
+        if (cl.table.parent != null)
+        {
+            Type cls = cl.table.parent.type;
+           
