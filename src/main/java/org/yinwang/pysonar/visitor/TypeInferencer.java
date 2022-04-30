@@ -1558,4 +1558,7 @@ public class TypeInferencer implements Visitor1<Type, State>
             if (cls != null && cls instanceof ClassType)
             {
                 addReadOnlyAttr(cl, "im_class", cls, CLASS);
-                addReadOnlyAttr(cl, "__class
+                addReadOnlyAttr(cl, "__class__", cls, CLASS);
+                addReadOnlyAttr(cl, "im_self", cls, ATTRIBUTE);
+                addReadOnlyAttr(cl, "__self__", cls, ATTRIBUTE);
+      
