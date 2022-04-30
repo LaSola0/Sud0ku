@@ -1555,4 +1555,7 @@ public class TypeInferencer implements Visitor1<Type, State>
         if (cl.table.parent != null)
         {
             Type cls = cl.table.parent.type;
-           
+            if (cls != null && cls instanceof ClassType)
+            {
+                addReadOnlyAttr(cl, "im_class", cls, CLASS);
+                addReadOnlyAttr(cl, "__class
