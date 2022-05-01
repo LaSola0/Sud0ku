@@ -1577,4 +1577,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         b.markStatic();
     }
 
-    static boolean missingReturn(@NotNull Type toType
+    static boolean missingReturn(@NotNull Type toType)
+    {
+        boolean hasNone = false;
+        boolean hasOther = false;
+
+        if (toType instanceof UnionType)
+        {
+            for (Type t : ((UnionTy
