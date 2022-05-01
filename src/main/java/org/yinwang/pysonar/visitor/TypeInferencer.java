@@ -1561,4 +1561,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                 addReadOnlyAttr(cl, "__class__", cls, CLASS);
                 addReadOnlyAttr(cl, "im_self", cls, ATTRIBUTE);
                 addReadOnlyAttr(cl, "__self__", cls, ATTRIBUTE);
-      
+            }
+        }
+    }
+
+    static void addReadOnlyAttr(@NotNull FunType fun,
+                                String name,
+                                @NotNull T
