@@ -1571,4 +1571,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                                 Binding.Kind kind)
     {
         Node loc = Builtins.newDataModelUrl("the-standard-type-hierarchy");
-        Binding b = ne
+        Binding b = new Binding(name, loc, type, kind);
+        fun.table.update(name, b);
+        b.markSynthetic();
+        b.markStatic();
+    }
+
+    static boolean missingReturn(@NotNull Type toType
