@@ -1584,4 +1584,10 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (toType instanceof UnionType)
         {
-            for (Type t : ((UnionTy
+            for (Type t : ((UnionType) toType).types)
+            {
+                if (t == Types.NoneInstance || t == Types.CONT)
+                {
+                    hasNone = true;
+                }
+      
