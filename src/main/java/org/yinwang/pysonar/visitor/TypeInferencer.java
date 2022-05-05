@@ -1590,4 +1590,15 @@ public class TypeInferencer implements Visitor1<Type, State>
                 {
                     hasNone = true;
                 }
-      
+                else
+                {
+                    hasOther = true;
+                }
+            }
+        }
+
+        return hasNone && hasOther;
+    }
+
+    @NotNull
+    
