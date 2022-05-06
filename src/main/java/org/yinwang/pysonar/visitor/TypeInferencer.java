@@ -1601,4 +1601,8 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     @NotNull
-    
+    public Type getSubscript(Node node, @NotNull Type vt, @Nullable Type st, State s)
+    {
+        if (vt.isUnknownType())
+        {
+            return Types.UNKNOW
