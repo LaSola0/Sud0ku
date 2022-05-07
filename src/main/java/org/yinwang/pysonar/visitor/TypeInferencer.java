@@ -1613,4 +1613,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 return getListSubscript(node, vt, st, s);
             }
-    
+            else if (vt instanceof TupleType)
+            {
+                return getListSubscript(node, ((TupleType) vt).toListType(), st, s);
+            }
+            e
