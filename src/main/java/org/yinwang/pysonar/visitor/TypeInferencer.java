@@ -1617,4 +1617,9 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 return getListSubscript(node, ((TupleType) vt).toListType(), st, s);
             }
-            e
+            else if (vt instanceof DictType)
+            {
+                DictType dt = (DictType) vt;
+                if (!dt.keyType.equals(st))
+                {
+                    addWarningToNode(node, "P
