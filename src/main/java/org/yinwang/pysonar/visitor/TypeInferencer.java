@@ -1605,4 +1605,12 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         if (vt.isUnknownType())
         {
-            return Types.UNKNOW
+            return Types.UNKNOWN;
+        }
+        else
+        {
+            if (vt instanceof ListType)
+            {
+                return getListSubscript(node, vt, st, s);
+            }
+    
