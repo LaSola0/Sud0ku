@@ -1628,4 +1628,10 @@ public class TypeInferencer implements Visitor1<Type, State>
             }
             else if (vt == Types.StrInstance)
             {
-        
+                if (st != null && (st instanceof ListType || st.isNumType()))
+                {
+                    return vt;
+                }
+                else
+                {
+  
