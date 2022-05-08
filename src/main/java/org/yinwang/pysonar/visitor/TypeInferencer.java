@@ -1634,4 +1634,8 @@ public class TypeInferencer implements Visitor1<Type, State>
                 }
                 else
                 {
-  
+                    addWarningToNode(node, "Possible KeyError (wrong type for subscript)");
+                    return Types.UNKNOWN;
+                }
+            }
+         
