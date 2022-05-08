@@ -1638,4 +1638,12 @@ public class TypeInferencer implements Visitor1<Type, State>
                     return Types.UNKNOWN;
                 }
             }
-         
+            else
+            {
+                return Types.UNKNOWN;
+            }
+        }
+    }
+
+    @NotNull
+    private Type getListSubscript(Node node, @NotNull Type vt,
