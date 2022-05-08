@@ -1622,4 +1622,10 @@ public class TypeInferencer implements Visitor1<Type, State>
                 DictType dt = (DictType) vt;
                 if (!dt.keyType.equals(st))
                 {
-                    addWarningToNode(node, "P
+                    addWarningToNode(node, "Possible KeyError (wrong type for subscript)");
+                }
+                return ((DictType) vt).valueType;
+            }
+            else if (vt == Types.StrInstance)
+            {
+        
