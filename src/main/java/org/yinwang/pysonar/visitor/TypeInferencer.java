@@ -1646,4 +1646,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     @NotNull
-    private Type getListSubscript(Node node, @NotNull Type vt,
+    private Type getListSubscript(Node node, @NotNull Type vt, @Nullable Type st, State s)
+    {
+        if (vt instanceof ListType)
+        {
+            if (st != null && st instanceof ListType)
+            {
+               
