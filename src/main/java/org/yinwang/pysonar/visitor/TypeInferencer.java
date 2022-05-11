@@ -1657,4 +1657,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             else if (st == null || st.isNumType())
             {
                 return ((ListType) vt).eltType;
-      
+            }
+            else
+            {
+                Type sliceFunc = vt.table.lookupAttrType("__getslice__");
+                if (sliceFunc == 
