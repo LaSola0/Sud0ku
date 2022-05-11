@@ -1652,4 +1652,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             if (st != null && st instanceof ListType)
             {
-               
+                return vt;
+            }
+            else if (st == null || st.isNumType())
+            {
+                return ((ListType) vt).eltType;
+      
