@@ -1661,4 +1661,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             else
             {
                 Type sliceFunc = vt.table.lookupAttrType("__getslice__");
-                if (sliceFunc == 
+                if (sliceFunc == null)
+                {
+                    addError(node, "The type can't be sliced: " + vt);
+                    return Types.UNKNOWN;
+         
