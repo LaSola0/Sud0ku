@@ -1668,4 +1668,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                 }
                 else if (sliceFunc instanceof FunType)
                 {
-                    return apply((FunType) sliceFunc, null, null, null, null, null, nod
+                    return apply((FunType) sliceFunc, null, null, null, null, null, node);
+                }
+                else
+                {
+                    addError(node, "The type's __getslice__ method is not a function: " + sliceFunc);
+             
