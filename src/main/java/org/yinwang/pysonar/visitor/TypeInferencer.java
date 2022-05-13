@@ -1683,4 +1683,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
     }
 
-    p
+    public void bind(@NotNull State s, Node target, @NotNull Type rvalue, Binding.Kind kind)
+    {
+        if (target instanceof Name)
+        {
+           
