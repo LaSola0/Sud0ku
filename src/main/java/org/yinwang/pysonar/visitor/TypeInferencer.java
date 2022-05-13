@@ -1673,4 +1673,14 @@ public class TypeInferencer implements Visitor1<Type, State>
                 else
                 {
                     addError(node, "The type's __getslice__ method is not a function: " + sliceFunc);
-             
+                    return Types.UNKNOWN;
+                }
+            }
+        }
+        else
+        {
+            return Types.UNKNOWN;
+        }
+    }
+
+    p
