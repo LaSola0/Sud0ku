@@ -1665,4 +1665,7 @@ public class TypeInferencer implements Visitor1<Type, State>
                 {
                     addError(node, "The type can't be sliced: " + vt);
                     return Types.UNKNOWN;
-         
+                }
+                else if (sliceFunc instanceof FunType)
+                {
+                    return apply((FunType) sliceFunc, null, null, null, null, null, nod
