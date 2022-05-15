@@ -1692,4 +1692,11 @@ public class TypeInferencer implements Visitor1<Type, State>
         else if (target instanceof Tuple)
         {
             bind(s, ((Tuple) target).elts, rvalue, kind);
- 
+        }
+        else if (target instanceof PyList)
+        {
+            bind(s, ((PyList) target).elts, rvalue, kind);
+        }
+        else if (target instanceof Attribute)
+        {
+            set
