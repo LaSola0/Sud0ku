@@ -1687,4 +1687,9 @@ public class TypeInferencer implements Visitor1<Type, State>
     {
         if (target instanceof Name)
         {
-           
+            bind(s, (Name) target, rvalue, kind);
+        }
+        else if (target instanceof Tuple)
+        {
+            bind(s, ((Tuple) target).elts, rvalue, kind);
+ 
