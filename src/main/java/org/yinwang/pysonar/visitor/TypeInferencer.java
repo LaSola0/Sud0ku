@@ -1699,4 +1699,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else if (target instanceof Attribute)
         {
-            set
+            setAttr(((Attribute) target), s, rvalue);
+        }
+        else if (target instanceof Subscript)
+        {
+            Subscript sub = (Subscript) target;
+            Type sliceType = sub.s
