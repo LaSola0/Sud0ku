@@ -1704,4 +1704,8 @@ public class TypeInferencer implements Visitor1<Type, State>
         else if (target instanceof Subscript)
         {
             Subscript sub = (Subscript) target;
-            Type sliceType = sub.s
+            Type sliceType = sub.slice == null ? null : visit(sub.slice, s);
+            Type valueType = visit(sub.value, s);
+            if (valueType instanceof ListType)
+            {
+            
