@@ -1711,4 +1711,9 @@ public class TypeInferencer implements Visitor1<Type, State>
                 ListType t = (ListType) valueType;
                 t.setElementType(UnionType.union(t.eltType, rvalue));
             }
-            else if (valueType
+            else if (valueType instanceof DictType)
+            {
+                DictType t = (DictType) valueType;
+                if (sliceType != null)
+                {
+                    t.set
