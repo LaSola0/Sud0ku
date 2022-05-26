@@ -1721,4 +1721,11 @@ public class TypeInferencer implements Visitor1<Type, State>
                 t.setValueType(UnionType.union(t.valueType, rvalue));
             }
         }
-        else if (ta
+        else if (target != null)
+        {
+            addWarningToNode(target, "invalid location for assignment");
+        }
+    }
+
+    /**
+     * Without specifying a kind, bind determin
