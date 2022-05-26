@@ -1728,4 +1728,9 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     /**
-     * Without specifying a kind, bind determin
+     * Without specifying a kind, bind determines the kind according to the type
+     * of the scope.
+     */
+    public void bind(@NotNull State s, Node target, @NotNull Type rvalue)
+    {
+        Binding.Kind k
