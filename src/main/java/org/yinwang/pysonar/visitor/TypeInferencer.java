@@ -1733,4 +1733,10 @@ public class TypeInferencer implements Visitor1<Type, State>
      */
     public void bind(@NotNull State s, Node target, @NotNull Type rvalue)
     {
-        Binding.Kind k
+        Binding.Kind kind;
+        if (s.stateType == State.StateType.FUNCTION)
+        {
+            kind = VARIABLE;
+        }
+        else if (s.stateType == State.StateType.CLASS ||
+                 s.sta
