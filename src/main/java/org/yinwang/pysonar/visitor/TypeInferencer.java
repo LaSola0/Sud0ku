@@ -1747,4 +1747,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         {
             kind = SCOPE;
         }
-   
+        bind(s, target, rvalue, kind);
+    }
+
+    public void bind(@NotNull State s, @NotNull List<Node> xs, @NotNull Type rvalue, Binding.Kind kind)
+    {
+        if (
