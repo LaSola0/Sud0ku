@@ -1739,4 +1739,12 @@ public class TypeInferencer implements Visitor1<Type, State>
             kind = VARIABLE;
         }
         else if (s.stateType == State.StateType.CLASS ||
-                 s.sta
+                 s.stateType == State.StateType.INSTANCE)
+        {
+            kind = ATTRIBUTE;
+        }
+        else
+        {
+            kind = SCOPE;
+        }
+   
