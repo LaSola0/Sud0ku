@@ -1752,4 +1752,9 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     public void bind(@NotNull State s, @NotNull List<Node> xs, @NotNull Type rvalue, Binding.Kind kind)
     {
-        if (
+        if (rvalue instanceof TupleType)
+        {
+            List<Type> vs = ((TupleType) rvalue).eltTypes;
+            if (xs.size() != vs.size())
+            {
+          
