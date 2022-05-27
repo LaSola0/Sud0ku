@@ -1757,4 +1757,10 @@ public class TypeInferencer implements Visitor1<Type, State>
             List<Type> vs = ((TupleType) rvalue).eltTypes;
             if (xs.size() != vs.size())
             {
-          
+                reportUnpackMismatch(xs, vs.size());
+            }
+            else
+            {
+                for (int i = 0; i < xs.size(); i++)
+                {
+      
