@@ -1773,4 +1773,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else if (rvalue instanceof DictType)
         {
-            bind(s, xs, ((DictType) rvalue
+            bind(s, xs, ((DictType) rvalue).toTupleType(xs.size()), kind);
+        }
+        else if (xs.size() > 0)
+        {
+            for (Node x : xs)
+            {
+                bind(s, x, Types.UNKNOWN, kind);
