@@ -1763,4 +1763,10 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 for (int i = 0; i < xs.size(); i++)
                 {
-      
+                    bind(s, xs.get(i), vs.get(i), kind);
+                }
+            }
+        }
+        else if (rvalue instanceof ListType)
+        {
+            bind
