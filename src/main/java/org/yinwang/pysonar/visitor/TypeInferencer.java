@@ -1780,3 +1780,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             for (Node x : xs)
             {
                 bind(s, x, Types.UNKNOWN, kind);
+            }
+            addWarningToFile(xs.get(0).file,
+                             xs.get(0).start,
+                             xs.get(xs.size() - 1).end,
+ 
