@@ -1784,4 +1784,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             addWarningToFile(xs.get(0).file,
                              xs.get(0).start,
                              xs.get(xs.size() - 1).end,
- 
+                             "unpacking non-iterable: " + rvalue);
+        }
+    }
+
+    public static void bind(@NotNull State s, @NotNull Name name, @NotNull Type rvalu
