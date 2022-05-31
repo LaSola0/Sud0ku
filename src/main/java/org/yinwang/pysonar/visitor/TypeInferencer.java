@@ -1788,4 +1788,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
     }
 
-    public static void bind(@NotNull State s, @NotNull Name name, @NotNull Type rvalu
+    public static void bind(@NotNull State s, @NotNull Name name, @NotNull Type rvalue, Binding.Kind kind)
+    {
+        if (s.isGlobalName(name.id))
+        {
+            State g = s.getGlobalTable();
+            Set<Binding> bs 
