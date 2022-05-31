@@ -1793,4 +1793,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         if (s.isGlobalName(name.id))
         {
             State g = s.getGlobalTable();
-            Set<Binding> bs 
+            Set<Binding> bs = g.lookupLocal(name.id);
+            if (bs != null)
+            {
+                for (Binding b : bs)
+                {
+                    b.addType(rva
