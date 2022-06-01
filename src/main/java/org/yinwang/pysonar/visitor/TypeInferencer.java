@@ -1806,4 +1806,12 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 g.insert(name.id, name, rvalue, kind);
             }
-        
+        }
+        else
+        {
+            s.insert(name.id, name, rvalue, kind);
+        }
+    }
+
+    // iterator
+    public void bindIter(@NotNull Sta
