@@ -1814,4 +1814,10 @@ public class TypeInferencer implements Visitor1<Type, State>
     }
 
     // iterator
-    public void bindIter(@NotNull Sta
+    public void bindIter(@NotNull State s, Node target, @NotNull Node iter, Binding.Kind kind)
+    {
+        Type iterType = visit(iter, s);
+
+        if (iterType instanceof ListType)
+        {
+            bind(s, t
