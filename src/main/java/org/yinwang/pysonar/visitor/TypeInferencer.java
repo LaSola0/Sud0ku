@@ -1820,4 +1820,8 @@ public class TypeInferencer implements Visitor1<Type, State>
 
         if (iterType instanceof ListType)
         {
-            bind(s, t
+            bind(s, target, ((ListType) iterType).eltType, kind);
+        }
+        else if (iterType instanceof TupleType)
+        {
+            bind(s, target, ((TupleType) iterType).toListType().eltType,
