@@ -1798,4 +1798,12 @@ public class TypeInferencer implements Visitor1<Type, State>
             {
                 for (Binding b : bs)
                 {
-                    b.addType(rva
+                    b.addType(rvalue);
+                    Analyzer.self.putRef(name, b);
+                }
+            }
+            else
+            {
+                g.insert(name.id, name, rvalue, kind);
+            }
+        
