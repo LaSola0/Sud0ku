@@ -1839,3 +1839,8 @@ public class TypeInferencer implements Visitor1<Type, State>
                         {
                             addWarningToNode(iter, "not an iterable type: " + iterType);
                         }
+                        bind(s, target, Types.UNKNOWN, kind);
+                    }
+                    else
+                    {
+                        bind(s, target, ((FunType) ent.typ
