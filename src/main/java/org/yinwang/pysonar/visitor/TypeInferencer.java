@@ -1831,4 +1831,8 @@ public class TypeInferencer implements Visitor1<Type, State>
             Set<Binding> ents = iterType.table.lookupAttr("__iter__");
             if (ents != null)
             {
-             
+                for (Binding ent : ents)
+                {
+                    if (ent == null || !(ent.type instanceof FunType))
+                    {
+                        if (!it
