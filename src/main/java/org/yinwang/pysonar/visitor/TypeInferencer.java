@@ -1835,4 +1835,7 @@ public class TypeInferencer implements Visitor1<Type, State>
                 {
                     if (ent == null || !(ent.type instanceof FunType))
                     {
-                        if (!it
+                        if (!iterType.isUnknownType())
+                        {
+                            addWarningToNode(iter, "not an iterable type: " + iterType);
+                        }
