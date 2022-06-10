@@ -1861,4 +1861,10 @@ public class TypeInferencer implements Visitor1<Type, State>
         int end = xs.get(xs.size() - 1).end;
         int diff = xsize - vsize;
         String msg;
-        if (di
+        if (diff > 0)
+        {
+            msg = "ValueError: need more than " + vsize + " values to unpack";
+        }
+        else
+        {
+            msg = "ValueError: 
