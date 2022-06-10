@@ -1843,4 +1843,11 @@ public class TypeInferencer implements Visitor1<Type, State>
                     }
                     else
                     {
-                        bind(s, target, ((FunType) ent.typ
+                        bind(s, target, ((FunType) ent.type).getReturnType(), kind);
+                    }
+                }
+            }
+            else
+            {
+                bind(s, target, Types.UNKNOWN, kind);
+      
