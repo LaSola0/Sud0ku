@@ -1867,4 +1867,9 @@ public class TypeInferencer implements Visitor1<Type, State>
         }
         else
         {
-            msg = "ValueError: 
+            msg = "ValueError: too many values to unpack";
+        }
+        addWarningToFile(xs.get(0).file, beg, end, msg);
+    }
+
+    public static void addWarningToNode(Node node, String 
