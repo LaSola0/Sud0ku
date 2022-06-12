@@ -1879,3 +1879,11 @@ public class TypeInferencer implements Visitor1<Type, State>
 
     public static void addWarningToFile(String file, int begin, int end, String msg)
     {
+        Analyzer.self.putProblem(file, begin, end, msg);
+    }
+
+    public void addError(Node node, String msg)
+    {
+        Analyzer.self.putProblem(node, msg);
+    }
+}
