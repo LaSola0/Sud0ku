@@ -141,3 +141,87 @@ public interface Visitor1<T, P> {
                 return visit((YieldFrom)node, param);
 
             default:
+                throw new RuntimeException("unexpected node");
+        }
+    }
+
+    default T visit(Sequence node, P param) {
+        switch (node.nodeType) {
+            case PYLIST:
+                return visit((PyList) node, param);
+            case PYSET:
+                return visit((PySet) node, param);
+            default: //TUPLE
+                return visit((Tuple) node, param);
+        }
+    }
+
+    default <N extends Node, O extends T> List<O> visit(List<N> list, P param) {
+        List<O> result = new ArrayList<>();
+        for (N elem : list) {
+            result.add((O) visit(elem, param));
+        }
+        return result;
+    }
+
+    T visit(Alias node, P param);
+    T visit(Assert node, P param);
+    T visit(Assign node, P param);
+    T visit(Attribute node, P param);
+    T visit(Await node, P param);
+    T visit(BinOp node, P param);
+    T visit(Block node, P param);
+    T visit(Break node, P param);
+    T visit(Bytes node, P param);
+    T visit(Call node, P param);
+    T visit(ClassDef node, P param);
+    T visit(Comprehension node, P param);
+    T visit(Continue node, P param);
+    T visit(Delete node, P param);
+    T visit(Dict node, P param);
+    T visit(DictComp node, P param);
+    T visit(Dummy node, P param);
+    T visit(Ellipsis node, P param);
+    T visit(Exec node, P param);
+    T visit(Expr node, P param);
+    T visit(ExtSlice node, P param);
+    T visit(For node, P param);
+    T visit(FunctionDef node, P param);
+    T visit(GeneratorExp node, P param);
+    T visit(Global node, P param);
+    T visit(Handler node, P param);
+    T visit(If node, P param);
+    T visit(IfExp node, P param);
+    T visit(Import node, P param);
+    T visit(ImportFrom node, P param);
+    T visit(Index node, P param);
+    T visit(Keyword node, P param);
+    T visit(ListComp node, P param);
+    T visit(PyModule node, P param);
+    T visit(Name node, P param);
+    T visit(Pass node, P param);
+    T visit(Print node, P param);
+    T visit(PyComplex node, P param);
+    T visit(PyFloat node, P param);
+    T visit(PyInt node, P param);
+    T visit(PyList node, P param);
+    T visit(PySet node, P param);
+    T visit(Raise node, P param);
+    T visit(Repr node, P param);
+    T visit(Return node, P param);
+    T visit(SetComp node, P param);
+    T visit(Slice node, P param);
+    T visit(Starred node, P param);
+    T visit(Str node, P param);
+    T visit(Subscript node, P param);
+    T visit(Try node, P param);
+    T visit(Tuple node, P param);
+    T visit(UnaryOp node, P param);
+    T visit(Unsupported node, P param);
+    T visit(Url node, P param);
+    T visit(While node, P param);
+    T visit(With node, P param);
+    T visit(Withitem node, P param);
+    T visit(Yield node, P param);
+    T visit(YieldFrom node, P param);
+}
