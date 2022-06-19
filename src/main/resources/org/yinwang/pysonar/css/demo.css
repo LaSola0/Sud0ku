@@ -19,3 +19,10 @@ table, th, td { border: 1px solid lightgrey; padding: 5px; corner: rounded; }
 .function {color: #4682b4;}
 .identifier {color: #8b7765;}
 .info {border-bottom: 1px dotted RoyalBlue;}
+.keyword {color: #0000cd;}
+.lineno {color: #cccccc;}
+.number {color: #483d8b;}
+.parameter {color: #777777;}
+.string {color: #999999;}
+.type-name {color: #4682b4;}
+.warning {border-bottom: 1px solid orange; padding-bottom: 1px}
