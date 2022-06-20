@@ -282,3 +282,175 @@ def find_end(node, s):
 
     elif isinstance(node, Assign) or isinstance(node, AugAssign):
         the_end = find_end(node.value, s)
+
+    elif isinstance(node, BinOp):
+        the_end = find_end(node.right, s)
+
+    elif isinstance(node, BoolOp):
+        the_end = find_end(node.values[-1], s)
+
+    elif isinstance(node, Compare):
+        the_end = find_end(node.comparators[-1], s)
+
+    elif isinstance(node, UnaryOp):
+        the_end = find_end(node.operand, s)
+
+    elif isinstance(node, Num):
+        the_end = find_start(node, s) + len(str(node.n))
+
+    elif isinstance(node, List):
+        the_end = match_paren(s, '[', ']', find_start(node, s))
+
+    elif isinstance(node, Subscript):
+        the_end = match_paren(s, '[', ']', find_start(node, s))
+
+    elif isinstance(node, Tuple):
+        if node.elts != []:
+            the_end = find_end(node.elts[-1], s)
+
+    elif isinstance(node, Dict):
+        the_end = match_paren(s, '{', '}', find_start(node, s))
+
+    elif ((not python3 and isinstance(node, TryExcept)) or
+          (python3 and isinstance(node, Try))):
+        if node.orelse != []:
+            the_end = find_end(node.orelse, s)
+        elif node.handlers != []:
+            the_end = find_end(node.handlers, s)
+        else:
+            the_end = find_end(node.body, s)
+
+    elif isinstance(node, ExceptHandler):
+        the_end = find_end(node.body, s)
+
+    elif isinstance(node, Pass):
+        the_end = find_start(node, s) + len('pass')
+
+    elif isinstance(node, Break):
+        the_end = find_start(node, s) + len('break')
+
+    elif isinstance(node, Continue):
+        the_end = find_start(node, s) + len('continue')
+
+    elif isinstance(node, Global):
+        the_end = start_seq(s, '\n', find_start(node, s))
+
+    elif isinstance(node, Import):
+        the_end = find_start(node, s) + len('import')
+
+    elif isinstance(node, ImportFrom):
+        the_end = find_start(node, s) + len('from')
+
+    else:   # can't determine node end, set to 3 chars after start
+        start = find_start(node, s)
+        if start is not None:
+            the_end = start + 3
+
+    if isinstance(node, AST) and the_end is not None:
+        node.end = the_end
+
+    return the_end
+
+
+def add_missing_names(node, s):
+    if hasattr(node, 'extra_attr'):
+        return
+
+    if isinstance(node, list):
+        for n in node:
+            add_missing_names(n, s)
+
+    elif isinstance(node, ClassDef):
+        head = find_start(node, s)
+        start = s.find("class", head) + len("class")
+        if start is not None:
+            node.name_node = str_to_name(s, start)
+            node._fields += ('name_node',)
+
+    elif isinstance(node, FunctionDef) or (python3 and isinstance(node, AsyncFunctionDef)):
+        # skip to "def" because it may contain decorators like @property
+        head = find_start(node, s)
+        start = s.find("def", head) + len("def")
+        if start is not None:
+            node.name_node = str_to_name(s, start)
+            node._fields += ('name_node',)
+
+        # keyword_start = find_start(node, s)
+        # node.keyword_node = str_to_name(s, keyword_start)
+        # node._fields += ('keyword_node',)
+
+        if node.args.vararg is not None:
+            if len(node.args.args) > 0:
+                vstart = find_end(node.args.args[-1], s)
+            else:
+                vstart = find_end(node.name_node, s)
+            if vstart is not None:
+                vname = str_to_name(s, vstart)
+                node.vararg_name = vname
+        else:
+            node.vararg_name = None
+        node._fields += ('vararg_name',)
+
+        if node.args.kwarg is not None:
+            if len(node.args.args) > 0:
+                kstart = find_end(node.args.args[-1], s)
+            else:
+                kstart = find_end(node.vararg_name, s)
+            if kstart:
+                kname = str_to_name(s, kstart)
+                node.kwarg_name = kname
+        else:
+            node.kwarg_name = None
+        node._fields += ('kwarg_name',)
+
+    elif isinstance(node, Attribute):
+        start = find_end(node.value, s)
+        if start is not None:
+            name = str_to_name(s, start)
+            node.attr_name = name
+            node._fields = ('value', 'attr_name')  # remove attr for node size accuracy
+
+    elif isinstance(node, Compare):
+        start = find_start(node, s)
+        if start is not None:
+            node.opsName = convert_ops(node.ops, s, start)
+            node._fields += ('opsName',)
+
+    elif (isinstance(node, BoolOp) or
+          isinstance(node, BinOp) or
+          isinstance(node, UnaryOp) or
+          isinstance(node, AugAssign)):
+        if hasattr(node, 'left'):
+            start = find_end(node.left, s)
+        else:
+            start = find_start(node, s)
+        if start is not None:
+            ops = convert_ops([node.op], s, start)
+        else:
+            ops = []
+        if ops != []:
+            node.op_node = ops[0]
+            node._fields += ('op_node',)
+
+    elif isinstance(node, Num):
+        if isinstance(node.n, int) or (not python3 and isinstance(node.n, long)):
+            num_type = 'int'
+            node.n = str(node.n)
+        elif isinstance(node.n, float):
+            num_type = 'float'
+            node.n = str(node.n)
+        elif isinstance(node.n, complex):
+            num_type = 'complex'
+            node.real = node.n.real
+            node.imag = node.n.imag
+            node._fields += ('real', 'imag')
+        else:
+            num_type = 'unsupported'
+
+        node.num_type = num_type
+        node._fields += ('num_type',)
+
+    node.extra_attr = True
+
+
+#-------------------------------------------------------------
