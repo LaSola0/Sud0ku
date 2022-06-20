@@ -454,3 +454,177 @@ def add_missing_names(node, s):
 
 
 #-------------------------------------------------------------
+#              utilities used by improve AST functions
+#-------------------------------------------------------------
+
+# find a sequence in a string s, returning the start point
+def start_seq(s, pat, start):
+    try:
+        return s.index(pat, start)
+    except ValueError:
+        return len(s)
+
+
+# find a sequence in a string s, returning the end point
+def end_seq(s, pat, start):
+    try:
+        return s.index(pat, start) + len(pat)
+    except ValueError:
+        return len(s)
+
+
+# find matching close paren from start
+def match_paren(s, open, close, start):
+    while start < len(s) and s[start] != open:
+        start += 1
+    if start >= len(s):
+        return len(s)
+
+    left = 1
+    i = start + 1
+    while left > 0 and i < len(s):
+        if s[i] == open:
+            left += 1
+        elif s[i] == close:
+            left -= 1
+        i += 1
+    return i
+
+
+# convert string to Name
+def str_to_name(s, start):
+    i = start
+    while i < len(s) and not is_alpha(s[i]):
+        i += 1
+    name_start = i
+
+    ret = []
+    while i < len(s) and is_alpha(s[i]):
+        ret.append(s[i])
+        i += 1
+    name_end = i
+
+    id1 = ''.join(ret)
+    if id1 == '':
+        return None
+    else:
+        name = Name(id1, None)
+        name.start = name_start
+        name.end = name_end
+        return name
+
+
+def convert_ops(ops, s, start):
+    syms = []
+    for op in ops:
+        if type(op) in ops_map:
+            syms.append(ops_map[type(op)])
+        else:
+            print("[WARNING] operator %s is missing from ops_map, "
+                  "please report the bug on GitHub" % op)
+
+    i = start
+    j = 0
+    ret = []
+    while i < len(s) and j < len(syms):
+        oplen = len(syms[j])
+        if s[i:i + oplen] == syms[j]:
+            op_node = Name(syms[j], None)
+            op_node.start = i
+            op_node.end = i + oplen
+            ret.append(op_node)
+            j += 1
+            i = op_node.end
+        else:
+            i += 1
+    return ret
+
+
+# lookup table for operators for convert_ops
+ops_map = {
+    # compare:
+    Eq: '==',
+    NotEq: '!=',
+    LtE: '<=',
+    Lt: '<',
+    GtE: '>=',
+    Gt: '>',
+    NotIn: 'not in',
+    In: 'in',
+    IsNot: 'is not',
+    Is: 'is',
+
+    # BoolOp
+    Or: 'or',
+    And: 'and',
+    Not: 'not',
+    Invert: '~',
+
+    # bit operators
+    BitOr: '|',
+    BitAnd: '&',
+    BitXor: '^',
+    RShift: '>>',
+    LShift: '<<',
+
+
+    # BinOp
+    Add: '+',
+    Sub: '-',
+    Mult: '*',
+    Div: '/',
+    FloorDiv: '//',
+    Mod: '%',
+    Pow: '**',
+
+    # UnaryOp
+    USub: '-',
+    UAdd: '+',
+}
+
+if python3:
+    ops_map[MatMult] = '@'
+
+
+# get list of fields from a node
+def node_fields(node):
+    ret = []
+    for field in node._fields:
+        if field != 'ctx' and hasattr(node, field):
+            ret.append(getattr(node, field))
+    return ret
+
+
+# get full source text where the node is from
+def node_source(node):
+    if hasattr(node, 'node_source'):
+        return node.node_source
+    else:
+        return None
+
+
+# utility for getting exact source code part of the node
+def src(node):
+    return node.node_source[node.start: node.end]
+
+
+def start(node):
+    if hasattr(node, 'start'):
+        return node.start
+    else:
+        return 0
+
+
+def end(node):
+    if hasattr(node, 'end'):
+        return node.end
+    else:
+        return None
+
+
+def is_alpha(c):
+    return (c == '_' or
+            ('0' <= c <= '9') or
+            ('a' <= c <= 'z') or
+            ('A' <= c <= 'Z'))
+
