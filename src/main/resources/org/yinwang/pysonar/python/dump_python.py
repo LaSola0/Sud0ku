@@ -628,3 +628,5 @@ def is_alpha(c):
             ('a' <= c <= 'z') or
             ('A' <= c <= 'Z'))
 
+
+# p('/System/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/lib-tk/Tix.py')
