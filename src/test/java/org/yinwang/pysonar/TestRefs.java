@@ -14,4 +14,8 @@ public class TestRefs
         List<String> failed = TestInference.testAll("tests", false);
         if (failed != null)
         {
-            String msg = "Some tests failed.
+            String msg = "Some tests failed. ";
+            msg += "\n----------------------------- FAILED TESTS ---------------------------";
+            for (String fail : failed)
+            {
+                msg += "\n
