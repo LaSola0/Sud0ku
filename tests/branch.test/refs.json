@@ -1,0 +1,113 @@
+
+[
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 55,
+      "end": 56,
+      "line": 6,
+      "col": 8
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test1.py",
+        "start": 31,
+        "end": 32,
+        "line": 4,
+        "col": 11,
+        "type": "?"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a",
+      "file": "test1.py",
+      "start": 86,
+      "end": 87,
+      "line": 8,
+      "col": 11
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 39,
+        "end": 40,
+        "line": 5,
+        "col": 5,
+        "type": "str"
+      },
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 70,
+        "end": 71,
+        "line": 7,
+        "col": 9,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 124,
+      "end": 125,
+      "line": 13,
+      "col": 8
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test1.py",
+        "start": 100,
+        "end": 101,
+        "line": 11,
+        "col": 11,
+        "type": "?"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a",
+      "file": "test1.py",
+      "start": 182,
+      "end": 183,
+      "line": 17,
+      "col": 11
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 139,
+        "end": 140,
+        "line": 14,
+        "col": 9,
+        "type": "int"
+      },
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 163,
+        "end": 164,
+        "line": 16,
+        "col": 9,
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 220,
+      "end": 221,
+      "line": 22,
+      "col": 8
+    },
