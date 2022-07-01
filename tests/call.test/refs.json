@@ -115,3 +115,184 @@
       "col": 17
     },
     "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 108,
+      "end": 111,
+      "line": 8,
+      "col": 27
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 118,
+      "end": 121,
+      "line": 8,
+      "col": 37
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 128,
+      "end": 131,
+      "line": 8,
+      "col": 47
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 138,
+      "end": 141,
+      "line": 8,
+      "col": 57
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 148,
+      "end": 151,
+      "line": 8,
+      "col": 67
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 158,
+      "end": 161,
+      "line": 8,
+      "col": 77
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 168,
+      "end": 171,
+      "line": 8,
+      "col": 87
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test-chained.py",
+      "start": 178,
+      "end": 181,
+      "line": 8,
+      "col": 97
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test-chained.py",
+        "start": 18,
+        "end": 21,
+        "line": 3,
+        "col": 9,
+        "type": "(A, int, int) -> A"
+      }
+    ]
+  },
+  {
+    "ref": {
