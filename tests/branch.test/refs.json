@@ -288,3 +288,19 @@
         "file": "test1.py",
         "start": 464,
         "end": 465,
+        "line": 40,
+        "col": 13,
+        "type": "bool"
+      },
+      {
+        "name": "b",
+        "file": "test1.py",
+        "start": 520,
+        "end": 521,
+        "line": 43,
+        "col": 13,
+        "type": "bool"
+      }
+    ]
+  }
+]
