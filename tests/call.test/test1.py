@@ -8,3 +8,11 @@ def bar(y):
 
 def baz1():
     return bar(1)
+
+
+def baz2():
+    return bar('hi')
+
+
+baz1()
+baz2()

@@ -1,0 +1,115 @@
+
+[
+  {
+    "ref": {
+      "name": "TestInit1",
+      "file": "test1.py",
+      "start": 218,
+      "end": 227,
+      "line": 15,
+      "col": 5
+    },
+    "dests": [
+      {
+        "name": "TestInit1",
+        "file": "test1.py",
+        "start": 36,
+        "end": 45,
+        "line": 4,
+        "col": 7,
+        "type": "<TestInit1>"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 193,
+      "end": 194,
+      "line": 12,
+      "col": 25
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test1.py",
+        "start": 165,
+        "end": 166,
+        "line": 11,
+        "col": 24,
+        "type": "int"
+      },
+      {
+        "name": "x",
+        "file": "test1.py",
+        "start": 165,
+        "end": 166,
+        "line": 11,
+        "col": 24,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "self",
+      "file": "test1.py",
+      "start": 177,
+      "end": 181,
+      "line": 12,
+      "col": 9
+    },
+    "dests": [
+      {
+        "name": "self",
+        "file": "test1.py",
+        "start": 159,
+        "end": 163,
+        "line": 11,
+        "col": 18,
+        "type": "TestInit1"
+      },
+      {
+        "name": "self",
+        "file": "test1.py",
+        "start": 159,
+        "end": 163,
+        "line": 11,
+        "col": 18,
+        "type": "TestInit1"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "TestInit1",
+      "file": "test1.py",
+      "start": 235,
+      "end": 244,
+      "line": 16,
+      "col": 5
+    },
+    "dests": [
+      {
+        "name": "TestInit1",
+        "file": "test1.py",
+        "start": 36,
+        "end": 45,
+        "line": 4,
+        "col": 7,
+        "type": "<TestInit1>"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "z",
+      "file": "test1.py",
+      "start": 261,
+      "end": 262,
+      "line": 17,
+      "col": 14
+    },
+    "dests": [
+      {
