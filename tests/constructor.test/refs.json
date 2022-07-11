@@ -113,3 +113,180 @@
     },
     "dests": [
       {
+        "name": "z",
+        "file": "test1.py",
+        "start": 231,
+        "end": 232,
+        "line": 16,
+        "col": 1,
+        "type": "TestInit1"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "my_field",
+      "file": "test1.py",
+      "start": 263,
+      "end": 271,
+      "line": 17,
+      "col": 16
+    },
+    "dests": [
+      {
+        "name": "my_field",
+        "file": "test1.py",
+        "start": 182,
+        "end": 190,
+        "line": 12,
+        "col": 14,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "test1.py",
+      "start": 248,
+      "end": 249,
+      "line": 17,
+      "col": 1
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "test1.py",
+        "start": 214,
+        "end": 215,
+        "line": 15,
+        "col": 1,
+        "type": "TestInit1"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "my_field",
+      "file": "test1.py",
+      "start": 250,
+      "end": 258,
+      "line": 17,
+      "col": 3
+    },
+    "dests": [
+      {
+        "name": "my_field",
+        "file": "test1.py",
+        "start": 182,
+        "end": 190,
+        "line": 12,
+        "col": 14,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "self",
+      "file": "test1.py",
+      "start": 79,
+      "end": 83,
+      "line": 6,
+      "col": 13
+    },
+    "dests": [
+      {
+        "name": "self",
+        "file": "test1.py",
+        "start": 60,
+        "end": 64,
+        "line": 5,
+        "col": 14,
+        "type": "TestInit1"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "my_field",
+      "file": "test1.py",
+      "start": 84,
+      "end": 92,
+      "line": 6,
+      "col": 18
+    },
+    "dests": [
+      {
+        "name": "my_field",
+        "file": "test1.py",
+        "start": 182,
+        "end": 190,
+        "line": 12,
+        "col": 14,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "self",
+      "file": "test1.py",
+      "start": 127,
+      "end": 131,
+      "line": 9,
+      "col": 13
+    },
+    "dests": [
+      {
+        "name": "self",
+        "file": "test1.py",
+        "start": 108,
+        "end": 112,
+        "line": 8,
+        "col": 15,
+        "type": "TestInit1"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "my_field",
+      "file": "test1.py",
+      "start": 132,
+      "end": 140,
+      "line": 9,
+      "col": 18
+    },
+    "dests": [
+      {
+        "name": "my_field",
+        "file": "test1.py",
+        "start": 182,
+        "end": 190,
+        "line": 12,
+        "col": 14,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 410,
+      "end": 411,
+      "line": 26,
+      "col": 25
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test1.py",
+        "start": 382,
+        "end": 383,
+        "line": 25,
+        "col": 24,
+        "type": "?"
+      },
+      {
