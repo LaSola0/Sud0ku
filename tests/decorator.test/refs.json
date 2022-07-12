@@ -5,4 +5,14 @@
       "file": "test1.py",
       "start": 236,
       "end": 237,
-      "
+      "line": 16,
+      "col": 5
+    },
+    "dests": [
+      {
+        "name": "A",
+        "file": "test1.py",
+        "start": 58,
+        "end": 59,
+        "line": 3,
+        "col":
