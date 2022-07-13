@@ -27,4 +27,14 @@
       "start": 240,
       "end": 241,
       "line": 17,
-    
+      "col": 1
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 232,
+        "end": 233,
+        "line": 16,
+        "col": 1,
+        "type": 
