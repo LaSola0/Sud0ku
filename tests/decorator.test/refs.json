@@ -15,4 +15,16 @@
         "start": 58,
         "end": 59,
         "line": 3,
-        "col":
+        "col": 7,
+        "type": "<A>"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a",
+      "file": "test1.py",
+      "start": 240,
+      "end": 241,
+      "line": 17,
+    
