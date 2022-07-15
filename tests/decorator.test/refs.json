@@ -56,4 +56,16 @@
         "file": "test1.py",
         "start": 70,
         "end": 77,
-        "line": 5
+        "line": 5,
+        "col": 9,
+        "type": "(A, int) -> int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 103,
+      "end": 104,
+     
