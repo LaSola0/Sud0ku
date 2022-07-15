@@ -37,4 +37,15 @@
         "end": 233,
         "line": 16,
         "col": 1,
-        "type": 
+        "type": "A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "normalm",
+      "file": "test1.py",
+      "start": 242,
+      "end": 249,
+      "line": 17,
+      "c
