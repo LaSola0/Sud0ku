@@ -48,4 +48,12 @@
       "start": 242,
       "end": 249,
       "line": 17,
-      "c
+      "col": 3
+    },
+    "dests": [
+      {
+        "name": "normalm",
+        "file": "test1.py",
+        "start": 70,
+        "end": 77,
+        "line": 5
