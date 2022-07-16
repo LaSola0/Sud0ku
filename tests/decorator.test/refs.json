@@ -78,4 +78,16 @@
         "start": 84,
         "end": 85,
         "line": 5,
-        "c
+        "col": 23,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a",
+      "file": "test1.py",
+      "start": 254,
+      "end": 255,
+      "line": 18,
+ 
