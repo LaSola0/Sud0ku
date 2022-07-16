@@ -90,4 +90,14 @@
       "start": 254,
       "end": 255,
       "line": 18,
- 
+      "col": 1
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 232,
+        "end": 233,
+        "line": 16,
+        "col": 1,
+        "type": "
