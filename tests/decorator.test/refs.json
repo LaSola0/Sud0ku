@@ -100,4 +100,16 @@
         "end": 233,
         "line": 16,
         "col": 1,
-        "type": "
+        "type": "A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "staticm",
+      "file": "test1.py",
+      "start": 256,
+      "end": 263,
+      "line": 18,
+      "col": 3
+    },
