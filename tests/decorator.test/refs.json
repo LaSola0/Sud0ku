@@ -129,4 +129,16 @@
     "ref": {
       "name": "x",
       "file": "test1.py",
-      "start": 162
+      "start": 162,
+      "end": 163,
+      "line": 10,
+      "col": 16
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test1.py",
+        "start": 140,
+        "end": 141,
+        "line": 9,
+  
