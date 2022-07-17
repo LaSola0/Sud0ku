@@ -120,4 +120,13 @@
         "start": 132,
         "end": 139,
         "line": 9,
-        "
+        "col": 9,
+        "type": "(int, str) -> (int, str)"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 162
