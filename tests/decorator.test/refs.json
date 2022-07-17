@@ -113,3 +113,11 @@
       "line": 18,
       "col": 3
     },
+    "dests": [
+      {
+        "name": "staticm",
+        "file": "test1.py",
+        "start": 132,
+        "end": 139,
+        "line": 9,
+        "
