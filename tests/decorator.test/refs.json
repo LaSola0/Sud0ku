@@ -141,4 +141,14 @@
         "start": 140,
         "end": 141,
         "line": 9,
-  
+        "col": 17,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "test1.py",
+      "start": 165,
+      "end"
