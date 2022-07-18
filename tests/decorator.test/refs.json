@@ -151,4 +151,14 @@
       "name": "y",
       "file": "test1.py",
       "start": 165,
-      "end"
+      "end": 166,
+      "line": 10,
+      "col": 19
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "test1.py",
+        "start": 143,
+        "end": 144,
+       
