@@ -173,4 +173,14 @@
       "file": "test1.py",
       "start": 274,
       "end": 275,
-      "lin
+      "line": 19,
+      "col": 1
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 232,
+        "end": 233,
+        "line": 16,
+        "col":
