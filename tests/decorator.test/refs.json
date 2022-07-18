@@ -161,4 +161,16 @@
         "file": "test1.py",
         "start": 143,
         "end": 144,
-       
+        "line": 9,
+        "col": 20,
+        "type": "str"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a",
+      "file": "test1.py",
+      "start": 274,
+      "end": 275,
+      "lin
