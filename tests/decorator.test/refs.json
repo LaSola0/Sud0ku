@@ -183,4 +183,16 @@
         "start": 232,
         "end": 233,
         "line": 16,
-        "col":
+        "col": 1,
+        "type": "A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "classm",
+      "file": "test1.py",
+      "start": 276,
+      "end": 282,
+      "line": 19,
+  
