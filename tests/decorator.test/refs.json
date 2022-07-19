@@ -195,4 +195,14 @@
       "start": 276,
       "end": 282,
       "line": 19,
-  
+      "col": 3
+    },
+    "dests": [
+      {
+        "name": "classm",
+        "file": "test1.py",
+        "start": 193,
+        "end": 199,
+        "line": 13,
+        "col": 9,
+      
