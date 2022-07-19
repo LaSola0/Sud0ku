@@ -205,4 +205,14 @@
         "end": 199,
         "line": 13,
         "col": 9,
-      
+        "type": "(<A>, str) -> (<A>, str)"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "cls",
+      "file": "test1.py",
+      "start": 224,
+      "end": 227,
+      "line
