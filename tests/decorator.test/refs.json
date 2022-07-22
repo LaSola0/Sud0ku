@@ -215,4 +215,14 @@
       "file": "test1.py",
       "start": 224,
       "end": 227,
-      "line
+      "line": 14,
+      "col": 16
+    },
+    "dests": [
+      {
+        "name": "cls",
+        "file": "test1.py",
+        "start": 200,
+        "end": 203,
+        "line": 13,
+        "col":
