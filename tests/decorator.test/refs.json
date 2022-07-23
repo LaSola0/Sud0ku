@@ -225,4 +225,15 @@
         "start": 200,
         "end": 203,
         "line": 13,
-        "col":
+        "col": 16,
+        "type": "<A>"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "test1.py",
+      "start": 229,
+      "end": 230,
+      "line": 14,
