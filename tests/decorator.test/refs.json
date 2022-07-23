@@ -237,3 +237,13 @@
       "start": 229,
       "end": 230,
       "line": 14,
+      "col": 21
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "test1.py",
+        "start": 205,
+        "end": 206,
+        "line": 13,
+        "col": 
