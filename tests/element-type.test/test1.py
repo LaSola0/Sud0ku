@@ -12,3 +12,10 @@ print x
 c = []
 c.append(1)
 z = c[0]
+print z
+
+d = {}
+d.update({'x': 10})
+d.update({'y': True})
+u = d['foo']
+print u
