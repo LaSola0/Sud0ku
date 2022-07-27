@@ -67,4 +67,14 @@
       "name": "a",
       "file": "test1.py",
       "start": 66,
-      "end": 6
+      "end": 67,
+      "line": 8,
+      "col": 1
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 46,
+        "end": 47,
+      
