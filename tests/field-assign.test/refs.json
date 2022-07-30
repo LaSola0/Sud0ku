@@ -89,4 +89,14 @@
       "file": "test1.py",
       "start": 116,
       "end": 117,
-      "lin
+      "line": 10,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 46,
+        "end": 47,
+        "line": 6,
+    
