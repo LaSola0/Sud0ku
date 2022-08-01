@@ -141,4 +141,15 @@
         "start": 46,
         "end": 47,
         "line": 6,
-    
+        "col": 1,
+        "type": "A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "test1.py",
+      "start": 123,
+      "end": 124,
+  
