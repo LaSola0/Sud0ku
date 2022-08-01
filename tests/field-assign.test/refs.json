@@ -120,4 +120,15 @@
         "start": 39,
         "end": 40,
         "line": 4,
-      
+        "col": 5,
+        "type": "{int | str}"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a",
+      "file": "test1.py",
+      "start": 121,
+      "end": 122,
+      "line":
