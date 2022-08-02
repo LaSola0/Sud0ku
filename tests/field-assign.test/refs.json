@@ -160,4 +160,11 @@
         "name": "y",
         "file": "test1.py",
         "start": 68,
-        "end": 69
+        "end": 69,
+        "line": 8,
+        "col": 3,
+        "type": "int"
+      }
+    ]
+  }
+]
