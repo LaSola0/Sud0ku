@@ -8,4 +8,12 @@
       "line": 19,
       "col": 7
     },
-    
+    "dests": [
+      {
+        "name": "y",
+        "file": "test1.py",
+        "start": 6,
+        "end": 7,
+        "line": 2,
+        "col": 1,
+        "type": "bool"
