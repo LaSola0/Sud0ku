@@ -37,4 +37,17 @@
         "end": 1,
         "line": 1,
         "col": 1,
-        "type": "{bool | int | s
+        "type": "{bool | int | str}"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 73,
+      "end": 74,
+      "line": 8,
+      "col": 11
+    },
+    "dest
