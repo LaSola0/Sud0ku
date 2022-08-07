@@ -71,4 +71,13 @@
       "line": 9,
       "col": 11
     },
-    
+    "dests": [
+      {
+        "name": "y",
+        "file": "test1.py",
+        "start": 56,
+        "end": 57,
+        "line": 7,
+        "col": 5,
+        "type": "int"
+   
