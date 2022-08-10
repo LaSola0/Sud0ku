@@ -80,4 +80,18 @@
         "line": 7,
         "col": 5,
         "type": "int"
-   
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 102,
+      "end": 103,
+      "line": 13,
+      "col": 5
+    },
+    "dests": [
+      {
+  
