@@ -101,4 +101,17 @@
         "line": 1,
         "col": 1,
         "type": "{bool | int | str}"
- 
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 121,
+      "end": 122,
+      "line": 14,
+      "col": 11
+    },
+    "dests": [
+   
