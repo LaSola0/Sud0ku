@@ -12,4 +12,8 @@ def f():
 def g():
     x = 'hi'
     print x
-  
+    y = 'foo'
+    print y
+    global x
+
+print y
