@@ -1,3 +1,9 @@
 # from kitchen import a module oven
 
-from ki
+from kitchen import oven
+
+pizza = oven.Pizza()
+print pizza.size
+
+bread = oven.Bread()
+print bread.size
