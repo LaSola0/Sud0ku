@@ -10,4 +10,6 @@ def fork(x):
     return [x,x]
 
 
-# knife is
+# knife is not exported
+def knife(x):
+    return x+1
