@@ -38,4 +38,13 @@
       "line": 0,
       "col": 0
     },
-    "de
+    "dests": [
+      {
+        "name": "oven",
+        "file": "kitchen/oven.py",
+        "start": 0,
+        "end": 0,
+        "line": 0,
+        "col": 0,
+        "type": "oven"
+ 
