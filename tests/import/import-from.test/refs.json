@@ -95,4 +95,16 @@
         "file": "kitchen/oven.py",
         "start": 6,
         "end": 11,
-        "
+        "line": 1,
+        "col": 7,
+        "type": "<Pizza>"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "pizza",
+      "file": "import-oven.py",
+      "start": 90,
+      "end": 95,
+      "li
