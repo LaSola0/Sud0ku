@@ -200,4 +200,15 @@
         "file": "import-oven.py",
         "start": 102,
         "end": 107,
-     
+        "line": 8,
+        "col": 1,
+        "type": "Bread"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "size",
+      "file": "import-oven.py",
+      "start": 135,
+      "end": 139
