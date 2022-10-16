@@ -392,4 +392,18 @@
         "line": 10,
         "col": 1,
         "type": "?"
-   
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "drawer",
+      "file": "import-same-level.py",
+      "start": 5,
+      "end": 11,
+      "line": 0,
+      "col": 0
+    },
+    "dests": [
+      {
+ 
