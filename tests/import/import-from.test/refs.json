@@ -435,4 +435,13 @@
         "col": 7,
         "type": "<Knife>"
       }
-    
+    ]
+  },
+  {
+    "ref": {
+      "name": "Knife",
+      "file": "import-same-level.py",
+      "start": 31,
+      "end": 36,
+      "line": 3,
+      "col": 6
