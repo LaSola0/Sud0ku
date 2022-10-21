@@ -463,3 +463,14 @@
       "name": "k1",
       "file": "import-same-level.py",
       "start": 45,
+      "end": 47,
+      "line": 4,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "k1",
+        "file": "import-same-level.py",
+        "start": 26,
+        "end": 28,
+        "line":
