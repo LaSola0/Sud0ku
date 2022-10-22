@@ -473,4 +473,16 @@
         "file": "import-same-level.py",
         "start": 26,
         "end": 28,
-        "line":
+        "line": 3,
+        "col": 1,
+        "type": "Knife"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "length",
+      "file": "import-same-level.py",
+      "start": 48,
+      "end": 54,
+      
