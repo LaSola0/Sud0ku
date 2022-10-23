@@ -504,4 +504,13 @@
     "ref": {
       "name": "kitchen",
       "file": "import-star-from-init.py",
-      "start":
+      "start": 53,
+      "end": 60,
+      "line": 0,
+      "col": 0
+    },
+    "dests": [
+      {
+        "name": "kitchen",
+        "file": "kitchen/__init__.py",
+        "sta
