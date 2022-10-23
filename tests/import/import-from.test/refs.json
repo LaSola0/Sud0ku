@@ -494,4 +494,14 @@
         "file": "drawer.py",
         "start": 17,
         "end": 23,
-        "li
+        "line": 2,
+        "col": 5,
+        "type": "str"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "kitchen",
+      "file": "import-star-from-init.py",
+      "start":
