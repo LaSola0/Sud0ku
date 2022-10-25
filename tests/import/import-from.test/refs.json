@@ -524,4 +524,14 @@
   {
     "ref": {
       "name": "spoon",
-      "file": "import-star-from
+      "file": "import-star-from-init.py",
+      "start": 77,
+      "end": 82,
+      "line": 5,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "spoon",
+        "file": "kitchen/__init__.py",
+      
