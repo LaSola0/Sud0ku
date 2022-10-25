@@ -513,4 +513,15 @@
       {
         "name": "kitchen",
         "file": "kitchen/__init__.py",
-        "sta
+        "start": 0,
+        "end": 0,
+        "line": 0,
+        "col": 0,
+        "type": "kitchen"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "spoon",
+      "file": "import-star-from
