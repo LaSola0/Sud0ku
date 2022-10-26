@@ -561,4 +561,13 @@
         "col": 11,
         "type": "int"
       }
-  
+    ]
+  },
+  {
+    "ref": {
+      "name": "fork",
+      "file": "import-star-from-init.py",
+      "start": 92,
+      "end": 96,
+      "line": 6,
+      "col"
