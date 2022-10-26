@@ -553,4 +553,12 @@
     },
     "dests": [
       {
-     
+        "name": "x",
+        "file": "kitchen/__init__.py",
+        "start": 64,
+        "end": 65,
+        "line": 5,
+        "col": 11,
+        "type": "int"
+      }
+  
