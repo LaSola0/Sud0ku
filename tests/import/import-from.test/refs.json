@@ -579,4 +579,15 @@
         "start": 87,
         "end": 91,
         "line": 9,
-        "co
+        "col": 5,
+        "type": "int -> [int]"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "kitchen/__init__.py",
+      "start": 108,
+      "end": 109,
+      "l
