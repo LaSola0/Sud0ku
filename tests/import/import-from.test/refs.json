@@ -570,4 +570,13 @@
       "start": 92,
       "end": 96,
       "line": 6,
-      "col"
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "fork",
+        "file": "kitchen/__init__.py",
+        "start": 87,
+        "end": 91,
+        "line": 9,
+        "co
