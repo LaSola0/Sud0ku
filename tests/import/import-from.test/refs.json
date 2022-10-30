@@ -619,4 +619,15 @@
         "name": "x",
         "file": "kitchen/__init__.py",
         "start": 92,
-        "
+        "end": 93,
+        "line": 9,
+        "col": 10,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "kitchen",
+      "file": "import-star-from-oven.py",
+      "start": 
