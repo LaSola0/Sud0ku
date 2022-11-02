@@ -630,4 +630,13 @@
     "ref": {
       "name": "kitchen",
       "file": "import-star-from-oven.py",
-      "start": 
+      "start": 37,
+      "end": 44,
+      "line": 0,
+      "col": 0
+    },
+    "dests": [
+      {
+        "name": "kitchen",
+        "file": "kitchen/__init__.py",
+        "start
