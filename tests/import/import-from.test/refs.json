@@ -662,4 +662,13 @@
         "file": "kitchen/oven.py",
         "start": 0,
         "end": 0,
-    
+        "line": 0,
+        "col": 0,
+        "type": "oven"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "Pizza",
+      "file": "import-star-from-oven.p
