@@ -691,4 +691,13 @@
   },
   {
     "ref": {
-  
+      "name": "pizza",
+      "file": "import-star-from-oven.py",
+      "start": 82,
+      "end": 87,
+      "line": 6,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "pizz
