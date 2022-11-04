@@ -700,4 +700,15 @@
     },
     "dests": [
       {
-        "name": "pizz
+        "name": "pizza",
+        "file": "import-star-from-oven.py",
+        "start": 60,
+        "end": 65,
+        "line": 5,
+        "col": 1,
+        "type": "Pizza"
+      }
+    ]
+  },
+  {
+    "ref": 
