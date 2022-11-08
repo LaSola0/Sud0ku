@@ -777,4 +777,13 @@
     "ref": {
       "name": "size",
       "file": "import-star-from-oven.py",
-      "
+      "start": 127,
+      "end": 131,
+      "line": 9,
+      "col": 16
+    },
+    "dests": [
+      {
+        "name": "size",
+        "file": "kitchen/oven.py",
+        "start": 4
