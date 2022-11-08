@@ -766,4 +766,15 @@
         "name": "bread1",
         "file": "import-star-from-oven.py",
         "start": 95,
-        "en
+        "end": 101,
+        "line": 8,
+        "col": 1,
+        "type": "Bread"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "size",
+      "file": "import-star-from-oven.py",
+      "
