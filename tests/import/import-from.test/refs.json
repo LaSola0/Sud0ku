@@ -826,4 +826,16 @@
     },
     "dests": [
       {
-        "name": "bread2
+        "name": "bread2",
+        "file": "import-star-from-oven.py",
+        "start": 132,
+        "end": 138,
+        "line": 10,
+        "col": 1,
+        "type": "Bread"
+      }
+    ]
+  },
+  {
+    "ref": {
+ 
