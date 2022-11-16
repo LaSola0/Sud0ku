@@ -853,4 +853,14 @@
         "end": 48,
         "line": 5,
         "col": 3,
-        "type":
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "size1",
+      "file": "import-star-from-oven.py",
+      "start": 176,
+      "end": 181,
+      "line
