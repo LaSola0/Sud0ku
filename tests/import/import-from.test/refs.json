@@ -845,4 +845,12 @@
       "line": 11,
       "col": 16
     },
-    
+    "dests": [
+      {
+        "name": "size",
+        "file": "kitchen/oven.py",
+        "start": 44,
+        "end": 48,
+        "line": 5,
+        "col": 3,
+        "type":
