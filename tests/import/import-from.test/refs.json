@@ -863,4 +863,13 @@
       "file": "import-star-from-oven.py",
       "start": 176,
       "end": 181,
-      "line
+      "line": 13,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "size1",
+        "file": "import-star-from-oven.py",
+        "start": 112,
+        "end": 117,
+   
