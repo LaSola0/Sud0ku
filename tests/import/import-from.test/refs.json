@@ -872,4 +872,15 @@
         "file": "import-star-from-oven.py",
         "start": 112,
         "end": 117,
-   
+        "line": 9,
+        "col": 1,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "size2",
+      "file": "import-star-from-oven.py",
+      "start": 189,
+  
