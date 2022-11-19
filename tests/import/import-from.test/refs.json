@@ -892,4 +892,14 @@
         "name": "size2",
         "file": "import-star-from-oven.py",
         "start": 149,
-   
+        "end": 154,
+        "line": 11,
+        "col": 1,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "kitchen/__init_
