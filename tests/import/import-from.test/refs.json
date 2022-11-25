@@ -912,4 +912,12 @@
       {
         "name": "x",
         "file": "kitchen/__init__.py",
-        
+        "start": 149,
+        "end": 150,
+        "line": 14,
+        "col": 11,
+        "type": "?"
+      }
+    ]
+  }
+]
