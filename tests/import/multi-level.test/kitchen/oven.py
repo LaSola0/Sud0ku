@@ -3,4 +3,5 @@ class Pizza:
     self.toppings = toppings
 
   def get_toppings(self):
-    ret
+    return self.toppings
+  
