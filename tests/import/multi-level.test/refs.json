@@ -50,4 +50,12 @@
       "line": 3,
       "col": 9
     },
-    "
+    "dests": [
+      {
+        "name": "kitchen",
+        "file": "kitchen/__init__.py",
+        "start": 0,
+        "end": 0,
+        "line": 0,
+        "col": 0,
+        
