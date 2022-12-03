@@ -37,4 +37,17 @@
         "end": 0,
         "line": 0,
         "col": 0,
-        "type": "oven
+        "type": "oven"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "kitchen",
+      "file": "bedroom.py",
+      "start": 29,
+      "end": 36,
+      "line": 3,
+      "col": 9
+    },
+    "
