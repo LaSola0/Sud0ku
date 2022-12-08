@@ -70,4 +70,13 @@
       "end": 41,
       "line": 3,
       "col": 17
-    }
+    },
+    "dests": [
+      {
+        "name": "oven",
+        "file": "kitchen/oven.py",
+        "start": 0,
+        "end": 0,
+        "line": 0,
+        "col": 0,
+        "typ
