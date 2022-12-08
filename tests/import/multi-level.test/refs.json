@@ -79,4 +79,18 @@
         "end": 0,
         "line": 0,
         "col": 0,
-        "typ
+        "type": "oven"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "Pizza",
+      "file": "bedroom.py",
+      "start": 42,
+      "end": 47,
+      "line": 3,
+      "col": 22
+    },
+    "dests": [
+      {
