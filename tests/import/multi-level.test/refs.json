@@ -102,4 +102,17 @@
         "col": 7,
         "type": "<Pizza>"
       }
+    ]
+  },
+  {
+    "ref": {
+      "name": "toppings",
+      "file": "kitchen/oven.py",
+      "start": 65,
+      "end": 73,
+      "line": 3,
+      "col": 21
+    },
+    "dests": [
+      {
    
