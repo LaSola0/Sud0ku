@@ -115,4 +115,12 @@
     },
     "dests": [
       {
-   
+        "name": "toppings",
+        "file": "kitchen/oven.py",
+        "start": 34,
+        "end": 42,
+        "line": 2,
+        "col": 22,
+        "type": "[str]"
+      }
+    ]
