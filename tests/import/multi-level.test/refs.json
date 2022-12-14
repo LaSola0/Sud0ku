@@ -124,3 +124,15 @@
         "type": "[str]"
       }
     ]
+  },
+  {
+    "ref": {
+      "name": "self",
+      "file": "kitchen/oven.py",
+      "start": 49,
+      "end": 53,
+      "line": 3,
+      "col": 5
+    },
+    "dests": [
+  
