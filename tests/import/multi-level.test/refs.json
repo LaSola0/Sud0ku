@@ -135,4 +135,11 @@
       "col": 5
     },
     "dests": [
-  
+      {
+        "name": "self",
+        "file": "kitchen/oven.py",
+        "start": 28,
+        "end": 32,
+        "line": 2,
+        "col": 16,
+        "type"
