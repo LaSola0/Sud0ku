@@ -142,4 +142,15 @@
         "end": 32,
         "line": 2,
         "col": 16,
-        "type"
+        "type": "Pizza"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "pizza",
+      "file": "bedroom.py",
+      "start": 88,
+      "end": 93,
+      "line": 4,
+ 
