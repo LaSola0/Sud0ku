@@ -153,4 +153,14 @@
       "start": 88,
       "end": 93,
       "line": 4,
- 
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "pizza",
+        "file": "bedroom.py",
+        "start": 21,
+        "end": 26,
+        "line": 3,
+        "col": 1,
+   
