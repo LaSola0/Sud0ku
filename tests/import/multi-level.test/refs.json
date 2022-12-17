@@ -182,4 +182,15 @@
         "file": "kitchen/oven.py",
         "start": 81,
         "end": 93,
-        "line":
+        "line": 5,
+        "col": 7,
+        "type": "Pizza -> [str]"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "self",
+      "file": "kitchen/oven.py",
+      "start": 112,
+     
