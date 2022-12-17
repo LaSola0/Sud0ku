@@ -163,4 +163,15 @@
         "end": 26,
         "line": 3,
         "col": 1,
-   
+        "type": "Pizza"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "get_toppings",
+      "file": "bedroom.py",
+      "start": 94,
+      "end": 106,
+      "line": 4,
+      
