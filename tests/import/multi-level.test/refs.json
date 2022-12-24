@@ -193,4 +193,13 @@
       "name": "self",
       "file": "kitchen/oven.py",
       "start": 112,
-     
+      "end": 116,
+      "line": 6,
+      "col": 12
+    },
+    "dests": [
+      {
+        "name": "self",
+        "file": "kitchen/oven.py",
+        "start": 94,
+        "
