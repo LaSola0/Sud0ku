@@ -222,4 +222,12 @@
       {
         "name": "toppings",
         "file": "kitchen/oven.py",
-        "start": 5
+        "start": 54,
+        "end": 62,
+        "line": 3,
+        "col": 10,
+        "type": "[str]"
+      }
+    ]
+  }
+]
