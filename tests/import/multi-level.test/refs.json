@@ -202,4 +202,15 @@
         "name": "self",
         "file": "kitchen/oven.py",
         "start": 94,
-        "
+        "end": 98,
+        "line": 5,
+        "col": 20,
+        "type": "Pizza"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "toppings",
+      "file": "kitchen/oven.py",
+      
