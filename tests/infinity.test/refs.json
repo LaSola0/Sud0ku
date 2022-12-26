@@ -1,0 +1,8 @@
+[
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 63,
+      "end": 64,
+      "line": 6,
