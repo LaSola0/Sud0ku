@@ -35,4 +35,15 @@
         "file": "test1.py",
         "start": 43,
         "end": 44,
-        "l
+        "line": 4,
+        "col": 1,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 84,
+      "e
