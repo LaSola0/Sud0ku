@@ -100,4 +100,19 @@
         "end": 44,
         "line": 4,
         "col": 1,
-        "type
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 164,
+      "end": 165,
+      "line": 12,
+      "col": 9
+    },
+    "dests": [
+      {
+  
