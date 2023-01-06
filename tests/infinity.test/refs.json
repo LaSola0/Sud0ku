@@ -124,4 +124,14 @@
         "type": "int"
       }
     ]
-  
+  },
+  {
+    "ref": {
+      "name": "w",
+      "file": "test1.py",
+      "start": 192,
+      "end": 193,
+      "line": 14,
+      "col": 7
+    },
+    "dests": [
