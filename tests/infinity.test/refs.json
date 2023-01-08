@@ -143,4 +143,12 @@
         "line": 8,
         "col": 9,
         "type": "int"
-     
+      },
+      {
+        "name": "w",
+        "file": "test1.py",
+        "start": 134,
+        "end": 135,
+        "line": 10,
+        "col": 9,
+        "ty
