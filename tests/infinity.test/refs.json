@@ -135,3 +135,12 @@
       "col": 7
     },
     "dests": [
+      {
+        "name": "w",
+        "file": "test1.py",
+        "start": 101,
+        "end": 102,
+        "line": 8,
+        "col": 9,
+        "type": "int"
+     
