@@ -1,0 +1,79 @@
+
+[
+  {
+    "ref": {
+      "name": "foo",
+      "file": "test1.py",
+      "start": 65,
+      "end": 68,
+      "line": 8,
+      "col": 5
+    },
+    "dests": [
+      {
+        "name": "foo",
+        "file": "test1.py",
+        "start": 20,
+        "end": 23,
+        "line": 4,
+        "col": 5,
+        "type": "(int, str) -> [{int | str}] -> [{int | str}]"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "f",
+      "file": "test1.py",
+      "start": 36,
+      "end": 37,
+      "line": 5,
+      "col": 9
+    },
+    "dests": [
+      {
+        "name": "f",
+        "file": "test1.py",
+        "start": 24,
+        "end": 25,
+        "line": 4,
+        "col": 9,
+        "type": "(int, str) -> [{int | str}]"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a",
+      "file": "test1.py",
+      "start": 82,
+      "end": 83,
+      "line": 8,
+      "col": 22
+    },
+    "dests": [
+      {
+        "name": "a",
+        "file": "test1.py",
+        "start": 76,
+        "end": 77,
+        "line": 8,
+        "col": 16,
+        "type": "int"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "b",
+      "file": "test1.py",
+      "start": 84,
+      "end": 85,
+      "line": 8,
+      "col": 24
+    },
+    "dests": [
+      {
+        "name": "b",
+        "file": "test1.py",
+        "start": 78,
