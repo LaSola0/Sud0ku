@@ -2,4 +2,14 @@
   {
     "ref": {
       "name": "A",
-      "file": "test1.
+      "file": "test1.py",
+      "start": 71,
+      "end": 72,
+      "line": 7,
+      "col": 6
+    },
+    "dests": [
+      {
+        "name": "A",
+        "file": "test1.py",
+        "sta
