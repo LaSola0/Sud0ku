@@ -12,4 +12,16 @@
       {
         "name": "A",
         "file": "test1.py",
-        "sta
+        "start": 52,
+        "end": 53,
+        "line": 4,
+        "col": 7,
+        "type": "<A>"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "a1",
+      "file": "test1.py",
+      "start": 7
