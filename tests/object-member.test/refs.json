@@ -46,4 +46,13 @@
       "name": "a1",
       "file": "test1.py",
       "start": 94,
-      "en
+      "end": 96,
+      "line": 10,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "a1",
+        "file": "test1.py",
+        "start": 66,
+        "end": 68,
