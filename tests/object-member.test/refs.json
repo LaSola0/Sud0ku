@@ -98,4 +98,15 @@
         "file": "test1.py",
         "start": 66,
         "end": 68,
-        
+        "line": 7,
+        "col": 1,
+        "type": "A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "test1.py",
+      "start": 108,
+  
