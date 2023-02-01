@@ -119,4 +119,10 @@
         "file": "test1.py",
         "start": 78,
         "end": 79,
-        "
+        "line": 8,
+        "col": 4,
+        "type": "str"
+      }
+    ]
+  }
+]
