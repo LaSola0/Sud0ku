@@ -120,3 +120,73 @@
         "file": "test1.py",
         "start": 186,
         "end": 187,
+        "line": 15,
+        "col": 9,
+        "type": "A"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "f1",
+      "file": "test1.py",
+      "start": 236,
+      "end": 238,
+      "line": 18,
+      "col": 16
+    },
+    "dests": [
+      {
+        "name": "f1",
+        "file": "test1.py",
+        "start": 156,
+        "end": 158,
+        "line": 13,
+        "col": 5,
+        "type": "int -> {A | str}"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "x",
+      "file": "test1.py",
+      "start": 242,
+      "end": 243,
+      "line": 18,
+      "col": 22
+    },
+    "dests": [
+      {
+        "name": "x",
+        "file": "test1.py",
+        "start": 71,
+        "end": 72,
+        "line": 6,
+        "col": 9,
+        "type": "A -> str"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "k",
+      "file": "test1.py",
+      "start": 264,
+      "end": 265,
+      "line": 22,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "k",
+        "file": "test1.py",
+        "start": 248,
+        "end": 249,
+        "line": 21,
+        "col": 1,
+        "type": "{A | str}"
+      }
+    ]
+  }
+]
