@@ -16,3 +16,7 @@ def f1(n):
         return a
     else:
         return f1(0).x()
+
+
+k = f1(1)
+print k
