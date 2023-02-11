@@ -1,0 +1,10 @@
+
+[
+  {
+    "ref": {
+      "name": "x",
+      "file": "multi.py",
+      "start": 14,
+      "end": 15,
+      "line": 3,
+      "col": 4
