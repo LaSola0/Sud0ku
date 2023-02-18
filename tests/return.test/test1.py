@@ -10,3 +10,6 @@ def f(x, y=None):
     return True
     y = 'hi'
     print y
+
+y = f(42)
+print y
