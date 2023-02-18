@@ -96,3 +96,34 @@
     "dests": [
       {
         "name": "y",
+        "file": "test1.py",
+        "start": 112,
+        "end": 113,
+        "line": 11,
+        "col": 5,
+        "type": "str"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "y",
+      "file": "test1.py",
+      "start": 150,
+      "end": 151,
+      "line": 15,
+      "col": 7
+    },
+    "dests": [
+      {
+        "name": "y",
+        "file": "test1.py",
+        "start": 134,
+        "end": 135,
+        "line": 14,
+        "col": 1,
+        "type": "{bool | int}"
+      }
+    ]
+  }
+]
