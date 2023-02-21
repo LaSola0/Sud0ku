@@ -16,4 +16,14 @@
         "end": 32,
         "line": 3,
         "col": 5,
-     
+        "type": "int -> ({int | str}, bool)"
+      }
+    ]
+  },
+  {
+    "ref": {
+      "name": "q",
+      "file": "test1.py",
+      "start": 44,
+      "end": 45,
+    
